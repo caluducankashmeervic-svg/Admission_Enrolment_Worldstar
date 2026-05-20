@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Worldstar College of Science and Technology, Inc.">
+  <defs>
+    <clipPath id="arcClip">
+      <path d="M 20 130 A 80 80 0 0 1 180 130 L 180 200 L 20 200 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Rainbow concentric arcs -->
+  <g clip-path="url(#arcClip)" fill="none" stroke-linecap="butt">
+    <circle cx="100" cy="130" r="78" stroke="#e11d48" stroke-width="10"/>
+    <circle cx="100" cy="130" r="66" stroke="#f97316" stroke-width="10"/>
+    <circle cx="100" cy="130" r="54" stroke="#facc15" stroke-width="10"/>
+    <circle cx="100" cy="130" r="42" stroke="#16a34a" stroke-width="10"/>
+    <circle cx="100" cy="130" r="30" stroke="#0ea5e9" stroke-width="10"/>
+  </g>
+
+  <!-- Stylized human figure reaching up -->
+  <g fill="#1d4ed8">
+    <circle cx="100" cy="58" r="11"/>
+    <path d="M 100 70
+             L 95 90
+             L 70 70
+             L 66 76
+             L 92 100
+             L 88 130
+             L 100 130
+             L 112 130
+             L 108 100
+             L 134 76
+             L 130 70
+             L 105 90
+             Z"/>
+  </g>
+
+  <!-- Gold star -->
+  <polygon fill="#facc15" stroke="#ca8a04" stroke-width="1"
+    points="150,38 154,50 167,50 156,58 160,71 150,63 140,71 144,58 133,50 146,50"/>
+</svg>
