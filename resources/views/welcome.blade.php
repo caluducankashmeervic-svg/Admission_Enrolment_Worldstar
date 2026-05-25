@@ -38,8 +38,8 @@
 </section>
 
 {{-- ============== INTRO ============== --}}
-<section class="bg-white py-12">
-    <div class="max-w-3xl mx-auto px-6 text-center md:text-left">
+<section class="bg-white">
+    <div class="max-w-3xl mx-auto px-6 py-10 text-center md:text-left">
         <h2 class="text-blue-700 text-xl font-bold">For a better tomorrow</h2>
         <p class="mt-3 text-slate-700 text-sm leading-relaxed">
           Worldstar College of Science & Technology (formerly Isabela Colleges of Science & Technology) has been providing 25 years of quality yet affordable education in Region 2
@@ -55,8 +55,8 @@
 </section>
 
 {{-- ============== FEATURED BANNER (Explore campuses) ============== --}}
-<section class="bg-white pb-10">
-    <div class="max-w-3xl mx-auto px-6">
+<section class="bg-white">
+    <div class="max-w-3xl mx-auto px-6 pb-8">
         <div class="relative h-56 md:h-64 rounded-sm overflow-hidden bg-gradient-to-r from-slate-700 via-slate-500 to-slate-400 shadow">
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="relative h-full flex items-center px-8">
@@ -75,8 +75,8 @@
 </section>
 
 {{-- ============== THREE IMAGE CARDS ============== --}}
-<section class="bg-white pb-12">
-    <div class="max-w-3xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+<section class="bg-white">
+    <div class="max-w-3xl mx-auto px-6 pb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ([
             ['STUDY',    'from-blue-200 to-blue-400',    '#courses'],
             ['RESEARCH', 'from-slate-300 to-slate-500',  '#mission'],
@@ -95,7 +95,7 @@
 </section>
 
 {{-- ============== BLUE BUTTON ROW ============== --}}
-<section class="bg-slate-100 py-10">
+<section class="bg-slate-100 py-4">
     <div class="max-w-3xl mx-auto px-6 flex flex-wrap gap-3 justify-center md:justify-start">
         @foreach ([
             ['Locations',     '#mission'],
@@ -111,7 +111,7 @@
 </section>
 
 {{-- ============== STUDY AREAS ============== --}}
-<section class="bg-white py-12">
+<section class="bg-white py-6">
     <div class="max-w-4xl mx-auto px-6">
         <h2 class="text-blue-700 font-bold text-lg border-b border-blue-200 pb-2 mb-2">Study areas</h2>
         @php
@@ -136,7 +136,7 @@
 </section>
 
 {{-- ============== FIND A PROGRAM BAR ============== --}}
-<section class="bg-white pb-12">
+<section class="bg-white pb-4">
     <div class="max-w-4xl mx-auto px-6">
         <form action="{{ route('register') }}" method="GET"
               class="bg-blue-800 text-white flex flex-wrap items-center gap-3 p-4 rounded-sm">
@@ -161,7 +161,7 @@
 </section>
 
 {{-- ============== THREE INFO CARDS (light blue bg) ============== --}}
-<section class="bg-slate-100 py-12">
+<section class="bg-slate-100 py-6">
     <div class="max-w-4xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-5">
         @foreach ([
             
@@ -178,7 +178,7 @@
 </section>
 
 {{-- ============== FAQ (kept for /#questions anchor) ============== --}}
-<section id="questions" class="bg-white pb-16">
+<section id="questions" class="bg-white pb-6">
     <div class="max-w-4xl mx-auto px-6">
         <h3 class="font-bold text-slate-900 text-lg mb-4">Frequently Asked Questions</h3>
         <div class="space-y-3 text-sm text-slate-700">
