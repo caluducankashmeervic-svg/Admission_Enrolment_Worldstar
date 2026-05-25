@@ -2,8 +2,8 @@
 @section('title', 'Welcome')
 
 @section('content')
-{{-- Break out of the layout's max-w-7xl container so the hero & footer span full width --}}
-<div class="-mx-4 -my-6">
+{{-- Full-bleed: break out of the layout's max-w-7xl container so sections span the entire viewport width --}}
+<div class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen -my-6">
 
 {{-- ============== HERO (cinematic dark banner) ============== --}}
 <section class="relative bg-black text-white overflow-hidden">
