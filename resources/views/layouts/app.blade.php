@@ -79,11 +79,11 @@
                         ['Contact Us', '#contact'],
                     ];
                 @endphp
-                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-800 mx-auto">
+                <nav class="hidden md:flex items-center gap-10 text-base font-semibold text-slate-800 mx-auto">
                     {{-- ABOUT --}}
                     <div class="group self-stretch flex items-center relative">
                         <button type="button"
-                                class="flex items-center gap-1 py-2 hover:text-[#1D4ED8] transition-colors">
+                                class="flex items-center gap-1.5 py-2 text-lg font-semibold hover:text-[#1D4ED8] transition-colors">
                             About
                             <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
@@ -91,14 +91,14 @@
                         </button>
                         {{-- About Mega Menu --}}
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
-                            <div class="max-w-7xl mx-auto px-8 py-8">
-                                <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">About WCST</h3>
-                                <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2">
+                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-xl rounded-b-xl border-t-2 border-[#1D4ED8] z-50">
+                            <div class="max-w-7xl mx-auto px-12 py-10">
+                                <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">About WCST</h3>
+                                <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-1">
                                     @foreach ($aboutLinks as [$label, $href])
                                         <li>
                                             <a href="{{ $href }}"
-                                               class="block text-sm text-slate-700 hover:text-[#FBBF24] hover:translate-x-1 transition py-1">
+                                               class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] hover:translate-x-1 transition py-[6px]">
                                                 {{ $label }}
                                             </a>
                                         </li>
@@ -111,18 +111,18 @@
                     {{-- ADMISSIONS --}}
                     <div class="group self-stretch flex items-center relative">
                         <button type="button"
-                                class="flex items-center gap-1 py-2 hover:text-[#1D4ED8] transition-colors">
+                                class="flex items-center gap-1.5 py-2 text-lg font-semibold hover:text-[#1D4ED8] transition-colors">
                             Admissions
                             <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
-                            <div class="max-w-7xl mx-auto px-8 py-8 grid grid-cols-1 md:grid-cols-3 gap-10">
+                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-xl rounded-b-xl border-t-2 border-[#1D4ED8] z-50">
+                            <div class="max-w-7xl mx-auto px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-14">
                                 <div>
-                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">Be a Worldstar Lion!</h3>
-                                    <ul class="space-y-2">
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Be a Worldstar Lion!</h3>
+                                    <ul class="space-y-3">
                                         @foreach ([
                                             ['Apply', route('register')],
                                             ['Applicant Portal', route('login')],
@@ -130,31 +130,31 @@
                                             ['Enrollment FAQs', '/#questions'],
                                             ['Contact Admission', '#contact'],
                                         ] as [$label, $href])
-                                            <li><a href="{{ $href }}" class="block text-sm text-slate-700 hover:text-[#FBBF24] transition py-1">{{ $label }}</a></li>
+                                            <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">Programs</h3>
-                                    <ul class="space-y-2">
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Programs</h3>
+                                    <ul class="space-y-3">
                                         @foreach ([
                                             ['Senior High School', '#shs'],
                                             ['Transferees', '#transferees'],
                                             ['TESDA Diploma Courses', '#tesda'],
                                         ] as [$label, $href])
-                                            <li><a href="{{ $href }}" class="block text-sm text-slate-700 hover:text-[#FBBF24] transition py-1">{{ $label }}</a></li>
+                                            <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">Student Support</h3>
-                                    <ul class="space-y-2">
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Student Support</h3>
+                                    <ul class="space-y-3">
                                         @foreach ([
                                             ['Scholarship', '#scholarship'],
                                             ['Safe Space', '#safespace'],
                                             ['Apply as Working Student', '#working'],
                                         ] as [$label, $href])
-                                            <li><a href="{{ $href }}" class="block text-sm text-slate-700 hover:text-[#FBBF24] transition py-1">{{ $label }}</a></li>
+                                            <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -165,30 +165,30 @@
                     {{-- ACADEMICS --}}
                     <div class="group self-stretch flex items-center relative">
                         <button type="button"
-                                class="flex items-center gap-1 py-2 hover:text-[#1D4ED8] transition-colors">
+                                class="flex items-center gap-1.5 py-2 text-lg font-semibold hover:text-[#1D4ED8] transition-colors">
                             Academics
                             <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
-                            <div class="max-w-7xl mx-auto px-8 py-8 grid grid-cols-1 md:grid-cols-3 gap-10">
+                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-xl rounded-b-xl border-t-2 border-[#1D4ED8] z-50">
+                            <div class="max-w-7xl mx-auto px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-14">
                                 <div>
-                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">Academic Track</h3>
-                                    <ul class="space-y-2">
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Academic Track</h3>
+                                    <ul class="space-y-3">
                                         @foreach ([
                                             'Arts, Social Sciences, and Humanities',
                                             'Business and Entrepreneurship',
                                             'Science, Technology, Engineering & Mathematics (Health & Non-Health)',
                                         ] as $label)
-                                            <li><a href="#academic" class="block text-sm text-slate-700 hover:text-[#FBBF24] transition py-1">{{ $label }}</a></li>
+                                            <li><a href="#academic" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">Tech-Pro Track</h3>
-                                    <ul class="space-y-2">
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Tech-Pro Track</h3>
+                                    <ul class="space-y-3">
                                         @foreach ([
                                             'Automotive and Small Engine Technologies',
                                             'Business, Hospitality, and Tourism Bundle',
@@ -196,20 +196,20 @@
                                             'ICT support and Computer Programming Technologies Bundle',
                                             'Industrial Arts Bundle',
                                         ] as $label)
-                                            <li><a href="#techpro" class="block text-sm text-slate-700 hover:text-[#FBBF24] transition py-1">{{ $label }}</a></li>
+                                            <li><a href="#techpro" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">3-Year Diploma Course</h3>
-                                    <ul class="space-y-2">
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">3-Year Diploma Course</h3>
+                                    <ul class="space-y-3">
                                         @foreach ([
                                             'CST (Computer Science Technology)',
                                             'CET (Computer Engineering Technology)',
                                             'EET (Electronics Engineering Technology)',
                                             'ICT (Information and Communications Technology)',
                                         ] as $label)
-                                            <li><a href="#diploma" class="block text-sm text-slate-700 hover:text-[#FBBF24] transition py-1">{{ $label }}</a></li>
+                                            <li><a href="#diploma" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
