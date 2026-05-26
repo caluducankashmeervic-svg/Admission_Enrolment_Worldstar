@@ -200,54 +200,124 @@
     </div>
 </section>
 
-{{-- ============== BIG BLUE FOOTER (UniSC-style) ============== --}}
-<section class="bg-blue-900 text-white">
-    <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+{{-- ============== FOOTER (UniSC curved design + Worldstar content) ============== --}}
+
+{{-- Curved arch transition: white background with a blue arch shape drawing the curve into the footer --}}
+<div class="bg-white">
+    <svg class="w-full block" viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:72px;">
+        <path d="M0,80 C400,5 1040,5 1440,80 L1440,80 L0,80 Z" fill="#1432BE"/>
+    </svg>
+</div>
+
+<footer class="relative text-white overflow-hidden" style="background: linear-gradient(140deg, #1230b8 0%, #1a3dcc 25%, #2048e0 55%, #1635c2 100%);">
+
+    {{-- Diagonal light-ray overlays (UniSC visual effect) --}}
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute opacity-[0.07]"
+             style="width:220%;height:220%;top:-50%;left:-20%;
+                    background:repeating-linear-gradient(130deg,transparent 0%,transparent 46%,#fff 46%,#fff 54%);
+                    background-size:260px 260px;"></div>
+        <div class="absolute opacity-[0.05]"
+             style="width:180%;height:180%;top:-30%;left:10%;
+                    background:repeating-linear-gradient(50deg,transparent 0%,transparent 40%,#fff 40%,#fff 46%);
+                    background-size:320px 320px;"></div>
+    </div>
+
+    {{-- ── Main 3-column grid ── --}}
+    <div class="relative max-w-7xl mx-auto px-8 pt-10 pb-12 grid grid-cols-1 md:grid-cols-3 gap-14">
+
+        {{-- Column 1: Be a Worldstar Lion --}}
+        <div>
+            <h4 class="font-bold uppercase tracking-widest text-sm text-white mb-6 border-b border-white/20 pb-3">
+                Be a Worldstar Lion!
+            </h4>
+            <ul class="space-y-3 text-[15px] text-white/80">
+                <li>
+                    <a href="{{ route('register') }}"
+                       class="font-bold text-white hover:text-[#FBBF24] transition-colors">
+                        Apply Now
+                    </a>
+                </li>
+                <li><a href="{{ route('login') }}"      class="hover:text-[#FBBF24] transition-colors">Applicant Portal</a></li>
+                <li><a href="#forms"                    class="hover:text-[#FBBF24] transition-colors">Application Forms</a></li>
+                <li><a href="/#questions"               class="hover:text-[#FBBF24] transition-colors">Enrollment FAQ's</a></li>
+                <li><a href="#contact"                  class="hover:text-[#FBBF24] transition-colors">Contact Admission</a></li>
+            </ul>
+        </div>
+
+        {{-- Column 2: Programs --}}
+        <div>
+            <h4 class="font-bold uppercase tracking-widest text-sm text-white mb-6 border-b border-white/20 pb-3">
+                Programs
+            </h4>
+            <ul class="space-y-3 text-[15px] text-white/80">
+                <li>
+                    <a href="#shs"
+                       class="font-bold text-white hover:text-[#FBBF24] transition-colors">
+                        Senior High School
+                    </a>
+                </li>
+                <li><a href="#transferees" class="hover:text-[#FBBF24] transition-colors">Transferees</a></li>
+                <li><a href="#tesda"       class="hover:text-[#FBBF24] transition-colors">TESDA Diploma Courses</a></li>
+            </ul>
+        </div>
+
+        {{-- Column 3: Student Support --}}
+        <div>
+            <h4 class="font-bold uppercase tracking-widest text-sm text-white mb-6 border-b border-white/20 pb-3">
+                Student Support
+            </h4>
+            <ul class="space-y-3 text-[15px] text-white/80">
+                <li>
+                    <a href="#scholarship"
+                       class="font-bold text-white hover:text-[#FBBF24] transition-colors">
+                        Scholarship
+                    </a>
+                </li>
+                <li><a href="#safespace" class="hover:text-[#FBBF24] transition-colors">Safe Space</a></li>
+                <li><a href="#working"   class="hover:text-[#FBBF24] transition-colors">Apply as Working Student</a></li>
+            </ul>
+        </div>
+    </div>
+
+    {{-- ── Social icons ── --}}
+    <div class="relative max-w-7xl mx-auto px-8 pb-10 flex items-center gap-4">
         @foreach ([
-            ['SERVICES', [
-                'Library','Campus security and emergencies','Online payments',
-                'Sonis Online','MyWorldstar — staff resources','Workplace health, safety and wellbeing',
-            ]],
-            ['WEBSITE', [
-                'A–Z directory','Browsing this site','Site map','Accessibility','Explanation of terms',
-            ]],
-            ['LEGAL', [
-                'Privacy','Copyright','Disclaimer','Right to Information','Data Collection Preferences',
-            ]],
-            ['CONTACT', [
-                'Maps and directions','Student Central','Media enquiries','Careers at Worldstar','Contact Worldstar',
-            ]],
-        ] as [$heading, $links])
-            <div>
-                <h4 class="font-bold text-amber-300 tracking-wide mb-3">{{ $heading }}</h4>
-                <ul class="space-y-2 text-white/90">
-                    @foreach ($links as $link)
-                        <li><a href="#" class="hover:text-amber-300">{{ $link }}</a></li>
-                    @endforeach
-                </ul>
-            </div>
+            ['Facebook',  'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z'],
+            ['X',         'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.261 5.635 5.903-5.635zm-1.161 17.52h1.833L7.084 4.126H5.117z'],
+            ['Instagram', 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z'],
+            ['LinkedIn',  'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z'],
+            ['YouTube',   'M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z'],
+            ['TikTok',    'M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z'],
+        ] as [$name, $path])
+            <a href="#" title="{{ $name }}"
+               class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center
+                      text-white/70 hover:text-white hover:border-white hover:bg-white/10 transition-colors">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="{{ $path }}"/>
+                </svg>
+            </a>
         @endforeach
     </div>
 
-    <div class="border-t border-white/20">
-        <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between text-xs text-white/80">
-            <div class="flex items-center gap-3">
-                @foreach (['Facebook','X','Instagram','LinkedIn','YouTube','TikTok'] as $sn)
-                    <a href="#" class="w-8 h-8 rounded-full border border-white/40 flex items-center justify-center hover:bg-white/10"
-                       title="{{ $sn }}">
-                        <span class="text-[10px]">{{ $sn[0] }}</span>
-                    </a>
-                @endforeach
-            </div>
-            <p class="max-w-2xl leading-relaxed">
-                Worldstar College of Science and Technology, Inc. acknowledges the communities on whose
-                lands we live, work and study. We pay our respects to leaders past, present and emerging,
-                and recognise the strength, resilience and capacity of all our partners.
+    {{-- ── Sub-footer bar ── --}}
+    <div class="relative border-t border-white/20">
+        <div class="max-w-7xl mx-auto px-8 py-6
+                    flex flex-col md:flex-row items-center justify-between gap-3
+                    text-xs text-white/65">
+            <p class="text-center md:text-left">
+                P. Paredes St., Sampaloc, Manila, Philippines
+                &nbsp;|&nbsp; (02) 8245-4201
+                &nbsp;|&nbsp; info@worldstar.edu.ph
             </p>
-            <div class="bg-white text-blue-900 font-extrabold px-4 py-3 rounded-sm">Worldstar</div>
+            <p class="text-center md:text-right tracking-wide">
+                &copy; 2024 WORLDSTAR COLLEGE of SCIENCE and TECHNOLOGY. All Rights Reserved.
+            </p>
         </div>
     </div>
-</section>
+
+</footer>
+
 
 </div>{{-- end full-bleed wrapper --}}
 @endsection
