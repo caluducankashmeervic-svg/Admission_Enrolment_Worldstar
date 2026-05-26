@@ -240,46 +240,45 @@
 
     {{-- ===== SLIDE-DOWN SEARCH OVERLAY ===== --}}
     <div id="search-overlay"
-         class="fixed inset-0 z-50 bg-slate-900/95 flex flex-col"
-         style="transform: translateY(-100%); opacity: 0; pointer-events: none;"
+         class="fixed left-0 right-0 z-50 flex flex-col"
+         style="top: 0; transform: translateY(-100%); opacity: 0; pointer-events: none;"
          role="dialog" aria-modal="true" aria-label="Site search">
 
-        {{-- Invisible spacer matching the fixed header height --}}
-        <div class="h-[104px] shrink-0"></div>
+        {{-- Spacer matching the sticky header so the bar appears flush below it --}}
+        <div class="h-[104px] shrink-0 bg-white"></div>
 
-        {{-- Search panel content --}}
-        <div class="flex-1 flex items-start justify-center pt-16 px-6">
-            <div class="w-full max-w-3xl">
-                <p class="text-white/50 text-xs uppercase tracking-widest mb-6">Search Worldstar</p>
-                <form action="{{ route('register') }}" method="GET" class="relative">
-                    <input id="search-input"
-                           type="text"
-                           name="q"
-                           placeholder="Type keyword and hit enter"
-                           class="w-full bg-transparent border-b-2 border-white/40 focus:border-[#FBBF24]
-                                  text-white text-2xl md:text-3xl placeholder-white/30
-                                  py-4 pr-14 outline-none transition-colors duration-200">
-                    <button type="submit"
-                            class="absolute right-0 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#FBBF24] transition-colors">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                    </button>
-                </form>
-                <p class="mt-5 text-white/30 text-sm">Press <kbd class="bg-white/10 px-1.5 py-0.5 rounded text-white/50 text-xs">Enter</kbd> to search &nbsp;·&nbsp; <kbd class="bg-white/10 px-1.5 py-0.5 rounded text-white/50 text-xs">Esc</kbd> to close</p>
-            </div>
+        {{-- White search bar --}}
+        <div class="bg-white border-b border-slate-200 shadow-sm">
+            <form action="{{ route('register') }}" method="GET"
+                  class="max-w-7xl mx-auto px-8 flex items-center gap-5 h-[68px]">
+                {{-- Search icon --}}
+                <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+
+                {{-- Input --}}
+                <input id="search-input"
+                       type="text"
+                       name="q"
+                       placeholder="Type keyword and hit enter"
+                       class="flex-1 text-slate-700 text-lg placeholder-slate-400 bg-transparent outline-none">
+
+                {{-- Circular X close button --}}
+                <button id="search-close"
+                        type="button"
+                        class="w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center
+                               text-slate-500 hover:text-slate-900 hover:border-slate-500 transition-colors shrink-0"
+                        aria-label="Close search">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </form>
         </div>
 
-        {{-- Close (X) button --}}
-        <button id="search-close"
-                type="button"
-                class="absolute top-7 right-7 text-white/60 hover:text-white transition-colors"
-                aria-label="Close search">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
+        {{-- Dark dimmer backdrop (clicking it also closes) --}}
+        <div id="search-backdrop" class="flex-1 bg-black/50 cursor-pointer"></div>
     </div>
     {{-- ===== END SEARCH OVERLAY ===== --}}
 
@@ -328,6 +327,9 @@
 
         openBtn  && openBtn.addEventListener('click', openSearch);
         closeBtn && closeBtn.addEventListener('click', closeSearch);
+
+        var backdrop = document.getElementById('search-backdrop');
+        backdrop && backdrop.addEventListener('click', closeSearch);
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeSearch();
