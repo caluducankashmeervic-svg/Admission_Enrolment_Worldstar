@@ -8,14 +8,10 @@ use App\Models\Applicant;
 use App\Models\AuditLog;
 use App\Models\Enrollment;
 use App\Models\Verification;
-use App\Services\SmsGateway;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class EnrollmentController extends Controller
 {
-    public function __construct(protected SmsGateway $sms) {}
-
     public function show(Applicant $applicant)
     {
         $applicant->load([
@@ -32,8 +28,8 @@ class EnrollmentController extends Controller
      *  - no payment
      *  - no COR generation
      * Only requirement: applicant's documents have been verified.
-     * On success the applicant is flipped to STATUS_ENROLLED and notified
-     * (best-effort SMS). The notification surfaces on their status page.
+     * On success the applicant is flipped to STATUS_ENROLLED. The
+     * confirmation surfaces on their status page.
      */
     public function finalize(EnrollmentRequest $request)
     {
@@ -82,15 +78,9 @@ class EnrollmentController extends Controller
             return back()->withErrors(['enrollment' => $e->getMessage()])->withInput();
         }
 
-        // Best-effort notification. The student MUST be notified that they
-        // have been enrolled — but SMS gateway failures must not roll back
-        // a successful enrollment. The status page also surfaces the
-        // confirmation independently.
-        $this->notifyEnrolled($enrollment);
-
         return redirect()
             ->route('registrar.verify.show', $enrollment->applicant_id)
-            ->with('status', "Enrollment finalized. {$enrollment->enrollment_no} — the applicant has been notified.");
+            ->with('status', "Enrollment finalized. {$enrollment->enrollment_no}");
     }
 
     protected function nextEnrollmentNo(?int $termId): string
@@ -98,26 +88,5 @@ class EnrollmentController extends Controller
         $year  = date('Y');
         $count = Enrollment::where('academic_term_id', $termId)->count() + 1;
         return sprintf('ENR-%s-%06d', $year, $count);
-    }
-
-    protected function notifyEnrolled(Enrollment $enrollment): void
-    {
-        try {
-            $applicant = $enrollment->applicant;
-            if (! $applicant || ! $applicant->mobile) {
-                return;
-            }
-            $message = sprintf(
-                'Congratulations %s! You are officially enrolled at Worldstar College. Enrollment No: %s.',
-                $applicant->first_name,
-                $enrollment->enrollment_no
-            );
-            $this->sms->send($applicant->mobile, $message);
-        } catch (\Throwable $e) {
-            Log::warning('Enrollment SMS notification failed', [
-                'enrollment_id' => $enrollment->id,
-                'error'         => $e->getMessage(),
-            ]);
-        }
     }
 }

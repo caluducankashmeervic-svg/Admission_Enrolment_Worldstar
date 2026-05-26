@@ -7,14 +7,11 @@ use App\Models\Applicant;
 use App\Models\AuditLog;
 use App\Models\ExamResult;
 use App\Models\ExamSchedule;
-use App\Services\SmsGateway;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ExamResultController extends Controller
 {
-    public function __construct(protected SmsGateway $sms) {}
-
     public function index(ExamSchedule $schedule)
     {
         $results = ExamResult::with('applicant')
@@ -52,37 +49,5 @@ class ExamResultController extends Controller
         });
 
         return back()->with('status', 'Exam results recorded.');
-    }
-
-    public function dispatchSms(ExamSchedule $schedule)
-    {
-        $results = ExamResult::with('applicant')
-            ->where('exam_schedule_id', $schedule->id)
-            ->whereIn('result', [ExamResult::RESULT_PASSED, ExamResult::RESULT_FAILED])
-            ->where('sms_status', '!=', ExamResult::SMS_SENT)
-            ->get();
-
-        $sent = 0; $failed = 0;
-        foreach ($results as $r) {
-            $applicant = $r->applicant;
-            if (! $applicant || ! $applicant->mobile) continue;
-
-            $status = strtoupper($r->result);
-            $message = "Hello {$applicant->first_name}, your entrance exam result is: {$status}. "
-                     . "Score: {$r->score}. Ref: {$applicant->reference_code}.";
-
-            $res = $this->sms->send($applicant->mobile, $message);
-
-            $r->update([
-                'sms_status'       => $res['status'] === 'sent' ? ExamResult::SMS_SENT : ExamResult::SMS_FAILED,
-                'sms_sent_at'      => $res['status'] === 'sent' ? now() : null,
-                'sms_provider_ref' => $res['ref'],
-            ]);
-
-            $res['status'] === 'sent' ? $sent++ : $failed++;
-        }
-
-        AuditLog::record('exam.results.sms_dispatch', $schedule, compact('sent', 'failed'));
-        return back()->with('status', "SMS dispatch complete: {$sent} sent, {$failed} failed.");
     }
 }

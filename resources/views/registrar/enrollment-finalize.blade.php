@@ -19,7 +19,7 @@
 
     <h1 class="text-2xl font-semibold text-slate-900">Finalize Enrollment</h1>
     <p class="text-sm text-slate-500 mt-1">
-        Confirming enrollment marks the applicant as officially enrolled and notifies them via SMS.
+        Confirming enrollment marks the applicant as officially enrolled and the confirmation appears on their status page.
         No section assignment, payment, or COR is required at this step.
     </p>
 
@@ -77,7 +77,7 @@
                 <dd class="font-medium text-slate-800">{{ $applicant->academicTerm?->label ?? '—' }}</dd>
             </div>
             <div>
-                <dt class="text-slate-500">Mobile (for SMS)</dt>
+                <dt class="text-slate-500">Mobile</dt>
                 <dd class="font-medium text-slate-800">{{ $applicant->mobile ?: '— (no number on file)' }}</dd>
             </div>
             <div>
@@ -123,14 +123,13 @@
     @elseif($canFinalize)
         <form method="POST" action="{{ route('registrar.enrollment.finalize') }}"
               class="mt-6 bg-white border border-emerald-200 rounded-lg shadow-sm p-5"
-              onsubmit="return confirm('Finalize enrollment for {{ $applicant->full_name }}? The applicant will be notified via SMS and this cannot be undone.');">
+              onsubmit="return confirm('Finalize enrollment for {{ $applicant->full_name }}? This will mark the applicant as enrolled and cannot be undone.');">
             @csrf
             <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">
 
             <p class="text-sm text-slate-700">
                 By confirming, this applicant becomes officially <strong>enrolled</strong>.
-                An SMS will be sent to <strong>{{ $applicant->mobile ?: 'their registered number' }}</strong>
-                and the confirmation will appear on their status page.
+                The confirmation will appear on their status page.
             </p>
 
             <button type="submit"

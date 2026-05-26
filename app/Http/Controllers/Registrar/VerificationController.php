@@ -82,7 +82,6 @@ class VerificationController extends Controller
                     'applicant_id'     => $locked->id,
                     'exam_schedule_id' => $batch->id,
                     'result'           => ExamResult::RESULT_PENDING,
-                    'sms_status'       => ExamResult::SMS_NOT_SENT,
                 ]);
 
                 $batch->increment('assigned_count');

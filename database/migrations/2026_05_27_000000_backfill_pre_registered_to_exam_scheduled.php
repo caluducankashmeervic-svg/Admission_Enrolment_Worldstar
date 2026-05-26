@@ -41,7 +41,7 @@ return new class extends Migration
                     'applicant_id'     => $a->id,
                     'exam_schedule_id' => $batch->id,
                     'result'           => 'pending',
-                    'sms_status'       => 'not_sent',
+                    'sms_status'       => 'not_sent', // legacy column, removed in a later migration
                     'created_at'       => now(),
                     'updated_at'       => now(),
                 ]);

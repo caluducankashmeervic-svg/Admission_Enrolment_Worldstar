@@ -131,7 +131,6 @@ Route::middleware(['auth', 'role:admin,registrar'])->prefix('exam')->name('exam.
 
     Route::get('/results/{schedule}',          [ExamResultController::class, 'index'])->name('results.index');
     Route::post('/results/{schedule}/scores',  [ExamResultController::class, 'postScores'])->name('results.post');
-    Route::post('/results/{schedule}/sms',     [ExamResultController::class, 'dispatchSms'])->name('results.sms');
 });
 
 /* ---------------- Registrar ---------------- */

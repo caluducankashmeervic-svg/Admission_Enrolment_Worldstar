@@ -100,11 +100,6 @@
                     Enrollment No. <strong class="font-mono">{{ $enr->enrollment_no }}</strong> —
                     confirmed {{ $enr->enrolled_at?->format('M d, Y g:i A') }}.
                 </p>
-                @if($applicant->mobile)
-                    <p class="mt-1 text-xs text-emerald-800">
-                        A confirmation SMS was sent to {{ $applicant->mobile }}.
-                    </p>
-                @endif
             </div>
         </div>
     </div>
