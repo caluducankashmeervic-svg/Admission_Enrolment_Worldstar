@@ -214,21 +214,7 @@
 ============================================================ --}}
 
 {{-- ── Pronounced curved arch transition (white → deep blue) ── --}}
-<div class="bg-white" style="line-height:0;">
-    <svg class="w-full block" viewBox="0 0 1440 100"
-         preserveAspectRatio="none" style="height:90px; display:block;">
-        <defs>
-            <linearGradient id="ftArchGrad2" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"   stop-color="#0a1888"/>
-                <stop offset="100%" stop-color="#1230b8"/>
-            </linearGradient>
-        </defs>
-        <path d="M0,100 C360,8 1080,8 1440,100 L1440,100 L0,100 Z"
-              fill="url(#ftArchGrad2)"/>
-        <path d="M0,100 C420,28 1020,28 1440,100 L1440,100 L0,100 Z"
-              fill="rgba(255,255,255,0.04)"/>
-    </svg>
-</div>
+
 
 {{-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
      FOOTER ELEMENT
@@ -256,13 +242,6 @@
                  #0b1c96 78deg  84deg,
                  #1a38d6 84deg  90deg,
                  #0b1c96 90deg 360deg);">
-
-    {{-- Top-edge darkening overlay — blends arch seam --}}
-    <div class="absolute top-0 left-0 right-0 pointer-events-none"
-         style="height:120px;
-                background: linear-gradient(180deg,
-                  rgba(8,16,100,0.45) 0%,
-                  transparent 100%);"></div>
 
     {{-- Radial vignette at bottom-left origin (ray convergence point) --}}
     <div class="absolute inset-0 pointer-events-none"
