@@ -26,10 +26,7 @@ class PreRegistrationController extends Controller
 
     public function createShs()
     {
-        return view('applicant.pre-register-shs', [
-            'courses' => Course::where('is_active', true)->orderBy('code')->get(),
-            'terms'   => AcademicTerm::where('is_active', true)->orderBy('school_year', 'desc')->get(),
-        ]);
+        return view('applicant.pre-register-shs');
     }
 
     public function storeShs(ShsPreRegistrationRequest $request)
@@ -38,7 +35,6 @@ class PreRegistrationController extends Controller
             $v = $request->validated();
 
             $profile = [
-                'learner_ref_no'       => $v['learner_ref_no']      ?? null,
                 'facebook'             => $v['facebook']            ?? null,
                 'landline'             => $v['landline']            ?? null,
                 'father_name'          => $v['father_name']         ?? null,
@@ -48,10 +44,11 @@ class PreRegistrationController extends Controller
                 'mother_occupation'    => $v['mother_occupation']   ?? null,
                 'mother_contact'       => $v['mother_contact']      ?? null,
                 'school_type'          => $v['school_type']         ?? null,
+                'track_category'       => $v['track_category'],
+                'track_program'        => $v['track_program'],
                 'varsity_player'       => (bool)($v['varsity_player']      ?? false),
                 'school_dancer'        => (bool)($v['school_dancer']       ?? false),
                 'planning_college'     => (bool)($v['planning_college']    ?? false),
-                'intended_course'      => $v['intended_course']     ?? null,
                 'family_income'        => $v['family_income']       ?? null,
                 'financial_assistance' => (bool)($v['financial_assistance']?? false),
                 'referral_sources'     => $v['referral_sources']    ?? [],
@@ -66,8 +63,6 @@ class PreRegistrationController extends Controller
                 'reference_code'        => $this->codes->generate('SHS'),
                 'applicant_type'        => Applicant::TYPE_SHS,
                 'user_id'               => optional($request->user())->id,
-                'preferred_course_id'   => $v['preferred_course_id'],
-                'academic_term_id'      => $v['academic_term_id'],
                 'first_name'            => $v['first_name'],
                 'middle_name'           => $v['middle_name']  ?? null,
                 'last_name'             => $v['last_name'],
@@ -82,7 +77,7 @@ class PreRegistrationController extends Controller
                 'province'              => $v['province'],
                 'last_school_attended'  => $v['junior_high_school'],
                 'last_school_address'   => $v['junior_high_address'] ?? null,
-                'strand_track'          => $v['strand'],
+                'strand_track'          => $v['track_program'],
                 'year_graduated'        => $v['year_graduated']      ?? null,
                 'guardian_name'         => $guardianName,
                 'guardian_relationship' => $guardianRel,

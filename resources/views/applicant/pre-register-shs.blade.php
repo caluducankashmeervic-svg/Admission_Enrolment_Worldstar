@@ -25,15 +25,13 @@
         {{-- Personal --}}
         <fieldset>
             <legend class="font-semibold text-blue-700">Personal</legend>
-            <div class="grid md:grid-cols-4 gap-4 mt-3">
+            <div class="grid md:grid-cols-3 gap-4 mt-3">
                 <label class="block"><span class="text-sm font-medium">Last Name *</span>
                     <input name="last_name" required value="{{ old('last_name') }}" class="{{ $cls }}"></label>
                 <label class="block"><span class="text-sm font-medium">First Name *</span>
                     <input name="first_name" required value="{{ old('first_name') }}" class="{{ $cls }}"></label>
                 <label class="block"><span class="text-sm font-medium">Middle Name</span>
                     <input name="middle_name" value="{{ old('middle_name') }}" class="{{ $cls }}"></label>
-                <label class="block"><span class="text-sm font-medium">Learner Ref No.</span>
-                    <input name="learner_ref_no" value="{{ old('learner_ref_no') }}" class="{{ $cls }}"></label>
             </div>
             <div class="grid md:grid-cols-4 gap-4 mt-4">
                 <label class="block"><span class="text-sm font-medium">Gender *</span>
@@ -109,7 +107,7 @@
                 <label class="block"><span class="text-sm font-medium">Address</span>
                     <input name="junior_high_address" value="{{ old('junior_high_address') }}" class="{{ $cls }}"></label>
             </div>
-            <div class="grid md:grid-cols-3 gap-4 mt-4">
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
                 <label class="block"><span class="text-sm font-medium">Year Graduated</span>
                     <input type="number" min="1950" max="{{ date('Y')+1 }}" name="year_graduated"
                            value="{{ old('year_graduated') }}" class="{{ $cls }}"></label>
@@ -124,19 +122,8 @@
                         @endforeach
                     </div>
                 </div>
-                <div>
-                    <span class="text-sm font-medium block mb-1">Strand to Enroll In *</span>
-                    <div class="flex flex-wrap gap-3 mt-2 text-sm">
-                        @foreach(['STEM','ABM','TVL','HUMSS','GAS'] as $s)
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="strand" value="{{ $s }}" required @checked(old('strand')==$s) class="mr-1">
-                                {{ $s }}
-                            </label>
-                        @endforeach
-                    </div>
-                </div>
             </div>
-            <div class="grid md:grid-cols-4 gap-4 mt-4">
+            <div class="grid md:grid-cols-3 gap-4 mt-4">
                 <div>
                     <span class="text-sm font-medium block mb-1">Varsity Player?</span>
                     <div class="flex gap-4 mt-2 text-sm">
@@ -158,8 +145,6 @@
                         <label class="inline-flex items-center"><input type="radio" name="planning_college" value="0" @checked(old('planning_college','0')=='0') class="mr-1">No</label>
                     </div>
                 </div>
-                <label class="block"><span class="text-sm font-medium">Intended Course</span>
-                    <input name="intended_course" value="{{ old('intended_course') }}" class="{{ $cls }}"></label>
             </div>
             <div class="grid md:grid-cols-2 gap-4 mt-4">
                 <label class="block"><span class="text-sm font-medium">Estimated Family Annual Income (PhP)</span>
@@ -171,6 +156,25 @@
                         <label class="inline-flex items-center"><input type="radio" name="financial_assistance" value="0" @checked(old('financial_assistance','0')=='0') class="mr-1">No</label>
                     </div>
                 </div>
+            </div>
+        </fieldset>
+
+        {{-- Track Selection --}}
+        <fieldset>
+            <legend class="font-semibold text-blue-700">Track Selection</legend>
+            <div class="grid md:grid-cols-2 gap-4 mt-3">
+                <label class="block"><span class="text-sm font-medium">Track Type *</span>
+                    <select name="track_category" id="track-category" required class="{{ $cls }}">
+                        <option value="">Select…</option>
+                        <option value="Academic Track" @selected(old('track_category')==='Academic Track')>Academic Track</option>
+                        <option value="Tech-Pro Track" @selected(old('track_category')==='Tech-Pro Track')>Tech-Pro Track</option>
+                    </select>
+                </label>
+                <label class="block"><span class="text-sm font-medium">Track Program *</span>
+                    <select name="track_program" id="track-program" required class="{{ $cls }}">
+                        <option value="">Select track type first…</option>
+                    </select>
+                </label>
             </div>
         </fieldset>
 
@@ -191,31 +195,6 @@
                 <input name="referral_other" value="{{ old('referral_other') }}" class="{{ $cls }}"></label>
         </fieldset>
 
-        {{-- Program / Term --}}
-        <fieldset>
-            <legend class="font-semibold text-blue-700">Program Preference</legend>
-            <div class="grid md:grid-cols-2 gap-4 mt-3">
-                <label class="block"><span class="text-sm font-medium">Preferred Course *</span>
-                    <select name="preferred_course_id" required class="{{ $cls }}">
-                        <option value="">Select…</option>
-                        @foreach($courses as $c)
-                            <option value="{{ $c->id }}" @selected(old('preferred_course_id')==$c->id)>
-                                {{ $c->code }} — {{ $c->name }}
-                            </option>
-                        @endforeach
-                    </select></label>
-                <label class="block"><span class="text-sm font-medium">Academic Term *</span>
-                    <select name="academic_term_id" required class="{{ $cls }}">
-                        <option value="">Select…</option>
-                        @foreach($terms as $t)
-                            <option value="{{ $t->id }}" @selected(old('academic_term_id', $terms->count()===1 ? $t->id : null)==$t->id)>
-                                {{ $t->school_year }} — {{ $t->semester }} Sem
-                            </option>
-                        @endforeach
-                    </select></label>
-            </div>
-        </fieldset>
-
         <div class="flex justify-end">
             <button class="bg-blue-600 text-white px-5 py-2.5 rounded hover:bg-blue-700">
                 Submit Pre-Registration
@@ -223,4 +202,57 @@
         </div>
     </form>
 </div>
+
+<script>
+    (function () {
+        var category = document.getElementById('track-category');
+        var program = document.getElementById('track-program');
+        if (!category || !program) return;
+
+        var optionsByCategory = {
+            'Academic Track': [
+                'Arts, Social Sciences, and Humanities',
+                'Business and Entrepreneurship',
+                'Science, Technology, Engineering & Mathematics (Health & Non-Health)'
+            ],
+            'Tech-Pro Track': [
+                'Automotive and Small Engine Technologies',
+                'Business, Hospitality, and Tourism Bundle',
+                'Creative Arts and Design Technologies Bundle',
+                'ICT support and Computer Programming Technologies Bundle',
+                'Industrial Arts Bundle'
+            ]
+        };
+
+        var oldProgram = @json(old('track_program'));
+
+        function renderPrograms() {
+            var selectedCategory = category.value;
+            var list = optionsByCategory[selectedCategory] || [];
+            program.innerHTML = '';
+
+            var placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = list.length ? 'Select…' : 'Select track type first…';
+            program.appendChild(placeholder);
+
+            list.forEach(function (name) {
+                var opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                if (oldProgram && oldProgram === name) {
+                    opt.selected = true;
+                }
+                program.appendChild(opt);
+            });
+        }
+
+        category.addEventListener('change', function () {
+            oldProgram = null;
+            renderPrograms();
+        });
+
+        renderPrograms();
+    })();
+</script>
 @endsection
