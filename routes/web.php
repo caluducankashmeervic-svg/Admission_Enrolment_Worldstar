@@ -79,7 +79,6 @@ Route::middleware('auth')->group(function () {
 
     // Authenticated student admission form
     Route::get('/admission',  [AdmissionController::class, 'create'])->name('applicant.admission.create');
-    Route::post('/admission', [AdmissionController::class, 'store'])->name('applicant.admission.store');
 });
 
 /* ---------------- Admin ---------------- */
