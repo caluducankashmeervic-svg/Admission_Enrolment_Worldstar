@@ -7,17 +7,28 @@
     <title>@yield('title', config('app.name', 'Enrollment System'))</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        #search-overlay {
+            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.35s ease;
+        }
+        #search-overlay.search-open {
+            transform: translateY(0) !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
-    <header class="bg-white border-b border-slate-200 relative z-40">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-6">
+    <header id="site-header" class="bg-white border-b border-slate-200 fixed top-0 left-0 right-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between gap-6">
             {{-- LEFT: Logo --}}
-            <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0">
+            <a href="{{ route('home') }}" class="flex items-center gap-4 shrink-0">
                 <img src="{{ asset('images/image.png') }}" alt="Worldstar Logo"
-                     class="w-10 h-10 object-contain">
+                     class="w-14 h-14 object-contain">
                 <span class="font-semibold text-[#1D4ED8] leading-tight">
-                    <span class="block text-base">Worldstar College</span>
-                    <span class="block text-[11px] text-slate-500 font-normal">of Science and Technology, Inc.</span>
+                    <span class="block text-lg">Worldstar College</span>
+                    <span class="block text-xs text-slate-500 font-normal">of Science and Technology, Inc.</span>
                 </span>
             </a>
 
@@ -207,15 +218,24 @@
                     </div>
                 </nav>
 
-                {{-- RIGHT: Action Buttons --}}
-                <div class="flex items-center gap-2 shrink-0">
-                    <a href="{{ route('login') }}" class="hidden lg:inline text-sm text-slate-600 hover:text-[#1D4ED8] mr-2">Admin</a>
+                {{-- RIGHT: Action Buttons + Search --}}
+                <div class="flex items-center gap-3 shrink-0">
+                    {{-- Search icon --}}
+                    <button id="search-open" type="button"
+                            class="p-2 text-slate-500 hover:text-[#1D4ED8] transition-colors"
+                            aria-label="Open search">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+                    <a href="{{ route('login') }}" class="hidden lg:inline text-sm text-slate-600 hover:text-[#1D4ED8]">Admin</a>
                     <a href="{{ route('register') }}"
-                       class="text-sm font-semibold border border-[#1D4ED8] text-[#1D4ED8] px-4 py-1.5 rounded hover:bg-[#1D4ED8] hover:text-white transition-colors">
+                       class="text-sm font-semibold border border-[#1D4ED8] text-[#1D4ED8] px-4 py-2 rounded hover:bg-[#1D4ED8] hover:text-white transition-colors">
                         Register
                     </a>
                     <a href="{{ route('login') }}"
-                       class="text-sm font-semibold bg-[#1D4ED8] text-white px-4 py-1.5 rounded hover:bg-[#1e40af] transition-colors">
+                       class="text-sm font-semibold bg-[#1D4ED8] text-white px-4 py-2 rounded hover:bg-[#1e40af] transition-colors">
                         LOGIN
                     </a>
                 </div>
@@ -223,7 +243,52 @@
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+    {{-- ===== SLIDE-DOWN SEARCH OVERLAY ===== --}}
+    <div id="search-overlay"
+         class="fixed inset-0 z-50 bg-slate-900/95 flex flex-col"
+         style="transform: translateY(-100%); opacity: 0; pointer-events: none;"
+         role="dialog" aria-modal="true" aria-label="Site search">
+
+        {{-- Invisible spacer matching the fixed header height --}}
+        <div class="h-[104px] shrink-0"></div>
+
+        {{-- Search panel content --}}
+        <div class="flex-1 flex items-start justify-center pt-16 px-6">
+            <div class="w-full max-w-3xl">
+                <p class="text-white/50 text-xs uppercase tracking-widest mb-6">Search Worldstar</p>
+                <form action="{{ route('register') }}" method="GET" class="relative">
+                    <input id="search-input"
+                           type="text"
+                           name="q"
+                           placeholder="Type keyword and hit enter"
+                           class="w-full bg-transparent border-b-2 border-white/40 focus:border-[#FBBF24]
+                                  text-white text-2xl md:text-3xl placeholder-white/30
+                                  py-4 pr-14 outline-none transition-colors duration-200">
+                    <button type="submit"
+                            class="absolute right-0 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#FBBF24] transition-colors">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+                </form>
+                <p class="mt-5 text-white/30 text-sm">Press <kbd class="bg-white/10 px-1.5 py-0.5 rounded text-white/50 text-xs">Enter</kbd> to search &nbsp;·&nbsp; <kbd class="bg-white/10 px-1.5 py-0.5 rounded text-white/50 text-xs">Esc</kbd> to close</p>
+            </div>
+        </div>
+
+        {{-- Close (X) button --}}
+        <button id="search-close"
+                type="button"
+                class="absolute top-7 right-7 text-white/60 hover:text-white transition-colors"
+                aria-label="Close search">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+    {{-- ===== END SEARCH OVERLAY ===== --}}
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 pt-[128px]">
         @if (session('status'))
             <div class="mb-4 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-2 text-sm">
                 {{ session('status') }}
@@ -247,5 +312,32 @@
     </footer>
 
     @stack('scripts')
+
+    <script>
+    (function () {
+        var overlay  = document.getElementById('search-overlay');
+        var openBtn  = document.getElementById('search-open');
+        var closeBtn = document.getElementById('search-close');
+        var input    = document.getElementById('search-input');
+
+        function openSearch() {
+            overlay.classList.add('search-open');
+            setTimeout(function () { input && input.focus(); }, 80);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSearch() {
+            overlay.classList.remove('search-open');
+            document.body.style.overflow = '';
+        }
+
+        openBtn  && openBtn.addEventListener('click', openSearch);
+        closeBtn && closeBtn.addEventListener('click', closeSearch);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeSearch();
+        });
+    })();
+    </script>
 </body>
 </html>
