@@ -53,14 +53,13 @@
                     <td class="px-3 py-2 font-mono text-xs">{{ $e->enrollment_no }}</td>
                     <td class="px-3 py-2">{{ $e->applicant?->full_name }}
                         <div class="text-xs text-slate-400 font-mono">{{ $e->applicant?->reference_code }}</div></td>
-                    <td class="px-3 py-2">{{ $e->course?->code }}</td>
-                    <td class="px-3 py-2">{{ $e->section?->name }}</td>
+                    <td class="px-3 py-2">{{ $e->course?->code ?? '—' }}</td>
+                    <td class="px-3 py-2">{{ $e->section?->name ?? '—' }}</td>
                     <td class="px-3 py-2 text-xs">{{ $e->academicTerm?->school_year }} {{ $e->academicTerm?->semester }}</td>
                     <td class="px-3 py-2 text-xs">{{ optional($e->enrolled_at)->format('M d, Y H:i') }}</td>
                     <td class="px-3 py-2 text-xs">{{ $e->processor?->name }}</td>
                     <td class="px-3 py-2">
-                        <a href="{{ route('enrollment.cor.download', $e) }}"
-                           class="text-blue-600 hover:underline text-xs">COR ↓</a>
+                        <span class="text-xs text-slate-400">—</span>
                     </td>
                 </tr>
             @empty

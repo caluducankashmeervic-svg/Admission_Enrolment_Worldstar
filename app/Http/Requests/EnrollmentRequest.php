@@ -15,8 +15,6 @@ class EnrollmentRequest extends FormRequest
     {
         return [
             'applicant_id' => ['required', 'exists:applicants,id'],
-            'course_id'    => ['required', 'exists:courses,id'],
-            'section_id'   => ['nullable', 'exists:sections,id'],
         ];
     }
 }

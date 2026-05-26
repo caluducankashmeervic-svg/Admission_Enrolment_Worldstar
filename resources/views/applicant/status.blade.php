@@ -91,12 +91,22 @@
     @endif
 
     @if($enr)
-    <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-lg shadow-sm p-6 mt-5">
-        <h2 class="font-semibold">Enrollment Confirmed</h2>
-        <p class="mt-2 text-sm">
-            Enrollment No. <strong class="font-mono">{{ $enr->enrollment_no }}</strong> —
-            Section {{ $enr->section?->name }}.
-        </p>
+    <div class="bg-emerald-50 border-2 border-emerald-300 text-emerald-900 rounded-lg shadow-sm p-6 mt-5">
+        <div class="flex items-start gap-3">
+            <div class="text-3xl leading-none">🎉</div>
+            <div>
+                <h2 class="text-lg font-semibold">You are officially enrolled!</h2>
+                <p class="mt-1 text-sm">
+                    Enrollment No. <strong class="font-mono">{{ $enr->enrollment_no }}</strong> —
+                    confirmed {{ $enr->enrolled_at?->format('M d, Y g:i A') }}.
+                </p>
+                @if($applicant->mobile)
+                    <p class="mt-1 text-xs text-emerald-800">
+                        A confirmation SMS was sent to {{ $applicant->mobile }}.
+                    </p>
+                @endif
+            </div>
+        </div>
     </div>
     @endif
 
