@@ -70,7 +70,7 @@
                 @endphp
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-800 mx-auto">
                     {{-- ABOUT --}}
-                    <div class="group">
+                    <div class="group self-stretch flex items-center relative">
                         <button type="button"
                                 class="flex items-center gap-1 py-2 hover:text-[#1D4ED8] transition-colors">
                             About
@@ -80,7 +80,7 @@
                         </button>
                         {{-- About Mega Menu --}}
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute left-0 right-0 top-full bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
+                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
                             <div class="max-w-7xl mx-auto px-8 py-8">
                                 <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">About WCST</h3>
                                 <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2">
@@ -98,7 +98,7 @@
                     </div>
 
                     {{-- ADMISSIONS --}}
-                    <div class="group">
+                    <div class="group self-stretch flex items-center relative">
                         <button type="button"
                                 class="flex items-center gap-1 py-2 hover:text-[#1D4ED8] transition-colors">
                             Admissions
@@ -107,7 +107,7 @@
                             </svg>
                         </button>
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute left-0 right-0 top-full bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
+                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
                             <div class="max-w-7xl mx-auto px-8 py-8 grid grid-cols-1 md:grid-cols-3 gap-10">
                                 <div>
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">Be a Worldstar Lion!</h3>
@@ -152,7 +152,7 @@
                     </div>
 
                     {{-- ACADEMICS --}}
-                    <div class="group">
+                    <div class="group self-stretch flex items-center relative">
                         <button type="button"
                                 class="flex items-center gap-1 py-2 hover:text-[#1D4ED8] transition-colors">
                             Academics
@@ -161,7 +161,7 @@
                             </svg>
                         </button>
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute left-0 right-0 top-full bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
+                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-b-lg border-t border-slate-100 z-50">
                             <div class="max-w-7xl mx-auto px-8 py-8 grid grid-cols-1 md:grid-cols-3 gap-10">
                                 <div>
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-xs tracking-wider mb-4">Academic Track</h3>
