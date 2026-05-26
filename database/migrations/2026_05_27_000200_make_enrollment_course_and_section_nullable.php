@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,17 +14,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->foreignId('course_id')->nullable()->change();
-            $table->foreignId('section_id')->nullable()->change();
-        });
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE enrollments MODIFY COLUMN course_id BIGINT UNSIGNED NULL');
+            DB::statement('ALTER TABLE enrollments MODIFY COLUMN section_id BIGINT UNSIGNED NULL');
+        } else {
+            Schema::table('enrollments', function (Blueprint $table) {
+                $table->foreignId('course_id')->nullable()->change();
+                $table->foreignId('section_id')->nullable()->change();
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->foreignId('course_id')->nullable(false)->change();
-            $table->foreignId('section_id')->nullable(false)->change();
-        });
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE enrollments MODIFY COLUMN course_id BIGINT UNSIGNED NOT NULL');
+            DB::statement('ALTER TABLE enrollments MODIFY COLUMN section_id BIGINT UNSIGNED NOT NULL');
+        } else {
+            Schema::table('enrollments', function (Blueprint $table) {
+                $table->foreignId('course_id')->nullable(false)->change();
+                $table->foreignId('section_id')->nullable(false)->change();
+            });
+        }
     }
 };
