@@ -25,10 +25,10 @@
             {{-- LEFT: Logo --}}
             <a href="{{ route('home') }}" class="flex items-center gap-4 shrink-0">
                 <img src="{{ asset('images/image.png') }}" alt="Worldstar Logo"
-                     class="w-14 h-14 object-contain">
+                     class="w-16 h-16 object-contain">
                 <span class="font-semibold text-[#1D4ED8] leading-tight">
-                    <span class="block text-lg">Worldstar College</span>
-                    <span class="block text-xs text-slate-500 font-normal">of Science and Technology, Inc.</span>
+                    <span class="block text-xl">Worldstar College</span>
+                    <span class="block text-[13px] text-slate-500 font-normal">of Science and Technology, Inc.</span>
                 </span>
             </a>
 
@@ -229,13 +229,8 @@
                                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </button>
-                    <a href="{{ route('login') }}" class="hidden lg:inline text-sm text-slate-600 hover:text-[#1D4ED8]">Admin</a>
-                    <a href="{{ route('register') }}"
-                       class="text-sm font-semibold border border-[#1D4ED8] text-[#1D4ED8] px-4 py-2 rounded hover:bg-[#1D4ED8] hover:text-white transition-colors">
-                        Register
-                    </a>
                     <a href="{{ route('login') }}"
-                       class="text-sm font-semibold bg-[#1D4ED8] text-white px-4 py-2 rounded hover:bg-[#1e40af] transition-colors">
+                       class="text-sm font-semibold bg-[#1D4ED8] text-white px-5 py-2 rounded hover:bg-[#1e40af] transition-colors">
                         LOGIN
                     </a>
                 </div>
