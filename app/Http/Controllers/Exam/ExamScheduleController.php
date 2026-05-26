@@ -18,10 +18,13 @@ class ExamScheduleController extends Controller
 
     public function index()
     {
+        $schedules = ExamSchedule::with(['academicTerm', 'examResults.applicant'])
+            ->latest('exam_datetime')
+            ->paginate(15);
+
         return view('exam.schedule', [
-            'schedules' => ExamSchedule::with('academicTerm')->latest('exam_datetime')->paginate(15),
+            'schedules' => $schedules,
             'terms'     => AcademicTerm::where('is_active', true)->get(),
-            'pending'   => Applicant::where('status', Applicant::STATUS_PRE_REGISTERED)->get(),
         ]);
     }
 
@@ -44,45 +47,88 @@ class ExamScheduleController extends Controller
 
     public function assignBatch(Request $request, ExamSchedule $schedule)
     {
-        $request->validate([
-            'applicant_ids'   => ['required', 'array'],
-            'applicant_ids.*' => ['integer', 'exists:applicants,id'],
-        ]);
+        // Deprecated: auto-assignment now happens on registrar approval.
+        abort(410, 'Manual batch assignment has been removed. Approve the applicant from the registrar lookup page; assignment is automatic (FCFS).');
+    }
 
-        $assigned = DB::transaction(function () use ($request, $schedule) {
+    /**
+     * Remove an applicant from an exam batch. Frees a slot and moves the
+     * applicant back to pre_registered so a registrar can re-approve them
+     * (and the FCFS picker will assign the next open batch).
+     */
+    public function removeApplicant(Request $request, ExamSchedule $schedule, Applicant $applicant)
+    {
+        DB::transaction(function () use ($schedule, $applicant) {
             $schedule = ExamSchedule::lockForUpdate()->find($schedule->id);
-            $this->capacity->assertExamScheduleCapacity($schedule);
+            $result = ExamResult::where('applicant_id', $applicant->id)
+                ->where('exam_schedule_id', $schedule->id)
+                ->lockForUpdate()
+                ->first();
 
-            $ids = $request->input('applicant_ids');
-            $remaining = $schedule->remainingSlots();
-            $ids = array_slice($ids, 0, $remaining);
-
-            $count = 0;
-            foreach ($ids as $applicantId) {
-                $exists = ExamResult::where('applicant_id', $applicantId)
-                    ->where('exam_schedule_id', $schedule->id)->exists();
-                if ($exists) continue;
-
-                ExamResult::create([
-                    'applicant_id'     => $applicantId,
-                    'exam_schedule_id' => $schedule->id,
-                    'result'           => ExamResult::RESULT_PENDING,
-                    'sms_status'       => ExamResult::SMS_NOT_SENT,
-                ]);
-
-                Applicant::where('id', $applicantId)
-                    ->where('status', Applicant::STATUS_PRE_REGISTERED)
-                    ->update(['status' => Applicant::STATUS_EXAM_SCHEDULED]);
-
-                $count++;
+            if (! $result) {
+                return;
+            }
+            // Refuse to remove if the exam has already been scored.
+            if ($result->result !== ExamResult::RESULT_PENDING) {
+                throw new \RuntimeException("Cannot remove {$applicant->reference_code}: exam already scored.");
             }
 
-            $schedule->increment('assigned_count', $count);
-            AuditLog::record('exam.schedule.assign_batch', $schedule, ['count' => $count]);
+            $result->delete();
+            $schedule->decrement('assigned_count');
 
-            return $count;
+            Applicant::where('id', $applicant->id)
+                ->where('status', Applicant::STATUS_EXAM_SCHEDULED)
+                ->update(['status' => Applicant::STATUS_PRE_REGISTERED]);
+
+            AuditLog::record('exam.schedule.remove_applicant', $schedule, [
+                'applicant_id' => $applicant->id,
+            ]);
         });
 
-        return back()->with('status', "Assigned {$assigned} applicant(s) to batch.");
+        return back()->with('status', "Removed {$applicant->reference_code} from batch.");
+    }
+
+    /**
+     * Move an applicant from one batch to another (manual override of FCFS).
+     */
+    public function moveApplicant(Request $request, ExamSchedule $schedule, Applicant $applicant)
+    {
+        $data = $request->validate([
+            'target_schedule_id' => ['required', 'integer', 'exists:exam_schedules,id'],
+        ]);
+
+        DB::transaction(function () use ($schedule, $applicant, $data) {
+            $from = ExamSchedule::lockForUpdate()->find($schedule->id);
+            $to   = ExamSchedule::lockForUpdate()->find($data['target_schedule_id']);
+
+            if ($from->id === $to->id) {
+                return;
+            }
+
+            $this->capacity->assertExamScheduleCapacity($to);
+
+            $result = ExamResult::where('applicant_id', $applicant->id)
+                ->where('exam_schedule_id', $from->id)
+                ->lockForUpdate()
+                ->first();
+            if (! $result) {
+                return;
+            }
+            if ($result->result !== ExamResult::RESULT_PENDING) {
+                throw new \RuntimeException("Cannot move {$applicant->reference_code}: exam already scored.");
+            }
+
+            $result->update(['exam_schedule_id' => $to->id]);
+            $from->decrement('assigned_count');
+            $to->increment('assigned_count');
+
+            AuditLog::record('exam.schedule.move_applicant', $to, [
+                'applicant_id' => $applicant->id,
+                'from_batch'   => $from->batch_code,
+                'to_batch'     => $to->batch_code,
+            ]);
+        });
+
+        return back()->with('status', "Moved {$applicant->reference_code} to new batch.");
     }
 }

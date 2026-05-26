@@ -8,11 +8,12 @@
     $enr  = $applicant->enrollment;
 
     $steps = [
-        ['Pre-Registered',  true],
-        ['Exam Scheduled',  (bool) $exam],
-        ['Exam Completed',  $exam && in_array($exam->result, ['passed','failed'])],
-        ['Documents Verified', $ver && $ver->status === 'verified'],
-        ['Enrolled',        (bool) $enr],
+        ['Pre-Registered',          true],
+        ['Form Approved',           $applicant->status !== 'pre_registered'],
+        ['Exam Scheduled',          (bool) $exam],
+        ['Exam Completed',          $exam && in_array($exam->result, ['passed','failed'])],
+        ['Documents Verified',      $ver && $ver->status === 'verified'],
+        ['Enrolled',                (bool) $enr],
     ];
 @endphp
 
@@ -23,12 +24,12 @@
             <span class="font-mono font-bold text-blue-700">{{ $applicant->reference_code }}</span>
         </p>
 
-        <ol class="mt-6 grid gap-3 md:grid-cols-5">
+        <ol class="mt-6 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
             @foreach($steps as [$label, $done])
-                <li class="border rounded p-3 text-center
+                <li class="border rounded p-2 text-center
                     {{ $done ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-slate-50 border-slate-200 text-slate-500' }}">
-                    <div class="text-lg">{{ $done ? '✓' : '•' }}</div>
-                    <div class="text-xs mt-1">{{ $label }}</div>
+                    <div class="text-lg leading-none">{{ $done ? '✓' : '•' }}</div>
+                    <div class="text-[11px] leading-tight mt-1">{{ $label }}</div>
                 </li>
             @endforeach
         </ol>

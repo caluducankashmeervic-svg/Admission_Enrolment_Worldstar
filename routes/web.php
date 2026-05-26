@@ -122,8 +122,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 Route::middleware(['auth', 'role:admin,registrar'])->prefix('exam')->name('exam.')->group(function () {
     Route::get('/schedule',  [ExamScheduleController::class, 'index'])->name('schedule.index');
     Route::post('/schedule', [ExamScheduleController::class, 'store'])->name('schedule.store');
-    Route::post('/schedule/{schedule}/assign',
-        [ExamScheduleController::class, 'assignBatch'])->name('schedule.assign');
+
+    // Manual roster overrides (Q2). Auto-assignment is performed on registrar approval.
+    Route::post('/schedule/{schedule}/applicants/{applicant}/remove',
+        [ExamScheduleController::class, 'removeApplicant'])->name('schedule.applicant.remove');
+    Route::post('/schedule/{schedule}/applicants/{applicant}/move',
+        [ExamScheduleController::class, 'moveApplicant'])->name('schedule.applicant.move');
 
     Route::get('/results/{schedule}',          [ExamResultController::class, 'index'])->name('results.index');
     Route::post('/results/{schedule}/scores',  [ExamResultController::class, 'postScores'])->name('results.post');
@@ -136,6 +140,7 @@ Route::middleware(['auth', 'role:registrar,admin'])->prefix('registrar')->name('
     Route::post('/lookup',          [VerificationController::class, 'find'])->name('lookup.find');
     Route::get('/verify/{applicant}',  [VerificationController::class, 'show'])->name('verify.show');
     Route::post('/verify/{applicant}', [VerificationController::class, 'store'])->name('verify.store');
+    Route::post('/approve/{applicant}',[VerificationController::class, 'approve'])->name('approve');
 
     Route::get('/enrollment/{applicant}',   [EnrollmentController::class, 'show'])->name('enrollment.show');
     Route::post('/enrollment/finalize',     [EnrollmentController::class, 'finalize'])->name('enrollment.finalize');

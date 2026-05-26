@@ -40,6 +40,14 @@
             <dt class="text-slate-500">Mobile</dt><dd>{{ $applicant->mobile }}</dd>
             <dt class="text-slate-500">Status</dt>
             <dd class="capitalize">{{ str_replace('_', ' ', $applicant->status) }}</dd>
+            <dt class="text-slate-500">Form</dt>
+            <dd>
+                @if($applicant->status === 'pre_registered')
+                    <span class="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded">Awaiting approval</span>
+                @else
+                    <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded">Approved</span>
+                @endif
+            </dd>
         </dl>
 
         <h3 class="font-semibold mt-5 mb-2 text-sm">Exam</h3>
@@ -61,17 +69,90 @@
         @endif
     </div>
 
-    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm p-5">
+    <div class="lg:col-span-2 space-y-5">
+        @if($applicant->status === 'pre_registered')
+        <div class="bg-white border border-amber-300 rounded-lg shadow-sm p-5">
+            <h2 class="font-semibold mb-2">Pre-Registration Form Approval</h2>
+            <p class="text-sm text-slate-600 mb-3">
+                Review the submitted form below. Approving will <strong>automatically assign</strong>
+                this applicant to the earliest available exam batch (first-come-first-served).
+            </p>
+
+            @error('approve')
+                <div class="mb-3 rounded bg-rose-50 border border-rose-200 text-rose-800 px-3 py-2 text-sm">
+                    {{ $message }}
+                </div>
+            @enderror
+
+            <details class="border border-slate-200 rounded mb-3">
+                <summary class="cursor-pointer px-3 py-2 bg-slate-50 text-sm font-medium">
+                    View submitted form
+                </summary>
+                <div class="p-4 text-sm space-y-3">
+                    @php
+                        $scalarFields = [
+                            'Applicant Type' => $applicant->applicant_type,
+                            'First Name'     => $applicant->first_name,
+                            'Middle Name'    => $applicant->middle_name,
+                            'Last Name'      => $applicant->last_name,
+                            'Suffix'         => $applicant->suffix,
+                            'Sex'            => $applicant->sex,
+                            'Birth Date'     => optional($applicant->birth_date)->format('M d, Y'),
+                            'Civil Status'   => $applicant->civil_status,
+                            'Citizenship'    => $applicant->citizenship,
+                            'Mobile'         => $applicant->mobile,
+                            'Email'          => $applicant->email,
+                            'Address'        => $applicant->address,
+                            'Last School'    => $applicant->last_school,
+                            'Year Graduated' => $applicant->year_graduated,
+                            'GWA'            => $applicant->gwa,
+                            'Strand / Track' => $applicant->strand_track,
+                            'Program'        => $programValue,
+                            'Term'           => optional($applicant->academicTerm)->school_year . ' ' . optional($applicant->academicTerm)->semester,
+                        ];
+                    @endphp
+                    <dl class="grid sm:grid-cols-2 gap-x-6 gap-y-1">
+                        @foreach($scalarFields as $label => $value)
+                            @if($value !== null && $value !== '')
+                                <dt class="text-slate-500">{{ $label }}</dt>
+                                <dd>{{ $value }}</dd>
+                            @endif
+                        @endforeach
+                    </dl>
+
+                    @if(! empty($applicant->profile_data))
+                        <div>
+                            <div class="text-slate-500 mb-1">Additional Form Fields</div>
+                            <dl class="grid sm:grid-cols-2 gap-x-6 gap-y-1">
+                                @foreach($applicant->profile_data as $k => $v)
+                                    @if($v !== null && $v !== '')
+                                        <dt class="text-slate-500">{{ ucwords(str_replace('_',' ',$k)) }}</dt>
+                                        <dd>{{ is_array($v) ? json_encode($v) : $v }}</dd>
+                                    @endif
+                                @endforeach
+                            </dl>
+                        </div>
+                    @endif
+                </div>
+            </details>
+
+            <form method="POST" action="{{ route('registrar.approve', $applicant) }}">
+                @csrf
+                <button class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
+                        onclick="return confirm('Approve this pre-registration form? The applicant will be auto-assigned to the earliest open exam batch.');">
+                    Approve Pre-Registration Form
+                </button>
+            </form>
+        </div>
+        @endif
+
+        <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-5">
         <h2 class="font-semibold mb-3">Document Verification</h2>
 
         @if(! $exam)
             <div class="rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-                <p class="font-semibold mb-1">Assign an exam batch first.</p>
-                <p>This applicant has no exam record yet. They must be assigned to an exam batch and complete the exam before documents can be verified.</p>
-                <a href="{{ route('exam.schedule.index') }}"
-                   class="inline-block mt-3 bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700">
-                    Go to Exam Schedules →
-                </a>
+                <p class="font-semibold mb-1">Pending exam assignment.</p>
+                <p>Document verification unlocks once the pre-registration form is approved and the applicant has completed the entrance exam.</p>
             </div>
         @else
         <form method="POST" action="{{ route('registrar.verify.store', $applicant) }}" class="space-y-3">
@@ -118,6 +199,7 @@
             </div>
         </form>
         @endif
+        </div>
     </div>
 </div>
 

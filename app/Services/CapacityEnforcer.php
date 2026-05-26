@@ -40,6 +40,19 @@ class CapacityEnforcer
         }
     }
 
+    /**
+     * FCFS pick: earliest-scheduled exam batch with an open slot.
+     * Must be called inside a DB transaction — uses lockForUpdate to make
+     * concurrent registrar approvals safe.
+     */
+    public function pickEarliestOpenBatch(): ?ExamSchedule
+    {
+        return ExamSchedule::whereColumn('assigned_count', '<', 'capacity')
+            ->orderBy('exam_datetime')
+            ->lockForUpdate()
+            ->first();
+    }
+
     public function pickAvailableSection(int $courseId, int $termId, int $yearLevel = 1): ?Section
     {
         return Section::where('course_id', $courseId)
