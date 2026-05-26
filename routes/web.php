@@ -141,6 +141,7 @@ Route::middleware(['auth', 'role:registrar,admin'])->prefix('registrar')->name('
     Route::get('/verify/{applicant}',  [VerificationController::class, 'show'])->name('verify.show');
     Route::post('/verify/{applicant}', [VerificationController::class, 'store'])->name('verify.store');
     Route::post('/approve/{applicant}',[VerificationController::class, 'approve'])->name('approve');
+    Route::post('/reject/{applicant}', [VerificationController::class, 'reject'])->name('reject');
 
     Route::get('/enrollment/{applicant}',   [EnrollmentController::class, 'show'])->name('enrollment.show');
     Route::post('/enrollment/finalize',     [EnrollmentController::class, 'finalize'])->name('enrollment.finalize');

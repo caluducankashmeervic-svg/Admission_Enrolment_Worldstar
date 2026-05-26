@@ -104,6 +104,53 @@ class VerificationController extends Controller
         return back()->with('status', 'Pre-registration approved. Applicant has been assigned to an exam batch.');
     }
 
+    /**
+     * Reject an application. Works at any stage prior to enrollment.
+     * If the applicant currently holds an exam-batch slot with a pending
+     * result, the slot is freed and the batch counter decremented so another
+     * applicant can be auto-assigned via FCFS.
+     */
+    public function reject(Request $request, Applicant $applicant)
+    {
+        $data = $request->validate([
+            'reason' => ['required', 'string', 'max:500'],
+        ]);
+
+        if (in_array($applicant->status, [Applicant::STATUS_ENROLLED, Applicant::STATUS_REJECTED], true)) {
+            return back()->withErrors(['reject' => 'Applicant cannot be rejected from the current status.']);
+        }
+
+        DB::transaction(function () use ($applicant, $data, $request) {
+            $locked = Applicant::whereKey($applicant->id)->lockForUpdate()->first();
+            if (! $locked || in_array($locked->status, [Applicant::STATUS_ENROLLED, Applicant::STATUS_REJECTED], true)) {
+                return;
+            }
+
+            $pendingResult = ExamResult::where('applicant_id', $locked->id)
+                ->where('result', ExamResult::RESULT_PENDING)
+                ->lockForUpdate()
+                ->first();
+
+            if ($pendingResult) {
+                $schedule = ExamSchedule::whereKey($pendingResult->exam_schedule_id)->lockForUpdate()->first();
+                $pendingResult->delete();
+                if ($schedule && $schedule->assigned_count > 0) {
+                    $schedule->decrement('assigned_count');
+                }
+            }
+
+            $locked->update(['status' => Applicant::STATUS_REJECTED]);
+
+            AuditLog::record('applicant.rejected', $locked, [
+                'reason'       => $data['reason'],
+                'registrar_id' => $request->user()->id,
+                'prior_status' => $applicant->status,
+            ]);
+        });
+
+        return back()->with('status', 'Application rejected.');
+    }
+
     public function store(Request $request, Applicant $applicant)
     {
         // Server-side guard: documents may only be verified after the applicant has
