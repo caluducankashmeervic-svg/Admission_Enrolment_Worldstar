@@ -7,6 +7,13 @@
         <h1 class="text-2xl font-bold text-slate-900">Create Your Student Account</h1>
         <p class="text-sm text-slate-600 mt-1">Create your account — fill in your details below.</p>
 
+        @isset($pendingCode)
+            <div class="mt-4 p-3 rounded bg-amber-50 border border-amber-200 text-amber-800 text-sm">
+                Reference Code <span class="font-semibold tracking-wider">{{ $pendingCode }}</span>
+                will be bound to this account once you submit. After binding, this code can no longer be reused.
+            </div>
+        @endisset
+
         <form method="POST" action="{{ route('register.store') }}" enctype="multipart/form-data"
               class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             @csrf
@@ -56,31 +63,31 @@
 
             <div>
                 <label class="block text-sm font-medium text-slate-700">Firstname <span class="text-rose-500">*</span></label>
-                <input type="text" name="firstname" value="{{ old('firstname') }}" required
+                <input type="text" name="firstname" value="{{ old('firstname', $applicant->first_name ?? '') }}" required
                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-slate-700">Lastname <span class="text-rose-500">*</span></label>
-                <input type="text" name="lastname" value="{{ old('lastname') }}" required
+                <input type="text" name="lastname" value="{{ old('lastname', $applicant->last_name ?? '') }}" required
                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-slate-700">Middlename</label>
-                <input type="text" name="middlename" value="{{ old('middlename') }}"
+                <input type="text" name="middlename" value="{{ old('middlename', $applicant->middle_name ?? '') }}"
                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-slate-700">Contact No. <span class="text-rose-500">*</span></label>
-                <input type="text" name="contact_no" value="{{ old('contact_no') }}" required
+                <input type="text" name="contact_no" value="{{ old('contact_no', $applicant->mobile ?? '') }}" required
                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
             </div>
 
             <div class="md:col-span-2">
                 <label class="block text-sm font-medium text-slate-700">Email (optional)</label>
-                <input type="email" name="email" value="{{ old('email') }}"
+                <input type="email" name="email" value="{{ old('email', $applicant->email ?? '') }}"
                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
             </div>
 

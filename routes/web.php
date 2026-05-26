@@ -53,6 +53,10 @@ Route::prefix('apply')->name('applicant.')->group(function () {
     Route::get('/',  [PreRegistrationController::class, 'choose'])->name('pre-register.form');
     Route::get('/choose', [PreRegistrationController::class, 'choose'])->name('pre-register.choose');
 
+    // Reference-code apply (bind existing pre-registration to a new account)
+    Route::get('/code',  [PreRegistrationController::class, 'codeForm'])->name('code.form');
+    Route::post('/code', [PreRegistrationController::class, 'codeCheck'])->name('code.check');
+
     // Senior High School flow
     Route::get('/shs',  [PreRegistrationController::class, 'createShs'])->name('pre-register.shs.form');
     Route::post('/shs', [PreRegistrationController::class, 'storeShs'])->name('pre-register.shs.store');

@@ -10,6 +10,7 @@ use App\Models\Applicant;
 use App\Models\AuditLog;
 use App\Models\Course;
 use App\Services\ReferenceCodeGenerator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PreRegistrationController extends Controller
@@ -20,6 +21,57 @@ class PreRegistrationController extends Controller
     public function choose()
     {
         return view('applicant.program-choice');
+    }
+
+    /* ---------------- Reference Code Apply (bind pre-reg to a new account) ---------------- */
+
+    public function codeForm(Request $request)
+    {
+        if ($request->user()) {
+            return redirect()->route('home')
+                ->with('status', 'You are already signed in. Log out first to bind another reference code.');
+        }
+        return view('applicant.code-apply');
+    }
+
+    public function codeCheck(Request $request)
+    {
+        if ($request->user()) {
+            return redirect()->route('home');
+        }
+
+        $data = $request->validate([
+            'reference_code' => ['required', 'string', 'max:50'],
+            'last_name'      => ['required', 'string', 'max:100'],
+            'birth_date'     => ['required', 'date'],
+        ]);
+
+        $code = strtoupper(trim($data['reference_code']));
+        $applicant = Applicant::where('reference_code', $code)->first();
+
+        if (! $applicant) {
+            return back()->withErrors(['reference_code' => 'Reference code not found.'])->withInput();
+        }
+        if ($applicant->user_id) {
+            return back()->withErrors([
+                'reference_code' => 'This reference code has already been bound to an account and can no longer be used.',
+            ])->withInput();
+        }
+
+        // Identity verification: last name + birthdate must match the pre-registration record.
+        $sameLastName = mb_strtolower(trim($applicant->last_name ?? '')) === mb_strtolower(trim($data['last_name']));
+        $sameBirth    = optional($applicant->birth_date)->toDateString() === \Carbon\Carbon::parse($data['birth_date'])->toDateString();
+        if (! $sameLastName || ! $sameBirth) {
+            return back()->withErrors([
+                'reference_code' => 'The details you entered do not match the pre-registration record for this code.',
+            ])->withInput();
+        }
+
+        $request->session()->put('pending_applicant_id', $applicant->id);
+        $request->session()->put('pending_applicant_code', $applicant->reference_code);
+
+        return redirect()->route('register')
+            ->with('status', 'Reference code verified. Create your account to bind it.');
     }
 
     /* ---------------- Senior High School ---------------- */
