@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'lan'  => \App\Http\Middleware\LanOnlyMiddleware::class,
         ]);
 
+        // Prevent browser back-button from showing authenticated pages after logout.
+        $middleware->web(append: [
+            \App\Http\Middleware\PreventBackHistory::class,
+        ]);
+
         $middleware->redirectGuestsTo(fn () => route('login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
