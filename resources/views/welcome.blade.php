@@ -261,22 +261,9 @@
 
             {{-- Circular logo + school name --}}
             <div class="flex flex-col items-center gap-3 self-start">
-                <div class="w-28 h-28 rounded-full border-2 border-white/70
-                            flex items-center justify-center overflow-hidden bg-white/10
-                            backdrop-blur-sm">
-                    <img src="{{ asset('images/logo.png') }}"
-                         alt="Worldstar College Logo"
-                         class="w-24 h-24 object-contain"
-                         onerror="this.style.display='none';
-                                  this.nextElementSibling.style.display='flex'">
-                    {{-- Fallback initials badge shown if logo.png missing --}}
-                    <div style="display:none"
-                         class="w-full h-full flex flex-col items-center justify-center">
-                        <span class="text-4xl font-black text-white leading-none">W</span>
-                        <span class="text-[8px] font-semibold tracking-widest
-                                     uppercase text-white/70 mt-1">COLLEGE</span>
-                    </div>
-                </div>
+                <img src="{{ asset('images/logo.png') }}"
+                     alt="Worldstar College Logo"
+                     class="w-28 h-28 object-contain">
 
                 <div class="text-center">
                     <p class="text-white font-bold tracking-[0.16em] text-[11px]
@@ -290,26 +277,18 @@
                 </div>
             </div>
 
-            {{-- Social icons row — thin white circular border --}}
-            <div class="flex items-center gap-3 flex-wrap">
-                @foreach ([
-                    ['Facebook',  'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z'],
-                    ['X',         'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.261 5.635 5.903-5.635zm-1.161 17.52h1.833L7.084 4.126H5.117z'],
-                    ['Instagram', 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z'],
-                    ['YouTube',   'M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z'],
-                    ['LinkedIn',  'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z'],
-                ] as [$name, $path])
-                    <a href="#" title="{{ $name }}"
-                       class="w-10 h-10 rounded-full border border-white
-                              flex items-center justify-center text-white
-                              hover:bg-white hover:text-blue-900
-                              transition-colors duration-200">
-                        <svg class="w-[15px] h-[15px]" fill="currentColor"
-                             viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="{{ $path }}"/>
-                        </svg>
-                    </a>
-                @endforeach
+            {{-- Social icons row — Facebook only --}}
+            <div class="flex items-center gap-3">
+                <a href="#" title="Facebook"
+                   class="w-10 h-10 rounded-full border border-white
+                          flex items-center justify-center text-white
+                          hover:bg-white hover:text-blue-900
+                          transition-colors duration-200">
+                    <svg class="w-[15px] h-[15px]" fill="currentColor"
+                         viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                    </svg>
+                </a>
             </div>
         </div>
 
