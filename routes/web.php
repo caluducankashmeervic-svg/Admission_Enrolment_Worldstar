@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ManageEnrolleesController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Applicant\AdmissionController;
 use App\Http\Controllers\Applicant\PreRegistrationController;
 use App\Http\Controllers\Applicant\StatusController;
 use App\Http\Controllers\Auth\LoginController;
@@ -75,6 +76,10 @@ Route::prefix('apply')->name('applicant.')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile',  [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Authenticated student admission form
+    Route::get('/admission',  [AdmissionController::class, 'create'])->name('applicant.admission.create');
+    Route::post('/admission', [AdmissionController::class, 'store'])->name('applicant.admission.store');
 });
 
 /* ---------------- Admin ---------------- */

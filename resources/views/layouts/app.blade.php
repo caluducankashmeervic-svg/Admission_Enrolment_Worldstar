@@ -52,6 +52,7 @@
                         <a href="{{ route('registrar.lookup') }}" class="hover:text-[#1D4ED8]">Lookup</a>
                         <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8]">Exams</a>
                     @else
+                        <a href="{{ route('applicant.admission.create') }}" class="hover:text-[#1D4ED8]">My Admission</a>
                         <a href="{{ route('applicant.status.form') }}" class="hover:text-[#1D4ED8]">Check Status</a>
                     @endif
                     <a href="{{ route('profile.edit') }}"

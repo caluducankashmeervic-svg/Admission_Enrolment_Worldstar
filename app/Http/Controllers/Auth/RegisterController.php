@@ -90,7 +90,7 @@ class RegisterController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('applicant.status.form')
-            ->with('status', 'Account created and reference code '.$applicant->reference_code.' bound. You can now check your application status here.');
+        return redirect()->route('applicant.admission.create')
+            ->with('status', 'Account created and reference code '.$applicant->reference_code.' bound. Continue your enrollment progress here.');
     }
 }
