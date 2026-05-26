@@ -19,21 +19,25 @@ class Applicant extends Model
     public const STATUS_ENROLLED       = 'enrolled';
     public const STATUS_REJECTED       = 'rejected';
 
+    public const TYPE_SHS   = 'shs';
+    public const TYPE_TESDA = 'tesda';
+
     protected $fillable = [
-        'reference_code', 'user_id', 'preferred_course_id', 'academic_term_id',
+        'reference_code', 'applicant_type', 'user_id', 'preferred_course_id', 'academic_term_id',
         'first_name', 'middle_name', 'last_name', 'suffix',
         'gender', 'birth_date', 'civil_status', 'nationality', 'religion',
         'email', 'mobile', 'address_line', 'city', 'province', 'zip',
         'last_school_attended', 'last_school_address', 'strand_track',
         'year_graduated', 'gwa',
         'guardian_name', 'guardian_relationship', 'guardian_contact',
-        'status',
+        'status', 'profile_data',
     ];
 
     protected $casts = [
         'birth_date'     => 'date',
         'year_graduated' => 'integer',
         'gwa'            => 'decimal:2',
+        'profile_data'   => 'array',
     ];
 
     public function user(): BelongsTo

@@ -41,8 +41,18 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 
 /* ---------------- Applicant (public pre-registration) ---------------- */
 Route::prefix('apply')->name('applicant.')->group(function () {
-    Route::get('/',  [PreRegistrationController::class, 'create'])->name('pre-register.form');
-    Route::post('/', [PreRegistrationController::class, 'store'])->name('pre-register.store');
+    // Program-type chooser (entry point)
+    Route::get('/',  [PreRegistrationController::class, 'choose'])->name('pre-register.form');
+    Route::get('/choose', [PreRegistrationController::class, 'choose'])->name('pre-register.choose');
+
+    // Senior High School flow
+    Route::get('/shs',  [PreRegistrationController::class, 'createShs'])->name('pre-register.shs.form');
+    Route::post('/shs', [PreRegistrationController::class, 'storeShs'])->name('pre-register.shs.store');
+
+    // TESDA / Diploma flow
+    Route::get('/tesda',  [PreRegistrationController::class, 'createTesda'])->name('pre-register.tesda.form');
+    Route::post('/tesda', [PreRegistrationController::class, 'storeTesda'])->name('pre-register.tesda.store');
+
     Route::get('/success/{code}', [PreRegistrationController::class, 'success'])
         ->name('pre-register.success');
 
