@@ -77,6 +77,72 @@
     </div>
     @endif
 
+    @php
+        $inVerificationWindow = $exam && $exam->result === 'passed' && ! $enr;
+        $docLabels = [
+            'doc_form_137'       => 'Form 137 / SF10',
+            'doc_psa_birth_cert' => 'PSA Birth Certificate',
+            'doc_good_moral'     => 'Certificate of Good Moral',
+            'doc_id_photos'      => '2x2 ID Photos',
+            'doc_medical_cert'   => 'Medical Certificate',
+            'doc_diploma'        => 'Diploma / Certificate of Graduation',
+        ];
+    @endphp
+
+    @if($inVerificationWindow)
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6 mt-5">
+        <div class="flex items-start justify-between gap-3">
+            <div>
+                <h2 class="font-semibold">Required Documents</h2>
+                <p class="text-xs text-slate-500 mt-1">
+                    Submit these documents to the registrar. This list updates as items are verified.
+                </p>
+            </div>
+            <span class="text-[11px] text-slate-400">auto-refreshes every 10s</span>
+        </div>
+
+        @php
+            $checked = 0;
+            foreach (array_keys($docLabels) as $key) { if ($ver && $ver->{$key}) $checked++; }
+            $total = count($docLabels);
+        @endphp
+
+        <div class="mt-3 text-xs text-slate-600">
+            Progress: <strong>{{ $checked }}</strong> of {{ $total }} verified
+            @if($ver)
+                · Status:
+                <span class="capitalize font-medium
+                    @if($ver->status === 'verified') text-emerald-700
+                    @elseif($ver->status === 'rejected') text-rose-700
+                    @elseif($ver->status === 'incomplete') text-amber-700
+                    @else text-slate-700 @endif">
+                    {{ str_replace('_', ' ', $ver->status) }}
+                </span>
+            @else
+                · Status: <span class="text-slate-500">not started</span>
+            @endif
+        </div>
+
+        <ul class="mt-4 divide-y divide-slate-100 border border-slate-100 rounded">
+            @foreach($docLabels as $key => $label)
+                @php $done = (bool) ($ver?->{$key}); @endphp
+                <li class="flex items-center gap-3 px-3 py-2 text-sm">
+                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-full border
+                        {{ $done ? 'bg-emerald-100 border-emerald-300 text-emerald-700' : 'bg-slate-50 border-slate-200 text-slate-400' }}">
+                        {{ $done ? '✓' : '○' }}
+                    </span>
+                    <span class="{{ $done ? 'text-slate-800' : 'text-slate-600' }}">{{ $label }}</span>
+                    @if($done)
+                        <span class="ml-auto text-[11px] text-emerald-700">Verified</span>
+                    @else
+                        <span class="ml-auto text-[11px] text-slate-400">Pending</span>
+                    @endif
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     @if($ver && $ver->override_reason)
     <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-lg shadow-sm p-6 mt-5">
         <h2 class="font-semibold">Registrar Override Notice</h2>
@@ -107,4 +173,25 @@
 
     <a href="{{ route('applicant.status.form') }}" class="inline-block mt-4 text-blue-600 hover:underline">← Check another</a>
 </div>
+
+@if($inVerificationWindow)
+<script>
+    // Refresh the page while the applicant is awaiting document verification
+    // so registrar check-offs surface without a manual reload. Pauses when
+    // the tab is hidden to avoid wasted requests.
+    (function () {
+        const INTERVAL_MS = 10000;
+        let timer = null;
+        function start() {
+            stop();
+            timer = setTimeout(() => window.location.reload(), INTERVAL_MS);
+        }
+        function stop() { if (timer) { clearTimeout(timer); timer = null; } }
+        document.addEventListener('visibilitychange', () => {
+            document.hidden ? stop() : start();
+        });
+        start();
+    })();
+</script>
+@endif
 @endsection
