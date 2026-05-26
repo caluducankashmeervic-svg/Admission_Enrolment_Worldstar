@@ -5,6 +5,24 @@
 @php
     $verification = $applicant->verification;
     $exam         = $applicant->latestExamResult;
+
+    // Program / track: derive from whichever field the pre-registration form populated.
+    if ($applicant->preferredCourse) {
+        $programLabel = 'Course';
+        $programValue = $applicant->preferredCourse->code
+            . ($applicant->preferredCourse->name ? ' — ' . $applicant->preferredCourse->name : '');
+    } elseif ($applicant->applicant_type === \App\Models\Applicant::TYPE_SHS) {
+        $programLabel = 'SHS Track';
+        $programValue = $applicant->strand_track ?: '—';
+    } elseif ($applicant->applicant_type === \App\Models\Applicant::TYPE_TESDA) {
+        $programLabel = 'Diploma Course';
+        $programValue = data_get($applicant->profile_data, 'diploma_course')
+            ?: data_get($applicant->profile_data, 'course_qualification')
+            ?: '—';
+    } else {
+        $programLabel = 'Program';
+        $programValue = '—';
+    }
 @endphp
 
 <div class="grid lg:grid-cols-3 gap-5">
@@ -14,9 +32,11 @@
             <dt class="text-slate-500">Ref Code</dt>
             <dd class="font-mono font-bold text-blue-700">{{ $applicant->reference_code }}</dd>
             <dt class="text-slate-500">Name</dt><dd>{{ $applicant->full_name }}</dd>
-            <dt class="text-slate-500">Course</dt><dd>{{ $applicant->preferredCourse?->code }}</dd>
-            <dt class="text-slate-500">Term</dt>
-            <dd>{{ $applicant->academicTerm?->school_year }} {{ $applicant->academicTerm?->semester }}</dd>
+            <dt class="text-slate-500">{{ $programLabel }}</dt><dd>{{ $programValue }}</dd>
+            @if($applicant->academicTerm)
+                <dt class="text-slate-500">Term</dt>
+                <dd>{{ $applicant->academicTerm->school_year }} {{ $applicant->academicTerm->semester }}</dd>
+            @endif
             <dt class="text-slate-500">Mobile</dt><dd>{{ $applicant->mobile }}</dd>
             <dt class="text-slate-500">Status</dt>
             <dd class="capitalize">{{ str_replace('_', ' ', $applicant->status) }}</dd>
@@ -43,6 +63,17 @@
 
     <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm p-5">
         <h2 class="font-semibold mb-3">Document Verification</h2>
+
+        @if(! $exam)
+            <div class="rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                <p class="font-semibold mb-1">Assign an exam batch first.</p>
+                <p>This applicant has no exam record yet. They must be assigned to an exam batch and complete the exam before documents can be verified.</p>
+                <a href="{{ route('exam.schedule.index') }}"
+                   class="inline-block mt-3 bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700">
+                    Go to Exam Schedules →
+                </a>
+            </div>
+        @else
         <form method="POST" action="{{ route('registrar.verify.store', $applicant) }}" class="space-y-3">
             @csrf
             @php
@@ -86,6 +117,7 @@
                 </button>
             </div>
         </form>
+        @endif
     </div>
 </div>
 

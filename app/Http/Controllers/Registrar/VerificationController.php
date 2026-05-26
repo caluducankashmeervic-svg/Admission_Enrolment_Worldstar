@@ -45,6 +45,15 @@ class VerificationController extends Controller
 
     public function store(Request $request, Applicant $applicant)
     {
+        // Server-side guard: documents may only be verified after the applicant has
+        // been assigned to an exam batch (and therefore has an exam record).
+        $applicant->loadMissing('latestExamResult');
+        if (! $applicant->latestExamResult) {
+            return back()->withErrors([
+                'exam' => 'This applicant has not been assigned to an exam batch yet. Assign an exam batch before verifying documents.',
+            ]);
+        }
+
         $data = $request->validate([
             'doc_form_137'       => ['sometimes', 'boolean'],
             'doc_psa_birth_cert' => ['sometimes', 'boolean'],
