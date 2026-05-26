@@ -10,6 +10,17 @@
     </a>
 </div>
 
+@php
+    $pendingCount = \App\Models\Applicant::where('status', 'pre_registered')->count();
+@endphp
+@if($pendingCount > 0 && ($filter['status'] ?? '') !== 'pre_registered')
+    <a href="{{ route('registrar.applicants.index', ['status' => 'pre_registered']) }}"
+       class="mt-4 inline-flex items-center gap-2 rounded border border-amber-300 bg-amber-50 text-amber-900 px-3 py-2 text-sm hover:bg-amber-100">
+        <span class="inline-block w-2 h-2 rounded-full bg-amber-500"></span>
+        <strong>{{ $pendingCount }}</strong> pre-registration form(s) awaiting your approval — review now →
+    </a>
+@endif
+
 <form method="GET" class="mt-4 grid md:grid-cols-5 gap-2">
     <input name="q" value="{{ $filter['q'] ?? '' }}" placeholder="Ref / name / mobile" class="border rounded px-3 py-2">
     <select name="status" class="border rounded px-3 py-2">
@@ -79,7 +90,14 @@
                         @else — @endif
                     </td>
                     <td class="px-3 py-2">
-                        <a href="{{ route('registrar.verify.show', $a) }}" class="text-blue-600 hover:underline text-xs">Open →</a>
+                        @if($a->status === 'pre_registered')
+                            <a href="{{ route('registrar.verify.show', $a) }}"
+                               class="inline-block bg-amber-600 text-white px-3 py-1 rounded hover:bg-amber-700 text-xs">
+                                Review &amp; Approve →
+                            </a>
+                        @else
+                            <a href="{{ route('registrar.verify.show', $a) }}" class="text-blue-600 hover:underline text-xs">Open →</a>
+                        @endif
                     </td>
                 </tr>
             @empty

@@ -7,13 +7,25 @@
     $ver  = $applicant->verification;
     $enr  = $applicant->enrollment;
 
+    // Exam-result-aware label/colour for the 4th step.
+    if ($exam && $exam->result === 'passed') {
+        $examStep = ['Exam Passed', true, 'bg-emerald-50 border-emerald-200 text-emerald-800', '✓'];
+    } elseif ($exam && $exam->result === 'failed') {
+        $examStep = ['Exam Failed', true, 'bg-rose-50 border-rose-200 text-rose-800', '✕'];
+    } else {
+        $examStep = ['Exam Score Pending', false, 'bg-slate-50 border-slate-200 text-slate-500', '•'];
+    }
+
+    $doneCls    = 'bg-emerald-50 border-emerald-200 text-emerald-800';
+    $pendingCls = 'bg-slate-50 border-slate-200 text-slate-500';
+
     $steps = [
-        ['Pre-Registered',          true],
-        ['Form Approved',           $applicant->status !== 'pre_registered'],
-        ['Exam Scheduled',          (bool) $exam],
-        ['Exam Completed',          $exam && in_array($exam->result, ['passed','failed'])],
-        ['Documents Verified',      $ver && $ver->status === 'verified'],
-        ['Enrolled',                (bool) $enr],
+        ['Pre-Registered',      true,                                          null,       null],
+        ['Form Approved',       $applicant->status !== 'pre_registered',       null,       null],
+        ['Exam Scheduled',      (bool) $exam,                                  null,       null],
+        $examStep,
+        ['Documents Verified',  $ver && $ver->status === 'verified',           null,       null],
+        ['Enrolled',            (bool) $enr,                                   null,       null],
     ];
 @endphp
 
@@ -25,10 +37,13 @@
         </p>
 
         <ol class="mt-6 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
-            @foreach($steps as [$label, $done])
-                <li class="border rounded p-2 text-center
-                    {{ $done ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-slate-50 border-slate-200 text-slate-500' }}">
-                    <div class="text-lg leading-none">{{ $done ? '✓' : '•' }}</div>
+            @foreach($steps as [$label, $done, $cls, $icon])
+                @php
+                    $cellCls = $cls ?? ($done ? $doneCls : $pendingCls);
+                    $glyph   = $icon ?? ($done ? '✓' : '•');
+                @endphp
+                <li class="border rounded p-2 text-center {{ $cellCls }}">
+                    <div class="text-lg leading-none">{{ $glyph }}</div>
                     <div class="text-[11px] leading-tight mt-1">{{ $label }}</div>
                 </li>
             @endforeach
