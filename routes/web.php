@@ -30,6 +30,14 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+/* ---------------- About (public info pages) ---------------- */
+Route::prefix('about')->name('about.')->group(function () {
+    Route::view('/story',          'about.story')->name('story');
+    Route::view('/philosophy',     'about.philosophy')->name('philosophy');
+    Route::view('/vision-mission', 'about.vision-mission')->name('vision-mission');
+    Route::view('/core-values',    'about.core-values')->name('core-values');
+});
+
 /* ---------------- Auth ---------------- */
 Route::get('/login',  [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
