@@ -91,8 +91,8 @@
                         </button>
                         {{-- About Mega Menu --}}
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute top-full right-0 w-[min(1100px,calc(100%-6rem))] pt-4 z-50">
-                            <div class="bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10">
+                                    absolute top-full left-0 right-0 pt-4 z-50 flex justify-end">
+                            <div class="w-[min(1100px,calc(100%-6rem))] bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10">
                                 <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">About WCST</h3>
                                 <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-1">
                                     @foreach ($aboutLinks as [$label, $href])
@@ -118,8 +118,8 @@
                             </svg>
                         </button>
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute top-full right-0 w-[min(1100px,calc(100%-6rem))] pt-4 z-50">
-                            <div class="bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-14">
+                                    absolute top-full left-0 right-0 pt-4 z-50 flex justify-end">
+                            <div class="w-[min(1100px,calc(100%-6rem))] bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-14">
                                 <div>
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Be a Worldstar Lion!</h3>
                                     <ul class="space-y-3">
@@ -172,8 +172,8 @@
                             </svg>
                         </button>
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute top-full right-0 w-[min(1100px,calc(100%-6rem))] pt-4 z-50">
-                            <div class="bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
+                                    absolute top-full left-0 right-0 pt-4 z-50 flex justify-end">
+                            <div class="w-[min(1100px,calc(100%-6rem))] bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
                                 <div>
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Academic Track</h3>
                                     <ul class="space-y-3">
