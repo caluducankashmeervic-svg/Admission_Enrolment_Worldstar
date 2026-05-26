@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ShsPreRegistrationRequest extends FormRequest
 {
@@ -15,6 +16,7 @@ class ShsPreRegistrationRequest extends FormRequest
             'last_name'           => ['required', 'string', 'max:100'],
             'first_name'          => ['required', 'string', 'max:100'],
             'middle_name'         => ['nullable', 'string', 'max:100'],
+            'suffix'              => ['nullable', 'string', 'max:10'],
             'gender'              => ['required', 'in:Male,Female,Other'],
             'birth_date'          => ['required', 'date', 'before:today'],
             'nationality'         => ['required', 'string', 'max:50'],
@@ -42,8 +44,17 @@ class ShsPreRegistrationRequest extends FormRequest
             'junior_high_address' => ['nullable', 'string', 'max:200'],
             'year_graduated'      => ['nullable', 'integer', 'min:1950', 'max:' . (date('Y') + 1)],
             'school_type'         => ['nullable', 'in:Private,Public'],
-            'track_category'      => ['required', 'in:Academic Track,Tech-Pro Track'],
-            'track_program'       => ['required', 'in:Arts, Social Sciences, and Humanities,Business and Entrepreneurship,Science, Technology, Engineering & Mathematics (Health & Non-Health),Automotive and Small Engine Technologies,Business, Hospitality, and Tourism Bundle,Creative Arts and Design Technologies Bundle,ICT support and Computer Programming Technologies Bundle,Industrial Arts Bundle'],
+            'track_category'      => ['required', Rule::in(['Academic Track', 'Tech-Pro Track'])],
+            'track_program'       => ['required', Rule::in([
+                'Arts, Social Sciences, and Humanities',
+                'Business and Entrepreneurship',
+                'Science, Technology, Engineering & Mathematics (Health & Non-Health)',
+                'Automotive and Small Engine Technologies',
+                'Business, Hospitality, and Tourism Bundle',
+                'Creative Arts and Design Technologies Bundle',
+                'ICT support and Computer Programming Technologies Bundle',
+                'Industrial Arts Bundle',
+            ])],
             'varsity_player'      => ['nullable', 'boolean'],
             'school_dancer'       => ['nullable', 'boolean'],
             'planning_college'    => ['nullable', 'boolean'],
