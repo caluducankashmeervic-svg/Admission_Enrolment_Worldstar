@@ -16,30 +16,6 @@ class VerificationController extends Controller
 {
     public function __construct(protected CapacityEnforcer $capacity) {}
 
-    public function lookup()
-    {
-        return view('registrar.lookup');
-    }
-
-    public function find(Request $request)
-    {
-        $request->validate([
-            'reference_code' => ['required', 'string', 'max:20'],
-        ]);
-
-        $applicant = Applicant::with([
-            'preferredCourse', 'academicTerm', 'latestExamResult.examSchedule', 'verification', 'enrollment',
-        ])->where('reference_code', $request->reference_code)->first();
-
-        if (! $applicant) {
-            return back()->withErrors(['reference_code' => 'Reference code not found.'])
-                ->withInput();
-        }
-
-        AuditLog::record('registrar.lookup', $applicant);
-        return redirect()->route('registrar.verify.show', $applicant->id);
-    }
-
     public function show(Applicant $applicant)
     {
         $applicant->load([

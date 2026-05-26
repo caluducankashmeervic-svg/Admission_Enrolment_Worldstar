@@ -48,7 +48,7 @@ class ExamScheduleController extends Controller
     public function assignBatch(Request $request, ExamSchedule $schedule)
     {
         // Deprecated: auto-assignment now happens on registrar approval.
-        abort(410, 'Manual batch assignment has been removed. Approve the applicant from the registrar lookup page; assignment is automatic (FCFS).');
+        abort(410, 'Manual batch assignment has been removed. Approve the applicant from the registrar applicants page; assignment is automatic (FCFS).');
     }
 
     /**

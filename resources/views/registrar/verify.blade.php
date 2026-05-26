@@ -230,5 +230,5 @@
     </div>
 </div>
 
-<a href="{{ route('registrar.lookup') }}" class="inline-block mt-4 text-blue-600 hover:underline">← Another lookup</a>
+<a href="{{ route('registrar.applicants.index') }}" class="inline-block mt-4 text-blue-600 hover:underline">← Back to applicants</a>
 @endsection

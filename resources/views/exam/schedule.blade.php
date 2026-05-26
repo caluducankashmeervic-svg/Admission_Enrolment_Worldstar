@@ -136,7 +136,9 @@
                 @endforeach
             </select>
             <input name="batch_code" placeholder="Batch code e.g. BATCH-2026-01" required class="w-full border rounded px-3 py-2">
-            <input type="datetime-local" name="exam_datetime" required class="w-full border rounded px-3 py-2">
+            <input type="datetime-local" name="exam_datetime" required
+                   min="{{ now()->format('Y-m-d\TH:i') }}"
+                   class="w-full border rounded px-3 py-2">
             <input name="venue" placeholder="Venue" required class="w-full border rounded px-3 py-2">
             <input type="number" name="capacity" value="100" min="1" max="1000" class="w-full border rounded px-3 py-2">
             <textarea name="remarks" rows="2" placeholder="Remarks" class="w-full border rounded px-3 py-2"></textarea>

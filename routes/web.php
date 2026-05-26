@@ -134,8 +134,6 @@ Route::middleware(['auth', 'role:admin,registrar'])->prefix('exam')->name('exam.
 
 /* ---------------- Registrar ---------------- */
 Route::middleware(['auth', 'role:registrar,admin'])->prefix('registrar')->name('registrar.')->group(function () {
-    Route::get('/lookup',           [VerificationController::class, 'lookup'])->name('lookup');
-    Route::post('/lookup',          [VerificationController::class, 'find'])->name('lookup.find');
     Route::get('/verify/{applicant}',  [VerificationController::class, 'show'])->name('verify.show');
     Route::post('/verify/{applicant}', [VerificationController::class, 'store'])->name('verify.store');
     Route::post('/approve/{applicant}',[VerificationController::class, 'approve'])->name('approve');

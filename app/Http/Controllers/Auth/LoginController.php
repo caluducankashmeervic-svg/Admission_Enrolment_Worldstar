@@ -34,7 +34,7 @@ class LoginController extends Controller
 
             return match ($request->user()->role) {
                 'admin'     => redirect()->route('admin.dashboard'),
-                'registrar' => redirect()->route('registrar.lookup'),
+                'registrar' => redirect()->route('registrar.applicants.index'),
                 default     => redirect()->route('applicant.pre-register.form'),
             };
         }
