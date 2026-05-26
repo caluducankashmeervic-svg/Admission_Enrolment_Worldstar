@@ -102,10 +102,7 @@ class PreRegistrationController extends Controller
 
     public function createTesda()
     {
-        return view('applicant.pre-register-tesda', [
-            'courses' => Course::where('is_active', true)->orderBy('code')->get(),
-            'terms'   => AcademicTerm::where('is_active', true)->orderBy('school_year', 'desc')->get(),
-        ]);
+        return view('applicant.pre-register-tesda');
     }
 
     public function storeTesda(TesdaPreRegistrationRequest $request)
@@ -137,6 +134,7 @@ class PreRegistrationController extends Controller
                 'scholarship_type'       => $v['scholarship_type']       ?? null,
                 'beneficiary_1'          => $v['beneficiary_1']          ?? null,
                 'beneficiary_2'          => $v['beneficiary_2']          ?? null,
+                'diploma_course'         => $v['diploma_course'],
                 'privacy_consent'        => true,
             ];
 
@@ -144,8 +142,6 @@ class PreRegistrationController extends Controller
                 'reference_code'        => $this->codes->generate('TES'),
                 'applicant_type'        => Applicant::TYPE_TESDA,
                 'user_id'               => optional($request->user())->id,
-                'preferred_course_id'   => $v['preferred_course_id'],
-                'academic_term_id'      => $v['academic_term_id'],
                 'first_name'            => $v['first_name'],
                 'middle_name'           => $v['middle_name'] ?? null,
                 'last_name'             => $v['last_name'],

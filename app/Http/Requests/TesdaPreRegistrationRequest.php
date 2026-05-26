@@ -73,9 +73,8 @@ class TesdaPreRegistrationRequest extends FormRequest
             // Privacy
             'privacy_consent'        => ['required', 'accepted'],
 
-            // Required for system
-            'preferred_course_id'    => ['required', 'exists:courses,id'],
-            'academic_term_id'       => ['required', 'exists:academic_terms,id'],
+            // Diploma course (TESDA fixed list)
+            'diploma_course'         => ['required', 'in:CST (Computer Science Technology),CET (Computer Engineering Technology),EET (Electronics Engineering Technology),ICT (Information and Communications Technology)'],
         ];
     }
 

@@ -22,9 +22,9 @@
     <form method="POST" action="{{ route('applicant.pre-register.tesda.store') }}" class="space-y-8">
         @csrf
 
-        {{-- 2. Manpower Profile / Name --}}
+        {{-- 1. Manpower Profile / Name --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">2. Manpower Profile · Name</legend>
+            <legend class="font-semibold text-amber-700">1. Manpower Profile · Name</legend>
             <div class="grid md:grid-cols-4 gap-4 mt-3">
                 <label class="block"><span class="text-sm font-medium">Last Name *</span>
                     <input name="last_name" required value="{{ old('last_name') }}" class="{{ $cls }}"></label>
@@ -37,9 +37,9 @@
             </div>
         </fieldset>
 
-        {{-- 2.2 Permanent Mailing Address --}}
+        {{-- 1.2 Permanent Mailing Address --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">2.2 Complete Permanent Mailing Address</legend>
+            <legend class="font-semibold text-amber-700">1.2 Complete Permanent Mailing Address</legend>
             <div class="grid md:grid-cols-3 gap-4 mt-3">
                 <label class="block md:col-span-2"><span class="text-sm font-medium">Number, Street *</span>
                     <input name="address_line" required value="{{ old('address_line') }}" class="{{ $cls }}"></label>
@@ -70,12 +70,12 @@
             </div>
         </fieldset>
 
-        {{-- 3. Personal Information --}}
+        {{-- 2. Personal Information --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">3. Personal Information</legend>
+            <legend class="font-semibold text-amber-700">2. Personal Information</legend>
             <div class="grid md:grid-cols-3 gap-4 mt-3">
                 <div>
-                    <span class="text-sm font-medium block mb-1">3.1 Sex *</span>
+                    <span class="text-sm font-medium block mb-1">2.1 Sex *</span>
                     <div class="flex gap-4 mt-2 text-sm">
                         @foreach(['Male','Female'] as $g)
                             <label class="inline-flex items-center">
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div>
-                    <span class="text-sm font-medium block mb-1">3.2 Civil Status *</span>
+                    <span class="text-sm font-medium block mb-1">2.2 Civil Status *</span>
                     <div class="flex flex-wrap gap-3 mt-2 text-sm">
                         @foreach(['Single','Married','Widow/er','Separated'] as $cs)
                             <label class="inline-flex items-center">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div>
-                    <span class="text-sm font-medium block mb-1">3.3 Employment Status (before training) *</span>
+                    <span class="text-sm font-medium block mb-1">2.3 Employment Status (before training) *</span>
                     <div class="flex gap-4 mt-2 text-sm">
                         @foreach(['Employed','Unemployed'] as $es)
                             <label class="inline-flex items-center">
@@ -106,9 +106,9 @@
                 </div>
             </div>
             <div class="grid md:grid-cols-4 gap-4 mt-4">
-                <label class="block"><span class="text-sm font-medium">3.4 Birthdate *</span>
+                <label class="block"><span class="text-sm font-medium">2.4 Birthdate *</span>
                     <input type="date" name="birth_date" required value="{{ old('birth_date') }}" class="{{ $cls }}"></label>
-                <label class="block"><span class="text-sm font-medium">3.5 Birthplace — City/Municipality</span>
+                <label class="block"><span class="text-sm font-medium">2.5 Birthplace — City/Municipality</span>
                     <input name="birthplace_city" value="{{ old('birthplace_city') }}" class="{{ $cls }}"></label>
                 <label class="block"><span class="text-sm font-medium">Province</span>
                     <input name="birthplace_province" value="{{ old('birthplace_province') }}" class="{{ $cls }}"></label>
@@ -116,7 +116,7 @@
                     <input name="birthplace_region" value="{{ old('birthplace_region') }}" class="{{ $cls }}"></label>
             </div>
             <div class="mt-4">
-                <span class="text-sm font-medium block mb-1">3.6 Educational Attainment (before training) *</span>
+                <span class="text-sm font-medium block mb-1">2.6 Educational Attainment (before training) *</span>
                 <div class="grid md:grid-cols-3 gap-2 mt-2 text-sm">
                     @foreach([
                         'No Grade Completed', 'Pre-School (Nursery/Kinder)', 'Elementary Undergraduate',
@@ -130,7 +130,7 @@
                 </div>
             </div>
             <div class="grid md:grid-cols-3 gap-4 mt-4">
-                <label class="block"><span class="text-sm font-medium">3.7 Parent/Guardian Full Name *</span>
+                <label class="block"><span class="text-sm font-medium">2.7 Parent/Guardian Full Name *</span>
                     <input name="parent_full_name" required value="{{ old('parent_full_name') }}" class="{{ $cls }}"></label>
                 <label class="block"><span class="text-sm font-medium">Complete Permanent Address</span>
                     <input name="parent_address" value="{{ old('parent_address') }}" class="{{ $cls }}"></label>
@@ -139,9 +139,9 @@
             </div>
         </fieldset>
 
-        {{-- 4. Learner/Trainee/Student Classification --}}
+        {{-- 3. Learner/Trainee/Student Classification --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">4. Learner/Trainee/Student Classification</legend>
+            <legend class="font-semibold text-amber-700">3. Learner/Trainee/Student Classification</legend>
             <p class="text-xs text-slate-500 mb-2">(Check all that apply)</p>
             <div class="grid md:grid-cols-3 gap-2 mt-2 text-sm">
                 @foreach([
@@ -170,9 +170,9 @@
                 <input name="classification_other" value="{{ old('classification_other') }}" class="{{ $cls }}"></label>
         </fieldset>
 
-        {{-- 5. Type of Disability --}}
+        {{-- 4. Type of Disability --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">5. Type of Disability (PWD only)</legend>
+            <legend class="font-semibold text-amber-700">4. Type of Disability (PWD only)</legend>
             <div class="grid md:grid-cols-3 gap-2 mt-2 text-sm">
                 @foreach([
                     'Mental/Intellectual','Visual Disability','Orthopedic (Musculoskeletal) Disability',
@@ -187,9 +187,9 @@
             </div>
         </fieldset>
 
-        {{-- 6. Causes of Disability --}}
+        {{-- 5. Causes of Disability --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">6. Causes of Disability (PWD only)</legend>
+            <legend class="font-semibold text-amber-700">5. Causes of Disability (PWD only)</legend>
             <div class="flex flex-wrap gap-4 mt-2 text-sm">
                 @foreach(['Congenital/Inborn','Illness','Injury'] as $cd)
                     <label class="inline-flex items-center">
@@ -200,9 +200,9 @@
             </div>
         </fieldset>
 
-        {{-- 7. NCAE / YP4SC --}}
+        {{-- 6. NCAE / YP4SC --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">7. Taken NCAE/YP4SC Before?</legend>
+            <legend class="font-semibold text-amber-700">6. Taken NCAE/YP4SC Before?</legend>
             <div class="grid md:grid-cols-4 gap-4 mt-3">
                 <div>
                     <div class="flex gap-4 mt-2 text-sm">
@@ -217,20 +217,20 @@
             </div>
         </fieldset>
 
-        {{-- 8 & 9 Course / Scholarship --}}
+        {{-- 7. Course / Scholarship --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">8 & 9. Course &amp; Scholarship</legend>
+            <legend class="font-semibold text-amber-700">7. Course &amp; Scholarship</legend>
             <div class="grid md:grid-cols-2 gap-4 mt-3">
-                <label class="block"><span class="text-sm font-medium">8. Name of Course/Qualification *</span>
+                <label class="block"><span class="text-sm font-medium">7.1 Name of Course/Qualification *</span>
                     <input name="course_qualification" required value="{{ old('course_qualification') }}" class="{{ $cls }}"></label>
-                <label class="block"><span class="text-sm font-medium">9. Scholarship Package (TWSP, PESFA, STEP)</span>
+                <label class="block"><span class="text-sm font-medium">7.2 Scholarship Package (TWSP, PESFA, STEP)</span>
                     <input name="scholarship_type" value="{{ old('scholarship_type') }}" class="{{ $cls }}"></label>
             </div>
         </fieldset>
 
-        {{-- 10. Insurance Beneficiaries --}}
+        {{-- 8. Insurance Beneficiaries --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">10. Insurance Beneficiaries</legend>
+            <legend class="font-semibold text-amber-700">8. Insurance Beneficiaries</legend>
             <div class="grid md:grid-cols-2 gap-4 mt-3">
                 <label class="block"><span class="text-sm font-medium">Beneficiary 1 (Last, First, Middle)</span>
                     <input name="beneficiary_1" value="{{ old('beneficiary_1') }}" class="{{ $cls }}"></label>
@@ -239,34 +239,28 @@
             </div>
         </fieldset>
 
-        {{-- Program / Term --}}
+        {{-- 9. Program Preference --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">Program Preference</legend>
-            <div class="grid md:grid-cols-2 gap-4 mt-3">
+            <legend class="font-semibold text-amber-700">9. Program Preference</legend>
+            <div class="grid md:grid-cols-1 gap-4 mt-3">
                 <label class="block"><span class="text-sm font-medium">Preferred Course *</span>
-                    <select name="preferred_course_id" required class="{{ $cls }}">
+                    <select name="diploma_course" required class="{{ $cls }}">
                         <option value="">Select…</option>
-                        @foreach($courses as $c)
-                            <option value="{{ $c->id }}" @selected(old('preferred_course_id')==$c->id)>
-                                {{ $c->code }} — {{ $c->name }}
-                            </option>
-                        @endforeach
-                    </select></label>
-                <label class="block"><span class="text-sm font-medium">Academic Term *</span>
-                    <select name="academic_term_id" required class="{{ $cls }}">
-                        <option value="">Select…</option>
-                        @foreach($terms as $t)
-                            <option value="{{ $t->id }}" @selected(old('academic_term_id', $terms->count()===1 ? $t->id : null)==$t->id)>
-                                {{ $t->school_year }} — {{ $t->semester }} Sem
-                            </option>
+                        @foreach([
+                            'CST (Computer Science Technology)',
+                            'CET (Computer Engineering Technology)',
+                            'EET (Electronics Engineering Technology)',
+                            'ICT (Information and Communications Technology)',
+                        ] as $dc)
+                            <option value="{{ $dc }}" @selected(old('diploma_course')===$dc)>{{ $dc }}</option>
                         @endforeach
                     </select></label>
             </div>
         </fieldset>
 
-        {{-- 11. Privacy Disclaimer --}}
+        {{-- 10. Privacy Disclaimer --}}
         <fieldset>
-            <legend class="font-semibold text-amber-700">11. Privacy Disclaimer</legend>
+            <legend class="font-semibold text-amber-700">10. Privacy Disclaimer</legend>
             <p class="text-sm text-slate-700 mt-2">
                 I hereby allow TESDA to use/post my contact details, name, e-mail, cellphone/landline nos. and other information
                 I provided which may be used by processing my scholarship, for employment purposes and other opportunities.

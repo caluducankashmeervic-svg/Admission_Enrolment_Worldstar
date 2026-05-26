@@ -172,8 +172,8 @@
                             </svg>
                         </button>
                         <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200
-                                    absolute top-full w-screen left-1/2 -translate-x-1/2 bg-white shadow-xl rounded-b-xl border-t-2 border-[#1D4ED8] z-50">
-                            <div class="max-w-7xl mx-auto px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-14">
+                                    absolute top-full right-0 w-[820px] max-w-[95vw] bg-white shadow-xl rounded-b-xl border-t-2 border-[#1D4ED8] z-50">
+                            <div class="px-10 py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
                                 <div>
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Academic Track</h3>
                                     <ul class="space-y-3">
@@ -200,8 +200,8 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                <div>
-                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">3-Year Diploma Course</h3>
+                                <div class="md:border-l md:border-slate-900/70 md:pl-10">
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">TESDA Diploma Course</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
                                             'CST (Computer Science Technology)',

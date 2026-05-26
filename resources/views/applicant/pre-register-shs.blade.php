@@ -25,13 +25,15 @@
         {{-- Personal --}}
         <fieldset>
             <legend class="font-semibold text-blue-700">Personal</legend>
-            <div class="grid md:grid-cols-3 gap-4 mt-3">
+            <div class="grid md:grid-cols-4 gap-4 mt-3">
                 <label class="block"><span class="text-sm font-medium">Last Name *</span>
                     <input name="last_name" required value="{{ old('last_name') }}" class="{{ $cls }}"></label>
                 <label class="block"><span class="text-sm font-medium">First Name *</span>
                     <input name="first_name" required value="{{ old('first_name') }}" class="{{ $cls }}"></label>
                 <label class="block"><span class="text-sm font-medium">Middle Name</span>
                     <input name="middle_name" value="{{ old('middle_name') }}" class="{{ $cls }}"></label>
+                <label class="block"><span class="text-sm font-medium">Extension (Jr., Sr.)</span>
+                    <input name="suffix" value="{{ old('suffix') }}" class="{{ $cls }}"></label>
             </div>
             <div class="grid md:grid-cols-4 gap-4 mt-4">
                 <label class="block"><span class="text-sm font-medium">Gender *</span>
