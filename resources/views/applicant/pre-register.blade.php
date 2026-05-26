@@ -128,6 +128,15 @@
                             </option>
                         @endforeach
                     </select></label>
+                <label class="block"><span class="text-sm font-medium">Academic Term *</span>
+                    <select name="academic_term_id" required class="{{ $cls }}">
+                        <option value="">Select…</option>
+                        @foreach($terms as $t)
+                            <option value="{{ $t->id }}" @selected(old('academic_term_id', $terms->count()===1 ? $t->id : null)==$t->id)>
+                                {{ $t->school_year }} — {{ $t->semester }} Sem
+                            </option>
+                        @endforeach
+                    </select></label>
             </div>
         </fieldset>
 
