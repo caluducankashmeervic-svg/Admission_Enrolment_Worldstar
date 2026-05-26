@@ -24,7 +24,7 @@ class Verification extends Model
         'applicant_id', 'registrar_id',
         'doc_form_137', 'doc_psa_birth_cert', 'doc_good_moral',
         'doc_id_photos', 'doc_medical_cert', 'doc_diploma',
-        'status', 'remarks', 'verified_at',
+        'status', 'remarks', 'override_reason', 'verified_at',
     ];
 
     protected $casts = [

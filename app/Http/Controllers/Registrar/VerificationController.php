@@ -156,13 +156,24 @@ class VerificationController extends Controller
         // Server-side guard: documents may only be verified after the applicant has
         // been assigned to an exam batch (and therefore has an exam record).
         $applicant->loadMissing('latestExamResult');
-        if (! $applicant->latestExamResult) {
+        $exam = $applicant->latestExamResult;
+        if (! $exam) {
             return back()->withErrors([
                 'exam' => 'This applicant has not been assigned to an exam batch yet. Assign an exam batch before verifying documents.',
             ]);
         }
 
-        $data = $request->validate([
+        // Exam score must be in before docs can be verified.
+        if ($exam->result === \App\Models\ExamResult::RESULT_PENDING) {
+            return back()->withErrors([
+                'exam' => 'The entrance exam has not been scored yet. Documents cannot be verified until a score is recorded.',
+            ]);
+        }
+
+        // Failed applicants are blocked by default. A registrar may override
+        // with a written reason that is preserved on the verification record
+        // and surfaced on the applicant's status page.
+        $rules = [
             'doc_form_137'       => ['sometimes', 'boolean'],
             'doc_psa_birth_cert' => ['sometimes', 'boolean'],
             'doc_good_moral'     => ['sometimes', 'boolean'],
@@ -170,7 +181,13 @@ class VerificationController extends Controller
             'doc_medical_cert'   => ['sometimes', 'boolean'],
             'doc_diploma'        => ['sometimes', 'boolean'],
             'remarks'            => ['nullable', 'string', 'max:500'],
-        ]);
+        ];
+        if ($exam->result === \App\Models\ExamResult::RESULT_FAILED) {
+            $rules['override_reason'] = ['required', 'string', 'min:5', 'max:500'];
+        } else {
+            $rules['override_reason'] = ['nullable', 'string', 'max:500'];
+        }
+        $data = $request->validate($rules);
 
         $docs = collect(Verification::REQUIRED_DOCS)
             ->mapWithKeys(fn ($d) => [$d => (bool) ($data[$d] ?? false)])
@@ -179,8 +196,11 @@ class VerificationController extends Controller
         $verification = Verification::updateOrCreate(
             ['applicant_id' => $applicant->id],
             array_merge($docs, [
-                'registrar_id' => $request->user()->id,
-                'remarks'      => $data['remarks'] ?? null,
+                'registrar_id'    => $request->user()->id,
+                'remarks'         => $data['remarks'] ?? null,
+                'override_reason' => $exam->result === \App\Models\ExamResult::RESULT_FAILED
+                    ? $data['override_reason']
+                    : null,
             ])
         );
 
@@ -195,7 +215,9 @@ class VerificationController extends Controller
         }
 
         AuditLog::record('registrar.verification.save', $applicant, [
-            'status' => $verification->status,
+            'status'      => $verification->status,
+            'exam_result' => $exam->result,
+            'override'    => (bool) $verification->override_reason,
         ]);
 
         return back()->with('status', $complete

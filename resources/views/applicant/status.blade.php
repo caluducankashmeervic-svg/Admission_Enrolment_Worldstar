@@ -77,6 +77,19 @@
     </div>
     @endif
 
+    @if($ver && $ver->override_reason)
+    <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-lg shadow-sm p-6 mt-5">
+        <h2 class="font-semibold">Registrar Override Notice</h2>
+        <p class="mt-2 text-sm">
+            Although the entrance exam was marked <strong>{{ $exam?->result ?? 'failed' }}</strong>,
+            the registrar verified this applicant's documents with the following recorded reason:
+        </p>
+        <blockquote class="mt-2 border-l-4 border-amber-400 bg-white/60 px-3 py-2 text-sm italic">
+            {{ $ver->override_reason }}
+        </blockquote>
+    </div>
+    @endif
+
     @if($enr)
     <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-lg shadow-sm p-6 mt-5">
         <h2 class="font-semibold">Enrollment Confirmed</h2>

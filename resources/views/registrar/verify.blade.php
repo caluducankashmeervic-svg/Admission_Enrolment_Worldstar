@@ -197,50 +197,34 @@
                 <p class="font-semibold mb-1">Pending exam assignment.</p>
                 <p>Document verification unlocks once the pre-registration form is approved and the applicant has completed the entrance exam.</p>
             </div>
-        @else
-        <form method="POST" action="{{ route('registrar.verify.store', $applicant) }}" class="space-y-3">
-            @csrf
-            @php
-                $docs = [
-                    'doc_form_137'       => 'Form 137 / TOR',
-                    'doc_psa_birth_cert' => 'PSA Birth Certificate',
-                    'doc_good_moral'     => 'Good Moral Certificate',
-                    'doc_id_photos'      => '2×2 ID Photos',
-                    'doc_medical_cert'   => 'Medical Certificate',
-                    'doc_diploma'        => 'Diploma / Certificate of Graduation',
-                ];
-            @endphp
-            <div class="grid sm:grid-cols-2 gap-2">
-                @foreach($docs as $key => $label)
-                    <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded px-3 py-2">
-                        <input type="checkbox" name="{{ $key }}" value="1"
-                               @checked(optional($verification)->$key)>
-                        <span class="text-sm">{{ $label }}</span>
-                    </label>
-                @endforeach
+        @elseif($exam->result === 'pending')
+            <div class="rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                <p class="font-semibold mb-1">Exam not yet scored.</p>
+                <p>This applicant's entrance exam has not been scored. Documents cannot be verified until a score is recorded.</p>
             </div>
+        @else
+            @php $isFailed = $exam->result === 'failed'; @endphp
 
-            <label class="block">
-                <span class="text-sm font-medium">Remarks</span>
-                <textarea name="remarks" rows="3" class="mt-1 w-full border rounded px-3 py-2"
-                          >{{ optional($verification)->remarks }}</textarea>
-            </label>
-
-            <div class="flex items-center justify-between">
-                <div class="text-sm">
-                    @if($verification)
-                        Status:
-                        @php $cls = ['verified'=>'emerald','incomplete'=>'amber','rejected'=>'rose','pending'=>'slate'][$verification->status] ?? 'slate'; @endphp
-                        <span class="text-{{ $cls }}-700 bg-{{ $cls }}-100 rounded px-2 py-0.5 text-xs capitalize">
-                            {{ $verification->status }}
-                        </span>
+            @if($isFailed)
+                <div class="rounded-md border border-rose-300 bg-rose-50 px-4 py-3 text-sm text-rose-900">
+                    <p class="font-semibold mb-1">Applicant failed the entrance exam (score {{ $exam->score ?? '—' }}).</p>
+                    <p>Document verification is locked. By policy, only applicants who passed may be verified for enrollment.</p>
+                    @if(optional($verification)->override_reason)
+                        <p class="mt-2"><strong>Existing override on file:</strong> {{ $verification->override_reason }}</p>
                     @endif
                 </div>
-                <button class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
-                    Save Verification
-                </button>
-            </div>
-        </form>
+
+                <details class="mt-3 border border-rose-200 rounded">
+                    <summary class="cursor-pointer px-3 py-2 bg-rose-50 text-sm font-medium text-rose-800">
+                        Override and verify anyway (requires reason)
+                    </summary>
+                    <div class="p-4">
+                        @include('registrar.partials._verify_form', ['requireOverride' => true])
+                    </div>
+                </details>
+            @else
+                @include('registrar.partials._verify_form', ['requireOverride' => false])
+            @endif
         @endif
         </div>
     </div>
