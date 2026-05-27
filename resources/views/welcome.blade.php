@@ -190,12 +190,7 @@
                 <summary class="cursor-pointer font-medium">Is there an entrance exam?</summary>
                 <p class="mt-2 text-slate-600">Yes. After pre-registration, you'll receive a schedule for the entrance exam.</p>
             </details>
-            <details class="group border border-slate-200 rounded-md p-3">
-                <summary class="cursor-pointer font-medium">How do I check my status?</summary>
-                <p class="mt-2 text-slate-600">Use your reference code on the
-                    <a href="{{ route('applicant.status.form') }}" class="text-blue-600 hover:underline">Check Status</a> page.
-                </p>
-            </details>
+
         </div>
     </div>
 </section>

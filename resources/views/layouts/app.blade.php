@@ -37,7 +37,6 @@
                 <nav class="flex items-center gap-4 text-sm ml-auto">
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8]">Dashboard</a>
-                        <a href="{{ route('admin.enrollees.index') }}" class="hover:text-[#1D4ED8]">Manage Enrollees</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollments</a>
                         <a href="{{ route('admin.courses.index') }}" class="hover:text-[#1D4ED8]">Courses</a>
@@ -52,7 +51,6 @@
                         <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8]">Exams</a>
                     @else
                         <a href="{{ route('applicant.admission.create') }}" class="hover:text-[#1D4ED8]">My Admission</a>
-                        <a href="{{ route('applicant.status.form') }}" class="hover:text-[#1D4ED8]">Check Status</a>
                     @endif
                     <a href="{{ route('profile.edit') }}"
                        class="flex items-center gap-2 text-slate-500 hover:text-[#1D4ED8]">

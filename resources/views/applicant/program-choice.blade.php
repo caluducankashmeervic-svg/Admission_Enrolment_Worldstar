@@ -48,8 +48,6 @@
         </a>
     </div>
 
-    <p class="text-center text-xs text-slate-500 mt-8">
-        Already registered? <a href="{{ route('applicant.status.form') }}" class="text-blue-600 underline">Check your status</a>.
-    </p>
+
 </div>
 @endsection

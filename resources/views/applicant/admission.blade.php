@@ -6,8 +6,7 @@
     <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6">
         <h1 class="text-2xl font-semibold text-slate-900">My Admission</h1>
         <p class="text-sm text-slate-500 mt-1">
-            Read-only summary of your submitted application. For the latest progress, visit
-            <a href="{{ route('applicant.status.form') }}" class="text-blue-700 hover:underline font-medium">Check Status</a>.
+            Read-only summary of your submitted application.
         </p>
 
         @if(session('status'))
@@ -20,16 +19,11 @@
             <div class="mt-6 bg-amber-50 border border-amber-200 text-amber-900 rounded-lg p-5">
                 <h2 class="font-semibold">No application on file</h2>
                 <p class="mt-1 text-sm">
-                    We couldn't find an admission record linked to your account. If you have a
-                    reference code, you can check its status below, or start a new pre-registration.
+                    We couldn't find an admission record linked to your account. Please start a new pre-registration.
                 </p>
                 <div class="mt-4 flex flex-wrap gap-2">
-                    <a href="{{ route('applicant.status.form') }}"
-                       class="inline-flex items-center px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">
-                        Check Status
-                    </a>
                     <a href="{{ route('applicant.pre-register.form') }}"
-                       class="inline-flex items-center px-4 py-2 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium">
+                       class="inline-flex items-center px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">
                         Start Pre-Registration
                     </a>
                 </div>
@@ -110,12 +104,8 @@
                 </dl>
             </div>
 
-            <div class="mt-5 flex flex-wrap gap-2">
-                <a href="{{ route('applicant.status.form') }}"
-                   class="inline-flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">
-                    Check Status
-                </a>
-                <p class="text-xs text-slate-500 self-center">
+            <div class="mt-5">
+                <p class="text-xs text-slate-500">
                     Need to update any information? Please contact the registrar.
                 </p>
             </div>

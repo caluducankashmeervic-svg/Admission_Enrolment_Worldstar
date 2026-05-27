@@ -10,7 +10,6 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Applicant\AdmissionController;
 use App\Http\Controllers\Applicant\PreRegistrationController;
-use App\Http\Controllers\Applicant\StatusController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -67,9 +66,6 @@ Route::prefix('apply')->name('applicant.')->group(function () {
 
     Route::get('/success/{code}', [PreRegistrationController::class, 'success'])
         ->name('pre-register.success');
-
-    Route::get('/status',  [StatusController::class, 'form'])->name('status.form');
-    Route::post('/status', [StatusController::class, 'check'])->name('status.check');
 });
 
 /* ---------------- Authenticated profile ---------------- */

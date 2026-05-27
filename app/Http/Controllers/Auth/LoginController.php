@@ -11,6 +11,14 @@ class LoginController extends Controller
 {
     public function showLogin()
     {
+        if (Auth::check()) {
+            return match (Auth::user()->role) {
+                'admin'     => redirect()->route('admin.dashboard'),
+                'registrar' => redirect()->route('registrar.applicants.index'),
+                default     => redirect()->route('applicant.admission.create'),
+            };
+        }
+
         return view('auth.login');
     }
 
@@ -35,7 +43,7 @@ class LoginController extends Controller
             return match ($request->user()->role) {
                 'admin'     => redirect()->route('admin.dashboard'),
                 'registrar' => redirect()->route('registrar.applicants.index'),
-                default     => redirect()->route('applicant.pre-register.form'),
+                default     => redirect()->route('applicant.admission.create'),
             };
         }
 
