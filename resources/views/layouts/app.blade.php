@@ -186,11 +186,11 @@
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Academic Track</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
-                                            'Arts, Social Sciences, and Humanities',
-                                            'Business and Entrepreneurship',
-                                            'Science, Technology, Engineering & Mathematics (Health & Non-Health)',
-                                        ] as $label)
-                                            <li><a href="#academic" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
+                                            ['Arts, Social Sciences, and Humanities',                        'arts-social-sciences-humanities'],
+                                            ['Business and Entrepreneurship',                                'business-and-entrepreneurship'],
+                                            ['Science, Technology, Engineering & Mathematics (Health & Non-Health)', 'science-technology-engineering-mathematics'],
+                                        ] as [$label, $slug])
+                                            <li><a href="{{ route('academics.program', $slug) }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -198,13 +198,13 @@
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Tech-Pro Track</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
-                                            'Automotive and Small Engine Technologies',
-                                            'Business, Hospitality, and Tourism Bundle',
-                                            'Creative Arts and Design Technologies Bundle',
-                                            'ICT support and Computer Programming Technologies Bundle',
-                                            'Industrial Arts Bundle',
-                                        ] as $label)
-                                            <li><a href="#techpro" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
+                                            ['Automotive and Small Engine Technologies',                  'automotive-small-engine-technologies'],
+                                            ['Business, Hospitality, and Tourism Bundle',                 'business-hospitality-tourism'],
+                                            ['Creative Arts and Design Technologies Bundle',              'creative-arts-design-technologies'],
+                                            ['ICT support and Computer Programming Technologies Bundle',  'ict-computer-programming-technologies'],
+                                            ['Industrial Arts Bundle',                                    'industrial-arts'],
+                                        ] as [$label, $slug])
+                                            <li><a href="{{ route('academics.program', $slug) }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -212,12 +212,12 @@
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">TESDA Diploma Course</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
-                                            'CST (Computer Science Technology)',
-                                            'CET (Computer Engineering Technology)',
-                                            'EET (Electronics Engineering Technology)',
-                                            'ICT (Information and Communications Technology)',
-                                        ] as $label)
-                                            <li><a href="#diploma" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
+                                            ['CST (Computer Science Technology)',            'cst-computer-science-technology'],
+                                            ['CET (Computer Engineering Technology)',        'cet-computer-engineering-technology'],
+                                            ['EET (Electronics Engineering Technology)',     'eet-electronics-engineering-technology'],
+                                            ['ICT (Information and Communications Technology)', 'ict-information-communications-technology'],
+                                        ] as [$label, $slug])
+                                            <li><a href="{{ route('academics.program', $slug) }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>

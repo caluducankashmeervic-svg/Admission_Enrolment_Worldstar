@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcademicsController;
 use App\Http\Controllers\Admin\AcademicTermController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuditLogController;
@@ -38,6 +39,9 @@ Route::prefix('about')->name('about.')->group(function () {
     Route::view('/vision-mission', 'about.vision-mission')->name('vision-mission');
     Route::view('/core-values',    'about.core-values')->name('core-values');
 });
+
+/* ---------------- Academics (program detail pages) --------- */
+Route::get('/academics/{slug}', [AcademicsController::class, 'show'])->name('academics.program');
 
 /* ---------------- Auth ---------------- */
 Route::get('/login',  [LoginController::class, 'showLogin'])->name('login');
