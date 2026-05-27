@@ -38,6 +38,7 @@
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.dashboard*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Dashboard</a>
                         <a href="{{ route('admin.accreditations.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.accreditations.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Accreditations</a>
+                        <a href="{{ route('admin.safe-space.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.safe-space.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Safe Space</a>
                         <a href="{{ route('admin.announcements.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.announcements.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.applicants.*') || request()->routeIs('registrar.verify.*') || request()->routeIs('registrar.approve') || request()->routeIs('registrar.reject') ? 'text-[#1D4ED8] font-semibold' : '' }}">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.enrollment*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Enrollees</a>
@@ -186,7 +187,7 @@
                                     <ul class="space-y-3">
                                         @foreach ([
                                             ['Scholarship', route('admissions.scholarship')],
-                                            ['Safe Space', '#safespace'],
+                                            ['Safe Space', route('admissions.safe-space')],
                                             ['Apply as Working Student', route('admissions.working-student')],
                                         ] as [$label, $href])
                                             <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
@@ -289,6 +290,7 @@
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Dashboard</a>
                         <a href="{{ route('admin.accreditations.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Accreditations</a>
+                        <a href="{{ route('admin.safe-space.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Safe Space</a>
                         <a href="{{ route('admin.announcements.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollees</a>
@@ -348,6 +350,7 @@
                             <a href="{{ route('admissions.senior-high-school') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Senior High School</a>
                             <a href="{{ route('admissions.tesda-diploma-courses') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">TESDA Diploma Courses</a>
                             <a href="{{ route('admissions.scholarship') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Scholarship</a>
+                            <a href="{{ route('admissions.safe-space') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Safe Space</a>
                             <a href="{{ route('admissions.working-student') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Apply as Working Student</a>
                             <a href="/#questions" class="block px-3 py-2.5 rounded hover:bg-slate-100">Enrollment FAQs</a>
                         </div>

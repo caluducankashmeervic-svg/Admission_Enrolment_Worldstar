@@ -153,23 +153,6 @@
 
 
 
-{{-- ============== THREE INFO CARDS (light blue bg) ============== --}}
-<section class="bg-slate-100 py-6">
-    <div class="max-w-4xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-5">
-        @foreach ([
-            
-        ] as [$title, $body, $grad])
-            <article class="bg-white border-2 border-blue-700">
-                <div class="aspect-[16/10] bg-gradient-to-br {{ $grad }}"></div>
-                <div class="p-4">
-                    <h3 class="text-blue-700 font-bold leading-snug">{{ $title }}</h3>
-                    <p class="mt-2 text-xs text-slate-600 leading-relaxed">{{ $body }}</p>
-                </div>
-            </article>
-        @endforeach
-    </div>
-</section>
-
 {{-- ============== FAQ (kept for /#questions anchor) ============== --}}
 <section id="questions" class="bg-white pb-6">
     <div class="max-w-4xl mx-auto px-6">
@@ -265,10 +248,10 @@
 
             {{-- Circular logo + school name --}}
             <div class="flex flex-col items-center gap-3 mt-4">
-                <div class="inline-flex rounded-full bg-white p-0 shadow-md overflow-hidden">
+                <div class="inline-flex rounded-full p-0">
                     <img src="{{ asset('images/image.png') }}"
                          alt="Worldstar College Logo"
-                         class="w-40 h-40 object-cover scale-[1.14]">
+                         class="w-40 h-40 object-contain saturate-125 contrast-110">
                 </div>
 
                 <div class="text-center">

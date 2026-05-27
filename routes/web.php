@@ -3,10 +3,12 @@
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AccreditationController;
 use App\Http\Controllers\AcademicsController;
+use App\Http\Controllers\SafeSpaceController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Admin\AcademicTermController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 use App\Http\Controllers\Admin\AccreditationController as AdminAccreditationController;
+use App\Http\Controllers\Admin\SafeSpaceController as AdminSafeSpaceController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\CourseController;
@@ -56,6 +58,7 @@ Route::prefix('about')->name('about.')->group(function () {
 Route::prefix('admissions')->name('admissions.')->group(function () {
     Route::view('/senior-high-school', 'admissions.senior-high-school')->name('senior-high-school');
     Route::view('/tesda-diploma-courses', 'admissions.tesda-diploma-courses')->name('tesda-diploma-courses');
+    Route::get('/safe-space', [SafeSpaceController::class, 'index'])->name('safe-space');
     Route::view('/scholarship', 'admissions.scholarship')->name('scholarship');
     Route::view('/working-student', 'admissions.working-student')->name('working-student');
 });
@@ -117,6 +120,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/accreditations', [AdminAccreditationController::class, 'index'])->name('accreditations.index');
     Route::post('/accreditations', [AdminAccreditationController::class, 'store'])->name('accreditations.store');
     Route::delete('/accreditations/{accreditation}', [AdminAccreditationController::class, 'destroy'])->name('accreditations.destroy');
+
+    Route::get('/safe-space', [AdminSafeSpaceController::class, 'index'])->name('safe-space.index');
+    Route::post('/safe-space', [AdminSafeSpaceController::class, 'store'])->name('safe-space.store');
+    Route::put('/safe-space/{safeSpace}', [AdminSafeSpaceController::class, 'update'])->name('safe-space.update');
+    Route::delete('/safe-space/{safeSpace}', [AdminSafeSpaceController::class, 'destroy'])->name('safe-space.destroy');
 
     Route::get('/courses',            [CourseController::class, 'index'])->name('courses.index');
     Route::post('/courses',           [CourseController::class, 'store'])->name('courses.store');
