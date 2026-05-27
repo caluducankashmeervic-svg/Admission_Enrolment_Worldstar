@@ -15,7 +15,7 @@ class PreRegistrationPdfController extends Controller
         $filename = 'pre-reg-' . $applicant->reference_code . '.pdf';
 
         $pdf = Pdf::loadView('documents.pre-registration', compact('applicant'))
-            ->setPaper('a4', 'portrait');
+            ->setPaper('letter', 'portrait');
 
         return $pdf->download($filename);
     }

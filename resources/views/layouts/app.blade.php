@@ -38,7 +38,7 @@
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8]">Dashboard</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
-                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollments</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollees</a>
                         <a href="{{ route('admin.courses.index') }}" class="hover:text-[#1D4ED8]">Courses</a>
                         <a href="{{ route('admin.sections.index') }}" class="hover:text-[#1D4ED8]">Sections</a>
                         <a href="{{ route('admin.terms.index') }}" class="hover:text-[#1D4ED8]">Terms</a>
@@ -47,7 +47,7 @@
                         <a href="{{ route('admin.audit.index') }}" class="hover:text-[#1D4ED8]">Audit</a>
                     @elseif(auth()->user()->isRegistrar())
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
-                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollments</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollees</a>
                         <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8]">Exams</a>
                     @else
                         <a href="{{ route('applicant.admission.create') }}" class="hover:text-[#1D4ED8]">My Admission</a>
@@ -263,7 +263,7 @@
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Dashboard</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
-                        <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollments</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollees</a>
                         <a href="{{ route('admin.courses.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Courses</a>
                         <a href="{{ route('admin.sections.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Sections</a>
                         <a href="{{ route('admin.terms.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Terms</a>
@@ -272,7 +272,7 @@
                         <a href="{{ route('admin.audit.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Audit</a>
                     @elseif(auth()->user()->isRegistrar())
                         <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
-                        <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollments</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollees</a>
                         <a href="{{ route('exam.schedule.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Exams</a>
                     @else
                         <a href="{{ route('applicant.admission.create') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">My Admission</a>

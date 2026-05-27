@@ -88,6 +88,30 @@
             @endif
         </div>
 
+        {{-- Step context notice --}}
+        @php
+            $notices = [
+                'pre_registered'  => ['color' => 'amber',   'icon' => '⏳', 'title' => 'Awaiting Registrar Review', 'body' => 'Your pre-registration form has been submitted and is currently being reviewed by the registrar. No action required on your end.'],
+                'exam_scheduled'  => ['color' => 'blue',    'icon' => '✅', 'title' => 'Form Approved — Exam Scheduled', 'body' => 'Your pre-registration form has been approved. Please check your entrance exam batch and schedule below.'],
+                'exam_completed'  => ['color' => 'indigo',  'icon' => '📋', 'title' => 'Exam Completed', 'body' => 'Your entrance exam score has been recorded. The registrar will review your documents next.'],
+                'verified'        => ['color' => 'emerald', 'icon' => '🎉', 'title' => 'Application Verified', 'body' => 'Congratulations! Your documents have been verified. You are cleared for enrollment.'],
+                'enrolled'        => ['color' => 'emerald', 'icon' => '🏫', 'title' => 'Enrollment Complete', 'body' => 'You are officially enrolled. Welcome to Worldstar College of Science and Technology!'],
+                'rejected'        => ['color' => 'rose',    'icon' => '❌', 'title' => 'Application Rejected', 'body' => 'Your application has been rejected. Please visit or contact the registrar\'s office for details.'],
+            ];
+            $notice = $notices[$applicant->status] ?? null;
+        @endphp
+        @if($notice)
+        @php $c = $notice['color']; @endphp
+        <div class="mb-4 flex gap-3 items-start rounded-lg border px-4 py-3 text-sm
+            bg-{{ $c }}-50 border-{{ $c }}-200 text-{{ $c }}-800">
+            <span class="text-base leading-tight shrink-0">{{ $notice['icon'] }}</span>
+            <div>
+                <p class="font-semibold">{{ $notice['title'] }}</p>
+                <p class="mt-0.5 text-{{ $c }}-700">{{ $notice['body'] }}</p>
+            </div>
+        </div>
+        @endif
+
         {{-- Details card --}}
         <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6 space-y-4 text-sm">
             <h2 class="font-semibold text-slate-800">Application Details</h2>
@@ -162,6 +186,62 @@
                     </div>
                 </dl>
             </div>
+            @endif
+        </div>
+
+        {{-- Document Verification Checklist --}}
+        @php
+            $ver = $applicant->verification;
+            $docLabels = [
+                'doc_form_137'       => 'Form 137 / Report Card',
+                'doc_psa_birth_cert' => 'PSA Birth Certificate',
+                'doc_good_moral'     => 'Certificate of Good Moral',
+                'doc_id_photos'      => '2×2 ID Photos',
+                'doc_medical_cert'   => 'Medical Certificate',
+                'doc_diploma'        => 'Diploma / Certificate of Graduation',
+            ];
+        @endphp
+        <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6 text-sm">
+            <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+                <h2 class="font-semibold text-slate-800">Document Requirements</h2>
+                @if($ver)
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
+                        @switch($ver->status)
+                            @case('verified')   bg-emerald-100 text-emerald-800 @break
+                            @case('rejected')   bg-rose-100 text-rose-800       @break
+                            @case('incomplete') bg-amber-100 text-amber-800     @break
+                            @default            bg-slate-100 text-slate-600
+                        @endswitch">
+                        {{ ucfirst($ver->status) }}
+                    </span>
+                @else
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500">Not Yet Started</span>
+                @endif
+            </div>
+            <ul class="space-y-2">
+                @foreach($docLabels as $key => $label)
+                    @php $submitted = $ver && $ver->{$key}; @endphp
+                    <li class="flex items-center gap-3">
+                        <span class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold
+                            {{ $submitted ? 'bg-emerald-500 text-white' : 'border-2 border-slate-300 text-transparent' }}">
+                            ✓
+                        </span>
+                        <span class="{{ $submitted ? 'text-slate-800' : 'text-slate-400' }}">{{ $label }}</span>
+                        @if($submitted)
+                            <span class="ml-auto text-xs text-emerald-600 font-medium">Submitted</span>
+                        @else
+                            <span class="ml-auto text-xs text-slate-400">Pending</span>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+            @if($ver && $ver->remarks)
+                <div class="mt-4 rounded bg-amber-50 border border-amber-200 text-amber-800 px-3 py-2 text-xs">
+                    <span class="font-semibold">Registrar Note:</span> {{ $ver->remarks }}
+                </div>
+            @endif
+            @if(!$ver)
+                <p class="mt-3 text-xs text-slate-400">Documents are checked by the registrar during verification. Nothing to submit on your end — just bring originals.</p>
             @endif
         </div>
 

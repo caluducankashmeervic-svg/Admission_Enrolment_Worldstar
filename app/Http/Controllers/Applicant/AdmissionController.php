@@ -28,6 +28,7 @@ class AdmissionController extends Controller
         $applicant = Applicant::with([
             'preferredCourse', 'academicTerm',
             'latestExamResult.examSchedule', 'enrollment.section',
+            'verification',
         ])
             ->where('user_id', $user->id)
             ->latest()
