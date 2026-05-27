@@ -38,7 +38,6 @@
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.dashboard*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Dashboard</a>
                         <a href="{{ route('admin.accreditations.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.accreditations.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Accreditations</a>
-                        <a href="{{ route('admin.safe-space.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.safe-space.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Safe Space</a>
                         <a href="{{ route('admin.announcements.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.announcements.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.applicants.*') || request()->routeIs('registrar.verify.*') || request()->routeIs('registrar.approve') || request()->routeIs('registrar.reject') ? 'text-[#1D4ED8] font-semibold' : '' }}">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.enrollment*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Enrollees</a>
@@ -290,7 +289,6 @@
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Dashboard</a>
                         <a href="{{ route('admin.accreditations.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Accreditations</a>
-                        <a href="{{ route('admin.safe-space.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Safe Space</a>
                         <a href="{{ route('admin.announcements.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollees</a>

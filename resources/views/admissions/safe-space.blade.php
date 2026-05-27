@@ -22,14 +22,9 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($items as $item)
                 <article class="border border-slate-200 rounded-lg overflow-hidden bg-white">
-                    <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->title ?: 'Safe Space event photo' }}" class="w-full h-52 object-cover">
+                    <img src="{{ $item['image_url'] }}" alt="{{ $item['title'] ?: 'Safe Space event photo' }}" class="w-full h-52 object-cover">
                     <div class="px-4 py-3 space-y-1">
-                        <p class="text-sm font-medium text-slate-700">{{ $item->title ?: 'Safe Space Event' }}</p>
-                        @if($item->event_at)
-                            <p class="text-xs text-slate-500">{{ $item->event_at->format('F d, Y g:i A') }}</p>
-                        @else
-                            <p class="text-xs text-slate-400">Date/time not specified</p>
-                        @endif
+                        <p class="text-sm font-medium text-slate-700">{{ $item['title'] ?: 'Safe Space Event' }}</p>
                     </div>
                 </article>
             @endforeach
