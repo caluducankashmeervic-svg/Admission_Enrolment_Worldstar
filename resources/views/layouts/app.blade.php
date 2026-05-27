@@ -49,9 +49,9 @@
                         <a href="{{ route('admin.audit.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.audit.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Audit</a>
                         <a href="{{ route('admin.trash.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.trash.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Trash</a>
                     @elseif(auth()->user()->isRegistrar())
-                        <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
-                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollees</a>
-                        <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8]">Exams</a>
+                        <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.applicants.*') || request()->routeIs('registrar.verify.*') || request()->routeIs('registrar.approve') || request()->routeIs('registrar.reject') ? 'text-[#1D4ED8] font-semibold' : '' }}">Applicants</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.enrollment*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Enrollees</a>
+                        <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('exam.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Exams</a>
                     @else
                         <a href="{{ route('applicant.admission.create') }}" class="hover:text-[#1D4ED8]">My Admission</a>
                         <a href="{{ route('applicant.my-status') }}" class="hover:text-[#1D4ED8]">Check Status</a>

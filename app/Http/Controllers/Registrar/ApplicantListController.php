@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Registrar;
 use App\Http\Controllers\Controller;
 use App\Models\AcademicTerm;
 use App\Models\Applicant;
+use App\Models\AuditLog;
 use App\Models\Course;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApplicantListController extends Controller
 {
@@ -53,36 +54,60 @@ class ApplicantListController extends Controller
         ]);
     }
 
-    public function export(Request $request): StreamedResponse
+    public function export(Request $request): Response
     {
         $filename = 'applicants-' . now()->format('Ymd-His') . '.csv';
 
-        return response()->streamDownload(function () use ($request) {
-            $out = fopen('php://output', 'w');
-            fputcsv($out, [
-                'Reference', 'Last Name', 'First Name', 'Middle Name',
-                'Gender', 'Birth Date', 'Mobile', 'Email',
-                'Course', 'Term', 'Status',
-                'Latest Exam Score', 'Latest Exam Result', 'Registered At',
-            ]);
+        $out = fopen('php://temp', 'w+');
+        fwrite($out, "\xEF\xBB\xBF");
 
-            $this->baseQuery($request)->orderBy('id')->chunk(500, function ($rows) use ($out) {
-                foreach ($rows as $a) {
-                    fputcsv($out, [
-                        $a->reference_code,
-                        $a->last_name, $a->first_name, $a->middle_name,
-                        $a->gender, optional($a->birth_date)->format('Y-m-d'),
-                        $a->mobile, $a->email,
-                        $a->preferredCourse?->code,
-                        trim(($a->academicTerm?->school_year ?? '') . ' ' . ($a->academicTerm?->semester ?? '')),
-                        $a->status,
-                        $a->latestExamResult?->score,
-                        $a->latestExamResult?->result,
-                        $a->created_at?->format('Y-m-d H:i'),
-                    ]);
-                }
-            });
-            fclose($out);
-        }, $filename, ['Content-Type' => 'text/csv; charset=UTF-8']);
+        fputcsv($out, [
+            'Reference', 'Last Name', 'First Name', 'Middle Name',
+            'Gender', 'Birth Date', 'Mobile', 'Email',
+            'Course', 'Term', 'Status',
+            'Latest Exam Score', 'Latest Exam Result', 'Registered At',
+        ]);
+
+        $this->baseQuery($request)->orderBy('id')->chunk(500, function ($rows) use ($out) {
+            foreach ($rows as $a) {
+                fputcsv($out, [
+                    $a->reference_code,
+                    $a->last_name, $a->first_name, $a->middle_name,
+                    $a->gender, optional($a->birth_date)->format('Y-m-d'),
+                    $a->mobile, $a->email,
+                    $a->preferredCourse?->code,
+                    trim(($a->academicTerm?->school_year ?? '') . ' ' . ($a->academicTerm?->semester ?? '')),
+                    $a->status,
+                    $a->latestExamResult?->score,
+                    $a->latestExamResult?->result,
+                    $a->created_at?->format('Y-m-d H:i'),
+                ]);
+            }
+        });
+
+        rewind($out);
+        $csv = stream_get_contents($out) ?: '';
+        fclose($out);
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
+    }
+
+    public function destroy(Request $request, Applicant $applicant)
+    {
+        if ($applicant->status === Applicant::STATUS_ENROLLED) {
+            return back()->withErrors(['delete' => 'Enrolled students cannot be deleted from this page.']);
+        }
+
+        AuditLog::record('registrar.applicant.delete', $applicant, [
+            'reference_code' => $applicant->reference_code,
+            'deleted_by' => $request->user()->id,
+        ]);
+
+        $applicant->delete();
+
+        return back()->with('status', 'Applicant deleted.');
     }
 }

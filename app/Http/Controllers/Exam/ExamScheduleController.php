@@ -45,6 +45,43 @@ class ExamScheduleController extends Controller
         return back()->with('status', "Exam batch {$schedule->batch_code} created.");
     }
 
+    public function update(Request $request, ExamSchedule $schedule)
+    {
+        $data = $request->validate([
+            'batch_code'    => ['required', 'string', 'max:30', 'unique:exam_schedules,batch_code,' . $schedule->id],
+            'exam_datetime' => ['required', 'date'],
+            'venue'         => ['required', 'string', 'max:150'],
+            'capacity'      => ['required', 'integer', 'min:1', 'max:1000'],
+            'remarks'       => ['nullable', 'string', 'max:500'],
+        ]);
+
+        if ((int) $data['capacity'] < (int) $schedule->assigned_count) {
+            return back()->withErrors([
+                'capacity' => 'Capacity cannot be lower than currently assigned applicants (' . $schedule->assigned_count . ').',
+            ]);
+        }
+
+        $schedule->update($data);
+        AuditLog::record('exam.schedule.update', $schedule);
+
+        return back()->with('status', "Exam batch {$schedule->batch_code} updated.");
+    }
+
+    public function destroy(ExamSchedule $schedule)
+    {
+        if ($schedule->assigned_count > 0) {
+            return back()->withErrors([
+                'delete' => 'Cannot delete a schedule with assigned applicants. Remove/move applicants first.',
+            ]);
+        }
+
+        $batchCode = $schedule->batch_code;
+        AuditLog::record('exam.schedule.delete', $schedule);
+        $schedule->delete();
+
+        return back()->with('status', "Exam batch {$batchCode} deleted.");
+    }
+
     public function assignBatch(Request $request, ExamSchedule $schedule)
     {
         // Deprecated: auto-assignment now happens on registrar approval.

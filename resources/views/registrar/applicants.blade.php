@@ -21,6 +21,10 @@
     </a>
 @endif
 
+@error('delete')
+    <div class="mt-4 rounded bg-rose-50 border border-rose-200 text-rose-800 px-3 py-2 text-sm">{{ $message }}</div>
+@enderror
+
 <form method="GET" class="mt-4 grid md:grid-cols-5 gap-2">
     <input name="q" value="{{ $filter['q'] ?? '' }}" placeholder="Ref / name / mobile" class="border rounded px-3 py-2">
     <select name="status" class="border rounded px-3 py-2">
@@ -90,14 +94,24 @@
                         @else — @endif
                     </td>
                     <td class="px-3 py-2">
-                        @if($a->status === 'pre_registered')
-                            <a href="{{ route('registrar.verify.show', $a) }}"
-                               class="inline-block bg-amber-600 text-white px-3 py-1 rounded hover:bg-amber-700 text-xs">
-                                Review &amp; Approve →
-                            </a>
-                        @else
-                            <a href="{{ route('registrar.verify.show', $a) }}" class="text-blue-600 hover:underline text-xs">Open →</a>
-                        @endif
+                        <div class="flex items-center gap-3">
+                            @if($a->status === 'pre_registered')
+                                <a href="{{ route('registrar.verify.show', $a) }}"
+                                   class="inline-block bg-amber-600 text-white px-3 py-1 rounded hover:bg-amber-700 text-xs">
+                                    Review &amp; Approve →
+                                </a>
+                            @else
+                                <a href="{{ route('registrar.verify.show', $a) }}" class="text-blue-600 hover:underline text-xs">Open →</a>
+                            @endif
+
+                            @if($a->status !== \App\Models\Applicant::STATUS_ENROLLED)
+                                <form method="POST" action="{{ route('registrar.applicants.destroy', $a) }}"
+                                      onsubmit="return confirm('Delete applicant {{ addslashes($a->reference_code) }} permanently?')">
+                                    @csrf @method('DELETE')
+                                    <button class="text-rose-600 hover:underline text-xs">Delete</button>
+                                </form>
+                            @endif
+                        </div>
                     </td>
                 </tr>
             @empty

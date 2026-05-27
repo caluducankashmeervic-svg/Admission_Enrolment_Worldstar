@@ -37,6 +37,45 @@
                 </summary>
 
                 <div class="border-t border-slate-100 px-4 py-3">
+                    <div class="mb-3 border border-slate-200 rounded p-3 bg-slate-50">
+                        <form method="POST" action="{{ route('exam.schedule.update', $s) }}" class="grid md:grid-cols-5 gap-2 items-end">
+                            @csrf @method('PUT')
+                            <div>
+                                <label class="text-xs text-slate-500 block mb-1">Batch Code</label>
+                                <input name="batch_code" value="{{ $s->batch_code }}" required class="w-full border rounded px-2 py-1.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-500 block mb-1">Date & Time</label>
+                                <input type="datetime-local" name="exam_datetime"
+                                       value="{{ $s->exam_datetime->format('Y-m-d\\TH:i') }}"
+                                       required class="w-full border rounded px-2 py-1.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-500 block mb-1">Venue</label>
+                                <input name="venue" value="{{ $s->venue }}" required class="w-full border rounded px-2 py-1.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-500 block mb-1">Capacity</label>
+                                <input type="number" min="1" max="1000" name="capacity" value="{{ $s->capacity }}" required class="w-full border rounded px-2 py-1.5 text-sm">
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="bg-blue-600 text-white text-sm px-3 py-1.5 rounded hover:bg-blue-700">Save</button>
+                            </div>
+                        </form>
+                        <form method="POST" action="{{ route('exam.schedule.destroy', $s) }}"
+                              onsubmit="return confirm('Delete batch {{ addslashes($s->batch_code) }}?')"
+                              class="mt-2">
+                            @csrf @method('DELETE')
+                            <button class="bg-rose-600 text-white text-sm px-3 py-1.5 rounded hover:bg-rose-700"
+                                    {{ $s->assigned_count > 0 ? 'disabled' : '' }}>
+                                Delete Batch
+                            </button>
+                        </form>
+                        @if($s->assigned_count > 0)
+                            <p class="text-xs text-slate-500 mt-2">Delete is disabled while applicants are assigned to this batch.</p>
+                        @endif
+                    </div>
+
                     @php $roster = $s->examResults; @endphp
                     @if($roster->isEmpty())
                         <p class="text-sm text-slate-500">No applicants assigned to this batch yet.</p>

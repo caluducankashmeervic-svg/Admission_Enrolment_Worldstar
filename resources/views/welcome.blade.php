@@ -265,10 +265,10 @@
 
             {{-- Circular logo + school name --}}
             <div class="flex flex-col items-center gap-3 mt-4">
-                <div class="inline-flex rounded-full bg-white p-4 shadow-md">
+                <div class="inline-flex rounded-full bg-white p-0 shadow-md overflow-hidden">
                     <img src="{{ asset('images/image.png') }}"
                          alt="Worldstar College Logo"
-                         class="w-36 h-36 object-contain">
+                         class="w-40 h-40 object-cover scale-[1.14]">
                 </div>
 
                 <div class="text-center">

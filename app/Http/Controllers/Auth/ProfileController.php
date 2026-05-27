@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Applicant;
 use App\Models\AuditLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -45,8 +46,35 @@ class ProfileController extends Controller
         }
 
         $user->update($payload);
+
+        // Keep applicant records in sync so registrar-facing lists reflect name changes.
+        if ($user->role === 'applicant') {
+            [$firstName, $middleName, $lastName] = $this->splitDisplayName($payload['name']);
+
+            Applicant::where('user_id', $user->id)->update([
+                'first_name'  => $firstName,
+                'middle_name' => $middleName,
+                'last_name'   => $lastName,
+            ]);
+        }
+
         AuditLog::record('profile.update', $user);
 
         return back()->with('status', 'Profile updated.');
+    }
+
+    private function splitDisplayName(string $name): array
+    {
+        $parts = preg_split('/\s+/', trim($name)) ?: [];
+
+        if (count($parts) <= 1) {
+            return [$parts[0] ?? $name, null, '-'];
+        }
+
+        $first = array_shift($parts);
+        $last = array_pop($parts);
+        $middle = count($parts) ? implode(' ', $parts) : null;
+
+        return [$first, $middle, $last];
     }
 }

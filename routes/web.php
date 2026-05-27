@@ -159,6 +159,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 Route::middleware(['auth', 'role:admin,registrar'])->prefix('exam')->name('exam.')->group(function () {
     Route::get('/schedule',  [ExamScheduleController::class, 'index'])->name('schedule.index');
     Route::post('/schedule', [ExamScheduleController::class, 'store'])->name('schedule.store');
+    Route::put('/schedule/{schedule}', [ExamScheduleController::class, 'update'])->name('schedule.update');
+    Route::delete('/schedule/{schedule}', [ExamScheduleController::class, 'destroy'])->name('schedule.destroy');
 
     // Manual roster overrides (Q2). Auto-assignment is performed on registrar approval.
     Route::post('/schedule/{schedule}/applicants/{applicant}/remove',
@@ -182,6 +184,7 @@ Route::middleware(['auth', 'role:registrar,admin'])->prefix('registrar')->name('
 
     Route::get('/applicants',              [ApplicantListController::class, 'index'])->name('applicants.index');
     Route::get('/applicants/export',       [ApplicantListController::class, 'export'])->name('applicants.export');
+    Route::delete('/applicants/{applicant}', [ApplicantListController::class, 'destroy'])->name('applicants.destroy');
     Route::get('/applicants/{applicant}/edit',  [ApplicantEditController::class, 'edit'])->name('applicants.edit');
     Route::put('/applicants/{applicant}',       [ApplicantEditController::class, 'update'])->name('applicants.update');
     Route::get('/applicants/{applicant}/pre-reg-pdf', [PreRegistrationPdfController::class, 'download'])->name('applicants.pre-reg-pdf');
