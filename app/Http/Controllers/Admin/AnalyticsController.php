@@ -8,6 +8,7 @@ use App\Models\Applicant;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Section;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -16,9 +17,14 @@ class AnalyticsController extends Controller
     public function dashboard()
     {
         $term = AcademicTerm::where('is_active', true)->latest('school_year')->first();
+        [$selectedTermId, $selectedTermLabel] = $this->resolveTermFilter(request());
+
         return view('admin.dashboard', [
-            'term'    => $term,
-            'summary' => $this->summary($term?->id),
+            'term'              => $term,
+            'summary'           => $this->summary($selectedTermId),
+            'terms'             => AcademicTerm::orderByDesc('school_year')->orderBy('semester')->get(),
+            'selectedTermId'    => $selectedTermId,
+            'selectedTermLabel' => $selectedTermLabel,
         ]);
     }
 
@@ -33,8 +39,10 @@ class AnalyticsController extends Controller
         ];
     }
 
-    public function trends(): JsonResponse
+    public function trends(Request $request): JsonResponse
     {
+        [$termId] = $this->resolveTermFilter($request);
+
         $driver = DB::connection()->getDriverName();
         $fmt = $driver === 'sqlite'
             ? "strftime('%Y-%m', created_at)"
@@ -44,9 +52,11 @@ class AnalyticsController extends Controller
             : "DATE_FORMAT(enrolled_at, '%Y-%m')";
 
         $applicants = Applicant::select(DB::raw("$fmt as ym"), DB::raw('COUNT(*) as c'))
+            ->when($termId, fn ($q) => $q->where('academic_term_id', $termId))
             ->groupBy('ym')->orderBy('ym')->pluck('c', 'ym');
 
         $enrolled = Enrollment::select(DB::raw("$fmtEnrolled as ym"), DB::raw('COUNT(*) as c'))
+            ->when($termId, fn ($q) => $q->where('academic_term_id', $termId))
             ->where('status', 'finalized')
             ->groupBy('ym')->orderBy('ym')->pluck('c', 'ym');
 
@@ -59,14 +69,16 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function courseCapacities(): JsonResponse
+    public function courseCapacities(Request $request): JsonResponse
     {
-        $term = AcademicTerm::where('is_active', true)->latest('school_year')->first();
+        [$termId] = $this->resolveTermFilter($request);
 
         $rows = Course::where('is_active', true)
-            ->withCount(['enrollments as enrolled_count' => function ($q) use ($term) {
+            ->withCount(['enrollments as enrolled_count' => function ($q) use ($termId) {
                 $q->where('status', 'finalized');
-                if ($term) $q->where('academic_term_id', $term->id);
+                if ($termId) {
+                    $q->where('academic_term_id', $termId);
+                }
             }])
             ->orderBy('code')->get();
 
@@ -77,11 +89,14 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function demographics(): JsonResponse
+    public function demographics(Request $request): JsonResponse
     {
+        [$termId] = $this->resolveTermFilter($request);
+
         $driver = DB::connection()->getDriverName();
 
         $gender = Applicant::select('gender', DB::raw('COUNT(*) as c'))
+            ->when($termId, fn ($q) => $q->where('academic_term_id', $termId))
             ->groupBy('gender')->pluck('c', 'gender');
 
         $bucketExpr = $driver === 'sqlite'
@@ -99,7 +114,8 @@ class AnalyticsController extends Controller
         $ages = Applicant::select(
             DB::raw("$bucketExpr as bucket"),
             DB::raw('COUNT(*) as c')
-        )->groupBy('bucket')->pluck('c', 'bucket');
+        )->when($termId, fn ($q) => $q->where('academic_term_id', $termId))
+            ->groupBy('bucket')->pluck('c', 'bucket');
 
         return response()->json([
             'gender' => [
@@ -111,5 +127,27 @@ class AnalyticsController extends Controller
                 'data'   => $ages->values(),
             ],
         ]);
+    }
+
+    private function resolveTermFilter(Request $request): array
+    {
+        $raw = (string) $request->query('term', 'active');
+
+        if ($raw === 'all') {
+            return [null, 'All Terms'];
+        }
+
+        if ($raw === 'active' || $raw === '') {
+            $active = AcademicTerm::where('is_active', true)->latest('school_year')->first();
+            return [$active?->id, $active ? ($active->school_year . ' ' . $active->semester) : 'No Active Term'];
+        }
+
+        $term = AcademicTerm::find((int) $raw);
+        if (! $term) {
+            $active = AcademicTerm::where('is_active', true)->latest('school_year')->first();
+            return [$active?->id, $active ? ($active->school_year . ' ' . $active->semester) : 'No Active Term'];
+        }
+
+        return [$term->id, $term->school_year . ' ' . $term->semester];
     }
 }

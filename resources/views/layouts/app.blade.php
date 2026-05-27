@@ -34,7 +34,7 @@
 
             @auth
                 {{-- Authenticated nav (desktop) --}}
-                <nav class="hidden md:flex items-center gap-3 text-sm ml-auto">
+                <nav class="hidden md:flex items-center gap-2 text-[15px] ml-auto">
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.dashboard*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Dashboard</a>
                         <a href="{{ route('admin.accreditations.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.accreditations.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Accreditations</a>
@@ -57,14 +57,14 @@
                         <a href="{{ route('applicant.my-status') }}" class="hover:text-[#1D4ED8]">Check Status</a>
                     @endif
                     <a href="{{ route('profile.edit') }}"
-                       class="ml-2 pl-2 border-l border-slate-200 flex items-center gap-2 text-slate-500 hover:text-[#1D4ED8]">
+                       class="ml-3 pl-3 border-l border-slate-200 flex items-center gap-2 text-slate-500 hover:text-[#1D4ED8]">
                         <img src="{{ auth()->user()->profile_photo_url }}"
                              class="w-7 h-7 rounded-full object-cover border border-slate-200" alt="">
-                        <span class="max-w-[110px] truncate">{{ auth()->user()->name }}</span>
+                        <span class="max-w-[170px] leading-tight whitespace-normal break-words">{{ auth()->user()->name }}</span>
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button class="ml-2 text-rose-600 hover:underline">Logout</button>
+                        <button class="ml-3 text-rose-600 hover:underline">Logout</button>
                     </form>
                 </nav>
                 {{-- Mobile hamburger (auth users) --}}

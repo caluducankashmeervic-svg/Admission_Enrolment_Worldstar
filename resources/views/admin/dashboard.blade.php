@@ -16,7 +16,29 @@
                 Active term: <strong>{{ $term->school_year }} — {{ $term->semester }} Sem</strong>
             </p>
         @endif
+        <p class="text-sm text-white/85 mt-1">
+            Viewing: <strong>{{ $selectedTermLabel }}</strong>
+        </p>
     </div>
+</section>
+
+<section class="bg-white border border-slate-200 rounded-lg shadow-sm p-4 mt-4">
+    <form method="GET" class="flex flex-wrap items-end gap-3">
+        <div>
+            <label class="text-xs uppercase tracking-wide text-slate-500">Dashboard Term Filter</label>
+            <select name="term" class="mt-1 border rounded px-3 py-2 min-w-[220px]">
+                <option value="active" @selected(request('term', 'active') === 'active')>Active Term</option>
+                <option value="all" @selected(request('term') === 'all')>All Terms</option>
+                @foreach($terms as $t)
+                    <option value="{{ $t->id }}" @selected((string) request('term') === (string) $t->id)>
+                        {{ $t->school_year }} {{ $t->semester }}{{ $t->is_active ? ' (Active)' : '' }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Apply</button>
+        <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 text-slate-600 hover:underline">Reset</a>
+    </form>
 </section>
 
 <section class="grid md:grid-cols-4 gap-4 mt-5">
@@ -56,11 +78,15 @@
 <script>
 async function j(url){ const r = await fetch(url); return r.json(); }
 
+const params = new URLSearchParams(window.location.search);
+const termParam = params.get('term') || 'active';
+const analyticsQs = '?term=' + encodeURIComponent(termParam);
+
 (async () => {
     const [trends, caps, demo] = await Promise.all([
-        j('{{ route('admin.analytics.trends') }}'),
-        j('{{ route('admin.analytics.capacities') }}'),
-        j('{{ route('admin.analytics.demographics') }}'),
+        j('{{ route('admin.analytics.trends') }}' + analyticsQs),
+        j('{{ route('admin.analytics.capacities') }}' + analyticsQs),
+        j('{{ route('admin.analytics.demographics') }}' + analyticsQs),
     ]);
 
     new Chart(document.getElementById('trendsChart'), {

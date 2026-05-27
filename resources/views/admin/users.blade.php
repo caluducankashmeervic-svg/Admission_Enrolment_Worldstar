@@ -18,8 +18,16 @@
 </form>
 
 <div class="grid lg:grid-cols-3 gap-5 mt-5">
-    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm overflow-x-auto">
-        <table class="min-w-[1060px] w-full text-sm">
+    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+        <table class="w-full text-sm table-fixed">
+            <colgroup>
+                <col class="w-[64px]">
+                <col class="w-[30%]">
+                <col class="w-[26%]">
+                <col class="w-[16%]">
+                <col class="w-[8%]">
+                <col class="w-[20%]">
+            </colgroup>
             <thead class="bg-slate-50 text-left text-slate-600">
                 <tr>
                     <th class="px-4 py-2">Photo</th>
@@ -27,9 +35,7 @@
                     <th class="px-4 py-2">Email</th>
                     <th class="px-4 py-2">Role</th>
                     <th class="px-4 py-2">Active</th>
-                    <th class="px-4 py-2">New Password</th>
-                    <th class="px-4 py-2"></th>
-                    <th class="px-4 py-2"></th>
+                    <th class="px-4 py-2">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,38 +47,44 @@
                                 <img src="{{ $u->profile_photo_url }}"
                                      class="w-10 h-10 rounded-full object-cover border border-slate-200" alt="">
                             </td>
-                            <td class="px-4 py-2"><input name="name" value="{{ $u->name }}" class="w-56 border rounded px-2 py-1"></td>
-                            <td class="px-4 py-2 text-slate-500">{{ $u->email }}</td>
+                            <td class="px-4 py-2"><input name="name" value="{{ $u->name }}" class="w-full border rounded px-2 py-1"></td>
+                            <td class="px-4 py-2 text-slate-500 truncate" title="{{ $u->email }}">{{ $u->email }}</td>
                             <td class="px-4 py-2">
-                                <select name="role" class="border rounded px-2 py-1">
+                                <select name="role" class="border rounded px-2 py-1 w-full">
                                     @foreach(['admin','registrar','applicant'] as $r)
                                         <option value="{{ $r }}" @selected($u->role===$r)>{{ ucfirst($r) }}</option>
                                     @endforeach
                                 </select>
                             </td>
                             <td class="px-4 py-2"><input type="checkbox" name="is_active" value="1" @checked($u->is_active)></td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2"><button class="text-blue-600 hover:underline">Save</button></td>
+                            <td class="px-4 py-2">
+                                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                                    <button class="text-blue-600 hover:underline">Save</button>
+                                    <button type="button" onclick="togglePassword('{{ $u->id }}')" class="text-amber-700 hover:underline">Change Password</button>
                         </form>
-                        <td class="px-4 py-2">
-                            <div class="flex items-center gap-3">
-                                <form method="POST" action="{{ route('admin.users.password', $u) }}" class="flex items-center gap-2">
-                                    @csrf @method('PUT')
-                                    <input type="password" name="password" minlength="8" required placeholder="min 8 chars" class="border rounded px-2 py-1 w-36">
-                                    <button class="text-amber-700 hover:underline text-sm">Change Password</button>
-                                </form>
-                                @if($u->id !== auth()->id())
-                                    <form method="POST" action="{{ route('admin.users.destroy', $u) }}"
-                                          onsubmit="return confirm('Delete user {{ addslashes($u->email) }}? This cannot be undone.')">
-                                        @csrf @method('DELETE')
-                                        <button class="text-rose-600 hover:underline text-sm">Delete</button>
-                                    </form>
-                                @endif
-                            </div>
+                                    @if($u->id !== auth()->id())
+                                        <form method="POST" action="{{ route('admin.users.destroy', $u) }}"
+                                              onsubmit="return confirm('Delete user {{ addslashes($u->email) }}? This cannot be undone.')">
+                                            @csrf @method('DELETE')
+                                            <button class="text-rose-600 hover:underline text-sm">Delete</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </td>
+                    </tr>
+                    <tr id="pwd-{{ $u->id }}" class="hidden border-t border-blue-100 bg-blue-50/40">
+                        <td colspan="6" class="px-4 py-3">
+                            <form method="POST" action="{{ route('admin.users.password', $u) }}" class="flex flex-wrap items-center gap-3">
+                                @csrf @method('PUT')
+                                <label class="text-sm text-slate-600">New password for <strong>{{ $u->email }}</strong></label>
+                                <input type="password" name="password" minlength="8" required placeholder="Minimum 8 characters" class="border rounded px-3 py-1.5 w-64">
+                                <button class="bg-amber-600 text-white text-sm px-3 py-1.5 rounded hover:bg-amber-700">Update Password</button>
+                                <button type="button" onclick="togglePassword('{{ $u->id }}')" class="text-slate-600 hover:underline text-sm">Cancel</button>
+                            </form>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">No users.</td></tr>
+                    <tr><td colspan="6" class="px-4 py-8 text-center text-slate-500">No users.</td></tr>
                 @endforelse
             </tbody>
         </table>
@@ -99,4 +111,13 @@
         </form>
     </div>
 </div>
+
+<script>
+function togglePassword(id) {
+    const row = document.getElementById('pwd-' + id);
+    if (row) {
+        row.classList.toggle('hidden');
+    }
+}
+</script>
 @endsection
