@@ -21,11 +21,7 @@ class Announcement extends Model
 
     public function scopePublished(Builder $query): Builder
     {
-        return $query
-            ->where('is_active', true)
-            ->where(function (Builder $builder) {
-                $builder->whereNull('published_at')
-                    ->orWhere('published_at', '<=', now());
-            });
+        // Public page should display all active announcements immediately.
+        return $query->where('is_active', true);
     }
 }
