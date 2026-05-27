@@ -2,9 +2,9 @@
 @section('title', 'Core Values')
 
 @section('content')
-<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-lg shadow-sm p-8 mt-6">
-    <div class="border-l-4 border-amber-400 pl-4 mb-8">
-        <h1 class="text-3xl font-bold text-[#1D4ED8] tracking-wide">Core Values</h1>
+<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-lg shadow-sm p-5 md:p-8 mt-4 md:mt-6">
+    <div class="border-l-4 border-amber-400 pl-3 md:pl-4 mb-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-[#1D4ED8] tracking-wide">Core Values</h1>
         <p class="text-sm text-slate-500 mt-1">W.C.S.T. — Wisdom · Compassion · Spirituality · Teamwork</p>
     </div>
 
@@ -16,10 +16,10 @@
             ['T', 'eamwork',   'We emphasize collaboration, respect, communication, and the ability to work effectively with others.'],
         ] as [$initial, $rest, $desc])
             <div class="border border-slate-200 rounded-lg p-5 hover:border-[#1D4ED8] transition">
-                <h3 class="text-2xl font-bold text-slate-800 mb-2">
+                <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-2">
                     <span class="text-[#1D4ED8]">{{ $initial }}</span>{{ $rest }}
                 </h3>
-                <p class="text-[15px] leading-relaxed text-slate-700">{{ $desc }}</p>
+                <p class="text-sm md:text-[15px] leading-relaxed text-slate-700">{{ $desc }}</p>
             </div>
         @endforeach
     </div>

@@ -2,13 +2,13 @@
 @section('title', 'Philosophy')
 
 @section('content')
-<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-lg shadow-sm p-8 mt-6">
-    <div class="border-l-4 border-amber-400 pl-4 mb-6">
-        <h1 class="text-3xl font-bold text-[#1D4ED8] tracking-wide">Philosophy</h1>
+<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-lg shadow-sm p-5 md:p-8 mt-4 md:mt-6">
+    <div class="border-l-4 border-amber-400 pl-3 md:pl-4 mb-6">
+        <h1 class="text-2xl md:text-3xl font-bold text-[#1D4ED8] tracking-wide">Philosophy</h1>
         <p class="text-sm text-slate-500 mt-1">The guiding principle of Worldstar College</p>
     </div>
 
-    <div class="prose prose-slate max-w-none text-[15px] leading-relaxed text-slate-700 text-justify">
+    <div class="prose prose-slate max-w-none text-sm md:text-[15px] leading-relaxed text-slate-700 text-justify">
         <p>
             The institution believes that the holistic development of the students is the goal.
             Apart from educational excellence, the school aims to provide graduates who are
