@@ -252,28 +252,23 @@
                 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
 
         {{-- ── COLUMN 1: Branding & Social Icons ── --}}
-        <div class="flex flex-col items-start gap-7">
+        <div class="flex flex-col items-center gap-6">
 
             {{-- Circular logo + school name --}}
-            <div class="flex flex-col items-center gap-3 self-start">
+            <div class="flex flex-col items-center gap-3 mt-4">
                 <img src="{{ asset('images/image.png') }}"
                      alt="Worldstar College Logo"
-                     class="w-28 h-28 object-contain">
+                     class="w-40 h-40 object-contain">
 
                 <div class="text-center">
-                    <p class="text-white font-bold tracking-[0.16em] text-[11px]
-                               uppercase leading-snug">
-                        WORLDSTAR COLLEGE
-                    </p>
-                    <p class="text-white/60 text-[10px] tracking-wider italic mt-0.5"
-                       style="font-family: Georgia, 'Times New Roman', serif;">
-                        of Science and Technology
+                    <p class="text-white font-extrabold text-[13px] leading-snug">
+                        Worldstar College of Science and Technology, Inc.
                     </p>
                 </div>
             </div>
 
             {{-- Social icons row — Facebook only --}}
-            <div class="flex items-center gap-3">
+            <div class="flex items-center justify-center gap-3">
                 <a href="https://www.facebook.com/WCST2016" title="Facebook" target="_blank" rel="noopener noreferrer"
                    class="w-10 h-10 rounded-full border border-white
                           flex items-center justify-center text-white

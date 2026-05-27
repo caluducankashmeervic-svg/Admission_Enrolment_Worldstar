@@ -8,7 +8,7 @@
         <p class="text-sm text-slate-500 mt-1">The guiding principle of Worldstar College</p>
     </div>
 
-    <div class="prose prose-slate max-w-none text-[15px] leading-relaxed text-slate-700">
+    <div class="prose prose-slate max-w-none text-[15px] leading-relaxed text-slate-700 text-justify">
         <p>
             The institution believes that the holistic development of the students is the goal.
             Apart from educational excellence, the school aims to provide graduates who are

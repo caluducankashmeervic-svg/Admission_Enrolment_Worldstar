@@ -8,7 +8,7 @@
         <p class="text-sm text-slate-500 mt-1">The Story of Worldstar College of Science and Technology</p>
     </div>
 
-    <div class="prose prose-slate max-w-none text-[15px] leading-relaxed text-slate-700 space-y-4">
+    <div class="prose prose-slate max-w-none text-[15px] leading-relaxed text-slate-700 space-y-4 text-justify">
         <p>
             Ms. Jocelyn O. Lenon, the founder, is the first to establish a Computer Industry in
             Mallig Region.

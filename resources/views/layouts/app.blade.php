@@ -148,7 +148,6 @@
                                     <ul class="space-y-3">
                                         @foreach ([
                                             ['Senior High School', '#shs'],
-                                            ['Transferees', '#transferees'],
                                             ['TESDA Diploma Courses', '#tesda'],
                                         ] as [$label, $href])
                                             <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
