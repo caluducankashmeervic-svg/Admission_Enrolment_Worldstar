@@ -287,10 +287,63 @@
                         </form>
                     </div>
                 @else
-                    <a href="{{ route('about.story') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">About WCST</a>
-                    <a href="{{ route('applicant.pre-register.choose') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Apply Now</a>
-                    <a href="{{ route('applicant.code.form') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Reference Code</a>
-                    <a href="{{ route('about.contact') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Contact Us</a>
+                    <details class="group border-b border-slate-100" open>
+                        <summary class="list-none cursor-pointer px-3 py-3.5 flex items-center justify-between font-semibold text-slate-800">
+                            About
+                            <svg class="w-4 h-4 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="pb-3 px-2 space-y-0.5">
+                            <a href="{{ route('about.story') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">The Story of Worldstar</a>
+                            <a href="{{ route('about.vision-mission') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Vision and Mission</a>
+                            <a href="{{ route('about.core-values') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Core Values</a>
+                            <a href="{{ route('about.philosophy') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Philosophy</a>
+                            <a href="{{ route('about.contact') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Contact Us</a>
+                        </div>
+                    </details>
+
+                    <details class="group border-b border-slate-100">
+                        <summary class="list-none cursor-pointer px-3 py-3.5 flex items-center justify-between font-semibold text-slate-800">
+                            Admissions
+                            <svg class="w-4 h-4 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="pb-3 px-2 space-y-0.5">
+                            <a href="{{ route('applicant.pre-register.choose') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Pre-registration Form</a>
+                            <a href="{{ route('applicant.code.form') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Reference Code Apply</a>
+                            <a href="{{ route('login') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Applicant Portal</a>
+                            <a href="{{ route('admissions.senior-high-school') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Senior High School</a>
+                            <a href="{{ route('admissions.tesda-diploma-courses') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">TESDA Diploma Courses</a>
+                            <a href="{{ route('admissions.scholarship') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Scholarship</a>
+                            <a href="{{ route('admissions.working-student') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Apply as Working Student</a>
+                            <a href="/#questions" class="block px-3 py-2.5 rounded hover:bg-slate-100">Enrollment FAQs</a>
+                        </div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="list-none cursor-pointer px-3 py-3.5 flex items-center justify-between font-semibold text-slate-800">
+                            Academics
+                            <svg class="w-4 h-4 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="pb-3 px-2 space-y-0.5">
+                            <a href="{{ route('academics.program', 'arts-social-sciences-humanities') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Arts, Social Sciences, and Humanities</a>
+                            <a href="{{ route('academics.program', 'business-and-entrepreneurship') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Business and Entrepreneurship</a>
+                            <a href="{{ route('academics.program', 'science-technology-engineering-mathematics') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">STEM (Health & Non-Health)</a>
+                            <a href="{{ route('academics.program', 'automotive-small-engine-technologies') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Automotive and Small Engine Technologies</a>
+                            <a href="{{ route('academics.program', 'business-hospitality-tourism') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Business, Hospitality, and Tourism Bundle</a>
+                            <a href="{{ route('academics.program', 'creative-arts-design-technologies') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Creative Arts and Design Technologies</a>
+                            <a href="{{ route('academics.program', 'ict-computer-programming-technologies') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">ICT Support and Computer Programming</a>
+                            <a href="{{ route('academics.program', 'industrial-arts') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Industrial Arts Bundle</a>
+                            <a href="{{ route('academics.program', 'cst-computer-science-technology') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">CST (Computer Science Technology)</a>
+                            <a href="{{ route('academics.program', 'cet-computer-engineering-technology') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">CET (Computer Engineering Technology)</a>
+                            <a href="{{ route('academics.program', 'eet-electronics-engineering-technology') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">EET (Electronics Engineering Technology)</a>
+                            <a href="{{ route('academics.program', 'ict-information-communications-technology') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">ICT (Information and Communications Technology)</a>
+                        </div>
+                    </details>
                 @endauth
             </nav>
         </div>
@@ -462,6 +515,11 @@
         function openMenu()  { isOpen = true;  nav.classList.remove('hidden'); hIcon && hIcon.classList.add('hidden');    xIcon && xIcon.classList.remove('hidden'); }
         function closeMenu() { isOpen = false; nav.classList.add('hidden');    hIcon && hIcon.classList.remove('hidden'); xIcon && xIcon.classList.add('hidden'); }
         btn.addEventListener('click', function (e) { e.stopPropagation(); isOpen ? closeMenu() : openMenu(); });
+        nav.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                closeMenu();
+            });
+        });
         document.addEventListener('click', function (e) { if (isOpen && !nav.contains(e.target)) closeMenu(); });
         window.addEventListener('resize', function () { if (window.innerWidth >= 768) closeMenu(); });
     })();
