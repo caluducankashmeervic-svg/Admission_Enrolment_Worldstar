@@ -108,23 +108,6 @@
 </script>
 @endpush
 
-{{-- ============== INTRO ============== --}}
-<section id="about" class="bg-white">
-    <div class="max-w-3xl mx-auto px-6 py-10 text-center md:text-left">
-        <h2 class="text-blue-700 text-xl font-bold">For a better tomorrow</h2>
-        <p class="mt-3 text-slate-700 text-sm leading-relaxed">
-          Worldstar College of Science & Technology (formerly Isabela Colleges of Science & Technology) has been providing 25 years of quality yet affordable education in Region 2
-            <a href="#courses" class="text-blue-600 underline">future-focused degrees</a>, world-leading
-            sustainability <a href="#" class="text-blue-600 underline">research</a> and 5-star teaching.*
-        </p>
-        <p class="mt-3 text-slate-900 text-sm font-semibold">
-            In 2026 we invite you to discover the moments, research and people who have shaped Worldstar,
-            and celebrate with us at our 30<sup>th</sup> anniversary events.
-        </p>
-        <p class="mt-3 text-[11px] text-slate-500">*Good Universities Guide 2026</p>
-    </div>
-</section>
-
 {{-- ============== FEATURED BANNER (Explore campuses) ============== --}}
 <section class="bg-white">
     <div class="max-w-3xl mx-auto px-6 pb-8">
@@ -188,7 +171,7 @@
 <section id="questions" class="bg-white pb-6">
     <div class="max-w-4xl mx-auto px-6">
         <h3 class="font-bold text-slate-900 text-lg mb-4">Frequently Asked Questions</h3>
-        <div class="space-y-3 text-sm text-slate-700">
+        <div class="space-y-3 text-sm text-slate-700 text-justify">
             <details class="group border border-slate-200 rounded-md p-3">
                 <summary class="cursor-pointer font-medium">Who can apply?</summary>
                 <p class="mt-2 text-slate-600">Senior-high-school graduates and transferees are welcome to apply online.</p>
@@ -279,10 +262,10 @@
 
             {{-- Circular logo + school name --}}
             <div class="flex flex-col items-center gap-3 mt-4">
-                <div class="inline-flex rounded-full bg-white p-2 shadow-md">
+                <div class="inline-flex rounded-full bg-white p-4 shadow-md">
                     <img src="{{ asset('images/image.png') }}"
                          alt="Worldstar College Logo"
-                         class="w-36 h-36 object-contain rounded-full">
+                         class="w-36 h-36 object-contain">
                 </div>
 
                 <div class="text-center">

@@ -15,12 +15,15 @@ class SearchController extends Controller
         $pages   = collect();
 
         if ($q !== '') {
-            // Search active courses by name, department, or code
+            $qLower = strtolower($q);
+
+            // Search active courses — LOWER() ensures case-insensitive partial matching
+            // regardless of database collation
             $courses = Course::where('is_active', true)
-                ->where(function ($query) use ($q) {
-                    $query->where('name', 'like', "%{$q}%")
-                          ->orWhere('department', 'like', "%{$q}%")
-                          ->orWhere('code', 'like', "%{$q}%");
+                ->where(function ($query) use ($qLower) {
+                    $query->whereRaw('LOWER(name) LIKE ?',       ['%' . $qLower . '%'])
+                          ->orWhereRaw('LOWER(department) LIKE ?', ['%' . $qLower . '%'])
+                          ->orWhereRaw('LOWER(code) LIKE ?',       ['%' . $qLower . '%']);
                 })
                 ->orderBy('name')
                 ->get();
@@ -59,7 +62,6 @@ class SearchController extends Controller
                 ],
             ];
 
-            $qLower = strtolower($q);
             $pages  = collect($staticPages)->filter(function ($page) use ($qLower) {
                 return str_contains(strtolower($page['title']), $qLower)
                     || str_contains(strtolower($page['keywords']), $qLower);
