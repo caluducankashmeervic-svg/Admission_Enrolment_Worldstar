@@ -64,7 +64,7 @@
                     Quality education, affordable tuition —<br>
                     apply online at Worldstar College of Science and Technology.
                 </p>
-                <a href="{{ route('register') }}"
+                <a href="{{ route('applicant.pre-register.choose') }}"
                    class="inline-block mt-7 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm px-7 py-3 rounded">
                     Apply Now
                 </a>
@@ -109,7 +109,7 @@
 @endpush
 
 {{-- ============== FEATURED BANNER (Explore campuses) ============== --}}
-<section class="bg-white">
+<section class="bg-white pt-10">
     <div class="max-w-3xl mx-auto px-6 pb-8">
         <div class="relative h-56 md:h-64 rounded-sm overflow-hidden bg-gradient-to-r from-slate-700 via-slate-500 to-slate-400 shadow">
             <div class="absolute inset-0 bg-black/30"></div>

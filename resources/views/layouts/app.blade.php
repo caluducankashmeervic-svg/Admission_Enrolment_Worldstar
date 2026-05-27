@@ -85,7 +85,7 @@
                         ['Philosophy',             route('about.philosophy')],
                         ['Accreditations and Recognition', '#accreditation'],
                         ['Announcements', '#announcements'],
-                        ['Contact Us', '#contact'],
+                        ['Contact Us', route('about.contact')],
                     ];
                 @endphp
                 <nav class="hidden md:flex items-center gap-10 text-base font-semibold text-slate-800 mx-auto">
@@ -291,7 +291,7 @@
                     <a href="{{ route('about.story') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">About WCST</a>
                     <a href="{{ route('applicant.pre-register.choose') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Apply Now</a>
                     <a href="{{ route('applicant.code.form') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Reference Code</a>
-                    <a href="/#contact" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Contact Us</a>
+                    <a href="{{ route('about.contact') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Contact Us</a>
                 @endauth
             </nav>
         </div>

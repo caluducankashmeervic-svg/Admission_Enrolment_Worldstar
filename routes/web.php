@@ -42,6 +42,7 @@ Route::prefix('about')->name('about.')->group(function () {
     Route::view('/philosophy',     'about.philosophy')->name('philosophy');
     Route::view('/vision-mission', 'about.vision-mission')->name('vision-mission');
     Route::view('/core-values',    'about.core-values')->name('core-values');
+    Route::view('/contact',        'about.contact')->name('contact');
 });
 
 /* ---------------- Academics (program detail pages) --------- */
