@@ -7,19 +7,23 @@
 
 {{-- ============== HERO (cinematic dark banner) ============== --}}
 <section class="relative bg-black text-white overflow-hidden">
-    <div class="relative h-[430px] md:h-[620px] flex">
+    <div class="relative h-[520px] md:h-[720px] flex">
 
         {{-- ── Slider: full-bleed background ── --}}
         <div id="hero-slider" class="absolute inset-0 overflow-hidden">
-            <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-100">
-                <img src="{{ asset('images/HeroSlide1.jpg') }}" alt="Worldstar Faculty" class="w-full h-full object-cover">
-            </div>
-            <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
-                <img src="{{ asset('images/HeroSlide2.jpg') }}" alt="Worldstar Sports Fest" class="w-full h-full object-cover">
-            </div>
-            <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
-                <img src="{{ asset('images/HeroSlide3.jpg') }}" alt="Worldstar Students" class="w-full h-full object-cover">
-            </div>
+            @foreach ([
+                ['HeroSlide1.jpg', 'Worldstar Faculty'],
+                ['HeroSlide2.jpg', 'Worldstar Sports Fest'],
+                ['Heroslide3.png', 'Worldstar Students'],
+                ['HeroSlide4.jpg', 'Worldstar Campus Event'],
+                ['HeroSlide5.jpg', 'Worldstar Student Gathering'],
+                ['HeroSlide6.jpg', 'Worldstar Student Activities'],
+                ['HeroSlide7.jpg', 'Worldstar School Community'],
+            ] as $index => [$image, $alt])
+                <div class="hero-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
+                    <img src="{{ asset('images/' . $image) }}" alt="{{ $alt }}" class="w-full h-full object-cover">
+                </div>
+            @endforeach
 
             {{-- Prev button --}}
             <button onclick="heroSlide(-1)" aria-label="Previous slide"
@@ -45,9 +49,9 @@
 
             {{-- Dot indicators --}}
             <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-                <button onclick="heroGoTo(0)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/80 transition-all duration-300"></button>
-                <button onclick="heroGoTo(1)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300"></button>
-                <button onclick="heroGoTo(2)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300"></button>
+                @for ($index = 0; $index < 7; $index++)
+                    <button onclick="heroGoTo({{ $index }})" class="hero-dot w-2.5 h-2.5 rounded-full {{ $index === 0 ? 'bg-white/80' : 'bg-white/30' }} transition-all duration-300"></button>
+                @endfor
             </div>
         </div>
 

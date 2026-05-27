@@ -37,6 +37,7 @@
                 <nav class="hidden md:flex items-center gap-4 text-sm ml-auto">
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8]">Dashboard</a>
+                        <a href="{{ route('admin.announcements.index') }}" class="hover:text-[#1D4ED8]">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollees</a>
                         <a href="{{ route('admin.courses.index') }}" class="hover:text-[#1D4ED8]">Courses</a>
@@ -84,7 +85,7 @@
                         ['Core Values',            route('about.core-values')],
                         ['Philosophy',             route('about.philosophy')],
                         ['Accreditations and Recognition', '#accreditation'],
-                        ['Announcements', '#announcements'],
+                        ['Announcements', route('about.announcements')],
                         ['Contact Us', route('about.contact')],
                     ];
                 @endphp
@@ -260,6 +261,7 @@
                 @auth
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Dashboard</a>
+                        <a href="{{ route('admin.announcements.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollees</a>
                         <a href="{{ route('admin.courses.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Courses</a>
@@ -299,6 +301,7 @@
                             <a href="{{ route('about.vision-mission') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Vision and Mission</a>
                             <a href="{{ route('about.core-values') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Core Values</a>
                             <a href="{{ route('about.philosophy') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Philosophy</a>
+                            <a href="{{ route('about.announcements') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Announcements</a>
                             <a href="{{ route('about.contact') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100">Contact Us</a>
                         </div>
                     </details>
