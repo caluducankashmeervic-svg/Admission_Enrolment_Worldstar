@@ -51,6 +51,7 @@
                         <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8]">Exams</a>
                     @else
                         <a href="{{ route('applicant.admission.create') }}" class="hover:text-[#1D4ED8]">My Admission</a>
+                        <a href="{{ route('applicant.my-status') }}" class="hover:text-[#1D4ED8]">Check Status</a>
                     @endif
                     <a href="{{ route('profile.edit') }}"
                        class="flex items-center gap-2 text-slate-500 hover:text-[#1D4ED8]">

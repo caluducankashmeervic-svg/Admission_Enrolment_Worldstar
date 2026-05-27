@@ -17,6 +17,7 @@ use App\Http\Controllers\Document\CORController;
 use App\Http\Controllers\Exam\ExamResultController;
 use App\Http\Controllers\Exam\ExamScheduleController;
 use App\Http\Controllers\Registrar\ApplicantListController;
+use App\Http\Controllers\Registrar\ApplicantEditController;
 use App\Http\Controllers\Registrar\EnrollmentController;
 use App\Http\Controllers\Registrar\EnrollmentListController;
 use App\Http\Controllers\Registrar\VerificationController;
@@ -75,6 +76,7 @@ Route::middleware('auth')->group(function () {
 
     // Authenticated student admission form
     Route::get('/admission',  [AdmissionController::class, 'create'])->name('applicant.admission.create');
+    Route::get('/my-status',  [AdmissionController::class, 'status'])->name('applicant.my-status');
 });
 
 /* ---------------- Admin ---------------- */
@@ -138,8 +140,10 @@ Route::middleware(['auth', 'role:registrar,admin'])->prefix('registrar')->name('
     Route::get('/enrollment/{applicant}',   [EnrollmentController::class, 'show'])->name('enrollment.show');
     Route::post('/enrollment/finalize',     [EnrollmentController::class, 'finalize'])->name('enrollment.finalize');
 
-    Route::get('/applicants',         [ApplicantListController::class, 'index'])->name('applicants.index');
-    Route::get('/applicants/export',  [ApplicantListController::class, 'export'])->name('applicants.export');
+    Route::get('/applicants',              [ApplicantListController::class, 'index'])->name('applicants.index');
+    Route::get('/applicants/export',       [ApplicantListController::class, 'export'])->name('applicants.export');
+    Route::get('/applicants/{applicant}/edit',  [ApplicantEditController::class, 'edit'])->name('applicants.edit');
+    Route::put('/applicants/{applicant}',       [ApplicantEditController::class, 'update'])->name('applicants.update');
 
     Route::get('/enrollments',        [EnrollmentListController::class, 'index'])->name('enrollments.index');
     Route::get('/enrollments/export', [EnrollmentListController::class, 'export'])->name('enrollments.export');

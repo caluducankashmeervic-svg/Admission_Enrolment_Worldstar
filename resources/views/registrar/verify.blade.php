@@ -98,55 +98,21 @@
                 <summary class="cursor-pointer px-3 py-2 bg-slate-50 text-sm font-medium">
                     View submitted form
                 </summary>
-                <div class="p-4 text-sm space-y-3">
-                    @php
-                        $scalarFields = [
-                            'Applicant Type' => $applicant->applicant_type,
-                            'First Name'     => $applicant->first_name,
-                            'Middle Name'    => $applicant->middle_name,
-                            'Last Name'      => $applicant->last_name,
-                            'Suffix'         => $applicant->suffix,
-                            'Sex'            => $applicant->sex,
-                            'Birth Date'     => optional($applicant->birth_date)->format('M d, Y'),
-                            'Civil Status'   => $applicant->civil_status,
-                            'Citizenship'    => $applicant->citizenship,
-                            'Mobile'         => $applicant->mobile,
-                            'Email'          => $applicant->email,
-                            'Address'        => $applicant->address,
-                            'Last School'    => $applicant->last_school,
-                            'Year Graduated' => $applicant->year_graduated,
-                            'GWA'            => $applicant->gwa,
-                            'Strand / Track' => $applicant->strand_track,
-                            'Program'        => $programValue,
-                            'Term'           => optional($applicant->academicTerm)->school_year . ' ' . optional($applicant->academicTerm)->semester,
-                        ];
-                    @endphp
-                    <dl class="grid sm:grid-cols-2 gap-x-6 gap-y-1">
-                        @foreach($scalarFields as $label => $value)
-                            @if($value !== null && $value !== '')
-                                <dt class="text-slate-500">{{ $label }}</dt>
-                                <dd>{{ $value }}</dd>
-                            @endif
-                        @endforeach
-                    </dl>
-
-                    @if(! empty($applicant->profile_data))
-                        <div>
-                            <div class="text-slate-500 mb-1">Additional Form Fields</div>
-                            <dl class="grid sm:grid-cols-2 gap-x-6 gap-y-1">
-                                @foreach($applicant->profile_data as $k => $v)
-                                    @if($v !== null && $v !== '')
-                                        <dt class="text-slate-500">{{ ucwords(str_replace('_',' ',$k)) }}</dt>
-                                        <dd>{{ is_array($v) ? json_encode($v) : $v }}</dd>
-                                    @endif
-                                @endforeach
-                            </dl>
-                        </div>
+                <div class="p-4">
+                    @if($applicant->applicant_type === \App\Models\Applicant::TYPE_SHS)
+                        @include('registrar.partials._shs_form', ['applicant' => $applicant])
+                    @else
+                        @include('registrar.partials._tesda_form', ['applicant' => $applicant])
                     @endif
                 </div>
             </details>
 
             <div class="mt-4 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">
+                <a href="{{ route('registrar.applicants.edit', $applicant) }}"
+                   class="inline-flex items-center gap-1.5 bg-slate-100 border border-slate-300 text-slate-700 text-sm px-4 py-2 rounded hover:bg-slate-200">
+                    ✏ Edit Applicant
+                </a>
+
                 @if($applicant->status === 'pre_registered')
                     <form method="POST" action="{{ route('registrar.approve', $applicant) }}">
                         @csrf
