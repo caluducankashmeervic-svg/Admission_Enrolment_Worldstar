@@ -462,5 +462,6 @@
         window.addEventListener('resize', function () { if (window.innerWidth >= 768) closeMenu(); });
     })();
     </script>
+    @stack('scripts')
 </body>
 </html>

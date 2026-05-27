@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <style>
-    @page { margin: 0.75in; }
+    @page { margin: 1.25in; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; font-size: 10pt; color: #1e293b; line-height: 1.4; }
+    body { font-family: Arial, sans-serif; font-size: 10pt; color: #1e293b; line-height: 1.5; }
 
     /* ── Page header ── */
-    .header { display: flex; align-items: center; border-bottom: 2.5px solid #1d4ed8; padding-bottom: 10px; margin-bottom: 14px; }
+    .header { display: flex; align-items: center; border-bottom: 2.5px solid #1d4ed8; padding-bottom: 12px; margin-bottom: 18px; }
     .header img { width: 58px; height: 58px; object-fit: contain; margin-right: 14px; }
     .header-text { flex: 1; }
     .school-name { font-size: 13pt; font-weight: bold; color: #1d4ed8; }
@@ -17,35 +17,35 @@
     .doc-ref     { text-align: right; font-size: 8.5pt; color: #64748b; margin-top: 2px; }
 
     /* ── Sections ── */
-    .section { margin-bottom: 12px; }
+    .section { margin-bottom: 18px; }
     .section-title {
         font-size: 9pt; font-weight: bold; color: #1d4ed8;
         background: #eff6ff; border-left: 3px solid #1d4ed8;
-        padding: 3px 8px; margin-bottom: 7px;
+        padding: 4px 10px; margin-bottom: 10px;
         text-transform: uppercase; letter-spacing: 0.04em;
     }
-    .grid { display: flex; flex-wrap: wrap; gap: 6px 12px; }
-    .field { flex: 1; min-width: 100px; margin-bottom: 4px; }
-    .field.half  { flex: 0 0 calc(50% - 6px); }
-    .field.third { flex: 0 0 calc(33.33% - 8px); }
-    .field.fourth{ flex: 0 0 calc(25% - 9px); }
+    .grid { display: flex; flex-wrap: wrap; gap: 10px 16px; }
+    .field { flex: 1; min-width: 100px; margin-bottom: 8px; }
+    .field.half  { flex: 0 0 calc(50% - 8px); }
+    .field.third { flex: 0 0 calc(33.33% - 11px); }
+    .field.fourth{ flex: 0 0 calc(25% - 12px); }
     .field.full  { flex: 0 0 100%; }
-    .field-label { font-size: 7.5pt; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1px; }
+    .field-label { font-size: 7.5pt; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
     .field-value {
         font-size: 9.5pt; font-weight: 500; color: #0f172a;
-        border-bottom: 1px solid #cbd5e1; padding: 2px 0 3px 0;
-        min-height: 18px;
+        border-bottom: 1px solid #cbd5e1; padding: 3px 0 5px 0;
+        min-height: 20px;
     }
 
     /* ── Checkbox list ── */
-    .check-list { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    .check-list { display: flex; flex-wrap: wrap; gap: 6px 18px; }
     .check-item { font-size: 9pt; display: flex; align-items: center; gap: 4px; }
     .box { display: inline-block; width: 11px; height: 11px; border: 1px solid #64748b; margin-right: 2px; text-align: center; font-size: 8pt; line-height: 11px; }
     .box.checked { background: #1d4ed8; color: #fff; font-weight: bold; }
 
     /* ── Footer ── */
-    .footer { border-top: 1px solid #cbd5e1; margin-top: 16px; padding-top: 8px; font-size: 8pt; color: #94a3b8; text-align: center; }
-    .sig-row { display: flex; gap: 30px; margin-top: 20px; }
+    .footer { border-top: 1px solid #cbd5e1; margin-top: 20px; padding-top: 10px; font-size: 8pt; color: #94a3b8; text-align: center; }
+    .sig-row { display: flex; gap: 30px; margin-top: 28px; }
     .sig-box { flex: 1; border-top: 1px solid #64748b; padding-top: 4px; text-align: center; font-size: 8.5pt; color: #475569; }
 </style>
 </head>

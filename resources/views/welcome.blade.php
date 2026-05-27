@@ -8,18 +8,58 @@
 {{-- ============== HERO (cinematic dark banner) ============== --}}
 <section class="relative bg-black text-white overflow-hidden">
     <div class="relative h-[360px] md:h-[440px] flex">
-        {{-- Decorative right-side imagery strip (gradient placeholders) --}}
-        <div class="absolute inset-0 grid grid-cols-4">
-            <div class="bg-gradient-to-br from-slate-800 via-slate-900 to-black"></div>
-            <div class="bg-gradient-to-br from-slate-700 to-slate-900"></div>
-            <div class="bg-gradient-to-br from-slate-600 to-slate-800"></div>
-            <div class="bg-gradient-to-br from-blue-900 via-slate-800 to-black"></div>
+
+        {{-- ── Slider: fills the right 60% of the hero ── --}}
+        <div id="hero-slider" class="absolute inset-0 md:left-[40%] left-0 overflow-hidden">
+            {{-- Slides --}}
+            <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-100">
+                <img src="{{ asset('images/slide-1.jpg') }}" alt="Enrollment Ongoing" class="w-full h-full object-cover">
+            </div>
+            <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
+                <img src="{{ asset('images/slide-2.jpg') }}" alt="Worldstar Students" class="w-full h-full object-cover">
+            </div>
+            <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
+                <img src="{{ asset('images/slide-3.jpg') }}" alt="TESDA Skills Training" class="w-full h-full object-cover">
+            </div>
+
+            {{-- Left fade overlay so slides blend into the hero copy --}}
+            <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent pointer-events-none z-10"></div>
+
+            {{-- Prev button --}}
+            <button onclick="heroSlide(-1)" aria-label="Previous slide"
+                    class="absolute left-3 top-1/2 -translate-y-1/2 z-20
+                           w-9 h-9 rounded-full flex items-center justify-center
+                           bg-black/30 hover:bg-black/55 text-white/80 hover:text-white
+                           transition-all duration-200 backdrop-blur-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+
+            {{-- Next button --}}
+            <button onclick="heroSlide(1)" aria-label="Next slide"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 z-20
+                           w-9 h-9 rounded-full flex items-center justify-center
+                           bg-black/30 hover:bg-black/55 text-white/80 hover:text-white
+                           transition-all duration-200 backdrop-blur-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+
+            {{-- Dot indicators --}}
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                <button onclick="heroGoTo(0)" class="hero-dot w-2 h-2 rounded-full bg-white/80 transition-all duration-300"></button>
+                <button onclick="heroGoTo(1)" class="hero-dot w-2 h-2 rounded-full bg-white/30 transition-all duration-300"></button>
+                <button onclick="heroGoTo(2)" class="hero-dot w-2 h-2 rounded-full bg-white/30 transition-all duration-300"></button>
+            </div>
         </div>
+
         {{-- Dark overlay on the left for text legibility --}}
-        <div class="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black via-black/90 to-transparent"></div>
+        <div class="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black via-black/90 to-transparent z-10"></div>
 
         {{-- Hero copy --}}
-        <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex items-center w-full">
+        <div class="relative z-20 max-w-7xl mx-auto px-6 md:px-12 flex items-center w-full">
             <div class="max-w-md">
                 <p class="text-amber-300 text-lg md:text-xl font-semibold"></p>
                 <h1 class="text-amber-300 text-3xl md:text-4xl font-extrabold leading-tight mt-1">
@@ -36,6 +76,41 @@
         </div>
     </div>
 </section>
+
+@push('scripts')
+<script>
+(function () {
+    let current = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots   = document.querySelectorAll('.hero-dot');
+    let timer    = startTimer();
+
+    function show(idx) {
+        slides[current].classList.replace('opacity-100', 'opacity-0');
+        dots[current].classList.replace('bg-white/80', 'bg-white/30');
+        current = (idx + slides.length) % slides.length;
+        slides[current].classList.replace('opacity-0', 'opacity-100');
+        dots[current].classList.replace('bg-white/30', 'bg-white/80');
+    }
+
+    function startTimer() {
+        return setInterval(() => show(current + 1), 5000);
+    }
+
+    window.heroSlide = function (dir) {
+        clearInterval(timer);
+        show(current + dir);
+        timer = startTimer();
+    };
+
+    window.heroGoTo = function (idx) {
+        clearInterval(timer);
+        show(idx);
+        timer = startTimer();
+    };
+}());
+</script>
+@endpush
 
 {{-- ============== INTRO ============== --}}
 <section class="bg-white">
@@ -189,6 +264,22 @@
             <details class="group border border-slate-200 rounded-md p-3">
                 <summary class="cursor-pointer font-medium">Is there an entrance exam?</summary>
                 <p class="mt-2 text-slate-600">Yes. After pre-registration, you'll receive a schedule for the entrance exam.</p>
+            </details>
+            <details class="group border border-slate-200 rounded-md p-3">
+                <summary class="cursor-pointer font-medium">What documents do I need to submit for enrollment?</summary>
+                <p class="mt-2 text-slate-600">You will need to bring the following original documents: Form 137 or Report Card, PSA Birth Certificate, Certificate of Good Moral Character, two 2x2 ID photos, a Medical Certificate from a licensed physician, and your Diploma or Certificate of Graduation. The registrar's office will verify these during your enrollment appointment.</p>
+            </details>
+            <details class="group border border-slate-200 rounded-md p-3">
+                <summary class="cursor-pointer font-medium">How do I check my application status?</summary>
+                <p class="mt-2 text-slate-600">Once you have pre-registered and created an account, log in to the portal and click "Check Status" in the navigation menu. Your reference code and current application step will be displayed there.</p>
+            </details>
+            <details class="group border border-slate-200 rounded-md p-3">
+                <summary class="cursor-pointer font-medium">Are there scholarships or financial assistance programs available?</summary>
+                <p class="mt-2 text-slate-600">Yes. Worldstar College offers various scholarship and financial assistance options for qualified students, including academic merit scholarships and government-sponsored programs such as UNIFAST/TES. You may inquire directly at the registrar's or student affairs office for the current requirements and application periods.</p>
+            </details>
+            <details class="group border border-slate-200 rounded-md p-3">
+                <summary class="cursor-pointer font-medium">What are the tuition fees and payment options?</summary>
+                <p class="mt-2 text-slate-600">Worldstar College is committed to providing affordable, quality education. Tuition rates vary by program. Installment payment plans are available for students who need flexible arrangements. For the latest fee schedule, please contact the registrar's office at 0916 908 8531 or email wcst.2016@gmail.com.</p>
             </details>
 
         </div>
