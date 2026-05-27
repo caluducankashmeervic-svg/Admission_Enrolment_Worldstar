@@ -13,13 +13,13 @@
         <div id="hero-slider" class="absolute inset-0 md:left-[40%] left-0 overflow-hidden">
             {{-- Slides --}}
             <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-100">
-                <img src="{{ asset('images/slide-1.jpg') }}" alt="Enrollment Ongoing" class="w-full h-full object-cover">
+                <img src="{{ asset('images/HeroSlide1.jpg') }}" alt="Enrollment Ongoing" class="w-full h-full object-cover">
             </div>
             <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
-                <img src="{{ asset('images/slide-2.jpg') }}" alt="Worldstar Students" class="w-full h-full object-cover">
+                <img src="{{ asset('images/HeroSlide2.jpg') }}" alt="Worldstar Students" class="w-full h-full object-cover">
             </div>
             <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
-                <img src="{{ asset('images/slide-3.jpg') }}" alt="TESDA Skills Training" class="w-full h-full object-cover">
+                <img src="{{ asset('images/HeroSlide3.jpg') }}" alt="TESDA Skills Training" class="w-full h-full object-cover">
             </div>
 
             {{-- Left fade overlay so slides blend into the hero copy --}}
@@ -185,56 +185,6 @@
     </div>
 </section>
 
-{{-- ============== STUDY AREAS ============== --}}
-<section class="bg-white py-6">
-    <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-blue-700 font-bold text-lg border-b border-blue-200 pb-2 mb-2">Study areas</h2>
-        @php
-            $studyAreas = $courses->count() ? $courses->pluck('name')->all() : [
-                'Arts and Humanities','Engineering','Psychology and Social Work',
-                'Business and Commerce','Environmental Studies','Science',
-                'Communication','Law and Criminology','Sport and Exercise Science',
-                'Creative Industries','Medical and Health Sciences','Technology',
-                'Design','Nursing and Midwifery','Pathways and Bridging Programs',
-                'Education','Paramedicine',
-            ];
-        @endphp
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8">
-            @foreach ($studyAreas as $area)
-                <a href="#courses"
-                   class="flex items-center gap-2 text-blue-700 text-sm py-2 border-b border-dotted border-slate-300 hover:text-blue-900">
-                    <span class="text-amber-500">›</span> {{ $area }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ============== FIND A PROGRAM BAR ============== --}}
-<section class="bg-white pb-4">
-    <div class="max-w-4xl mx-auto px-6">
-        <form action="{{ route('register') }}" method="GET"
-              class="bg-blue-800 text-white flex flex-wrap items-center gap-3 p-4 rounded-sm">
-            <span class="font-bold text-amber-300 uppercase tracking-wide text-sm">Find a program</span>
-            <select name="location" class="flex-1 min-w-[160px] text-slate-700 text-sm px-3 py-2 rounded-sm">
-                <option>Study location</option>
-                <option>Main Campus</option>
-                <option>Online</option>
-            </select>
-            <select name="area" class="flex-1 min-w-[160px] text-slate-700 text-sm px-3 py-2 rounded-sm">
-                <option>Study area</option>
-                @foreach ($courses as $course)
-                    <option>{{ $course->name }}</option>
-                @endforeach
-            </select>
-            <button type="submit"
-                    class="bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm px-4 py-2 rounded-sm">
-                GO
-            </button>
-        </form>
-    </div>
-</section>
-
 {{-- ============== THREE INFO CARDS (light blue bg) ============== --}}
 <section class="bg-slate-100 py-6">
     <div class="max-w-4xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -347,9 +297,12 @@
 
             {{-- Circular logo + school name --}}
             <div class="flex flex-col items-center gap-3 mt-4">
-                <img src="{{ asset('images/image.png') }}"
-                     alt="Worldstar College Logo"
-                     class="w-40 h-40 object-contain">
+                <div class="relative flex items-center justify-center">
+                    <div class="absolute w-36 h-36 rounded-full bg-white shadow-md"></div>
+                    <img src="{{ asset('images/image.png') }}"
+                         alt="Worldstar College Logo"
+                         class="relative w-40 h-40 object-contain">
+                </div>
 
                 <div class="text-center">
                     <p class="text-white font-extrabold text-[13px] leading-snug">
