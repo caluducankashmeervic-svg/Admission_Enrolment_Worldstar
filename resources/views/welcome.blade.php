@@ -7,23 +7,19 @@
 
 {{-- ============== HERO (cinematic dark banner) ============== --}}
 <section class="relative bg-black text-white overflow-hidden">
-    <div class="relative h-[360px] md:h-[440px] flex">
+    <div class="relative h-[360px] md:h-[500px] flex">
 
-        {{-- ── Slider: fills the right 60% of the hero ── --}}
-        <div id="hero-slider" class="absolute inset-0 md:left-[40%] left-0 overflow-hidden">
-            {{-- Slides --}}
+        {{-- ── Slider: full-bleed background ── --}}
+        <div id="hero-slider" class="absolute inset-0 overflow-hidden">
             <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-100">
-                <img src="{{ asset('images/HeroSlide1.jpg') }}" alt="Enrollment Ongoing" class="w-full h-full object-cover">
+                <img src="{{ asset('images/HeroSlide1.jpg') }}" alt="Worldstar Faculty" class="w-full h-full object-cover">
             </div>
             <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
-                <img src="{{ asset('images/HeroSlide2.jpg') }}" alt="Worldstar Students" class="w-full h-full object-cover">
+                <img src="{{ asset('images/HeroSlide2.jpg') }}" alt="Worldstar Sports Fest" class="w-full h-full object-cover">
             </div>
             <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0">
-                <img src="{{ asset('images/HeroSlide3.jpg') }}" alt="TESDA Skills Training" class="w-full h-full object-cover">
+                <img src="{{ asset('images/HeroSlide3.jpg') }}" alt="Worldstar Students" class="w-full h-full object-cover">
             </div>
-
-            {{-- Left fade overlay so slides blend into the hero copy --}}
-            <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent pointer-events-none z-10"></div>
 
             {{-- Prev button --}}
             <button onclick="heroSlide(-1)" aria-label="Previous slide"
@@ -48,29 +44,29 @@
             </button>
 
             {{-- Dot indicators --}}
-            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-                <button onclick="heroGoTo(0)" class="hero-dot w-2 h-2 rounded-full bg-white/80 transition-all duration-300"></button>
-                <button onclick="heroGoTo(1)" class="hero-dot w-2 h-2 rounded-full bg-white/30 transition-all duration-300"></button>
-                <button onclick="heroGoTo(2)" class="hero-dot w-2 h-2 rounded-full bg-white/30 transition-all duration-300"></button>
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                <button onclick="heroGoTo(0)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/80 transition-all duration-300"></button>
+                <button onclick="heroGoTo(1)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300"></button>
+                <button onclick="heroGoTo(2)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300"></button>
             </div>
         </div>
 
-        {{-- Dark overlay on the left for text legibility --}}
-        <div class="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black via-black/90 to-transparent z-10"></div>
+        {{-- Dark overlay — left-heavy gradient for text legibility --}}
+        <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/10 z-10"></div>
 
         {{-- Hero copy --}}
-        <div class="relative z-20 max-w-7xl mx-auto px-6 md:px-12 flex items-center w-full">
-            <div class="max-w-md">
-                <p class="text-amber-300 text-lg md:text-xl font-semibold"></p>
-                <h1 class="text-amber-300 text-3xl md:text-4xl font-extrabold leading-tight mt-1">
-                            Enroll <br>Now
+        <div class="relative z-20 max-w-7xl mx-auto px-8 md:px-16 flex items-center w-full">
+            <div class="max-w-lg">
+                <h1 class="text-amber-300 text-5xl md:text-7xl font-extrabold leading-tight">
+                    Your Future<br>Starts Here
                 </h1>
-                <p class="text-white/90 text-sm mt-3 font-semibold">
-                    Enroll online at <br>Worldstar College
+                <p class="text-white/85 text-base md:text-lg mt-5 leading-relaxed">
+                    Quality education, affordable tuition —<br>
+                    apply online at Worldstar College of Science and Technology.
                 </p>
                 <a href="{{ route('register') }}"
-                   class="inline-block mt-5 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm px-5 py-2 rounded">
-                    Register now
+                   class="inline-block mt-7 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm px-7 py-3 rounded">
+                    Apply Now
                 </a>
             </div>
         </div>
