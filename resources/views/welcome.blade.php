@@ -20,7 +20,7 @@
                 ['HeroSlide7.jpg', 'Worldstar School Community'],
             ] as $index => [$image, $alt])
                 <div class="hero-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
-                    <img src="{{ asset('images/' . $image) }}" alt="{{ $alt }}" class="w-full h-full object-contain object-center">
+                    <img src="{{ asset('images/' . $image) }}" alt="{{ $alt }}" class="w-full h-full object-cover object-center">
                 </div>
             @endforeach
 

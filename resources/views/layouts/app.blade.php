@@ -102,18 +102,43 @@
                         {{-- About Mega Menu --}}
                         <div data-megapanel
                              class="hidden absolute top-full left-0 right-0 pt-4 z-50 justify-end">
-                            <div class="w-[min(1100px,calc(100%-6rem))] bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10">
-                                <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">About WCST</h3>
-                                <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-1">
-                                    @foreach ($aboutLinks as [$label, $href])
-                                        <li>
-                                            <a href="{{ $href }}"
-                                               class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] hover:translate-x-1 transition py-[6px]">
-                                                {{ $label }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                            <div class="w-[min(1100px,calc(100%-6rem))] bg-white shadow-xl rounded-xl border-t-2 border-[#1D4ED8] px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-12">
+                                <div>
+                                    <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">About WCST</h3>
+                                    <ul class="space-y-3">
+                                        @foreach ([
+                                            ['The Story of Worldstar', route('about.story')],
+                                            ['Philosophy', route('about.philosophy')],
+                                            ['Contact Us', route('about.contact')],
+                                        ] as [$label, $href])
+                                            <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+                                <div class="md:border-l md:border-slate-900/70 md:pl-12">
+                                    <h3 class="text-transparent font-bold uppercase text-[13px] tracking-widest mb-6 select-none">About WCST</h3>
+                                    <ul class="space-y-3">
+                                        @foreach ([
+                                            ['Vision and Mission', route('about.vision-mission')],
+                                            ['Accreditations and Recognition', '#accreditation'],
+                                        ] as [$label, $href])
+                                            <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+                                <div class="md:border-l md:border-slate-900/70 md:pl-12">
+                                    <h3 class="text-transparent font-bold uppercase text-[13px] tracking-widest mb-6 select-none">About WCST</h3>
+                                    <ul class="space-y-3">
+                                        @foreach ([
+                                            ['Core Values', route('about.core-values')],
+                                            ['Announcements', route('about.announcements')],
+                                        ] as [$label, $href])
+                                            <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,7 +168,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                <div>
+                                <div class="md:border-l md:border-slate-900/70 md:pl-10">
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Programs</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
@@ -154,7 +179,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                <div>
+                                <div class="md:border-l md:border-slate-900/70 md:pl-10">
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Student Support</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
@@ -194,7 +219,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                <div>
+                                <div class="md:border-l md:border-slate-900/70 md:pl-10">
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Tech-Pro Track</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
