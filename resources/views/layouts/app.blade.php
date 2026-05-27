@@ -437,6 +437,11 @@
             });
 
             panel.addEventListener('click', function (e) { e.stopPropagation(); });
+            panel.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    closeAll(null);
+                });
+            });
         });
 
         document.addEventListener('click', function () { closeAll(null); });
