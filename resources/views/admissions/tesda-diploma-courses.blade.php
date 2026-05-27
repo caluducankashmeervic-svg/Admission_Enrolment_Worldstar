@@ -5,26 +5,21 @@
 <div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-lg shadow-sm p-5 md:p-8 mt-4 md:mt-6">
     <div class="border-l-4 border-amber-400 pl-3 md:pl-4 mb-6">
         <h1 class="text-2xl md:text-3xl font-bold text-[#1D4ED8] tracking-wide">TESDA Diploma Courses</h1>
-        <p class="text-sm text-slate-500 mt-1">Technical-vocational diploma programs offered under TESDA.</p>
+        <p class="text-sm text-slate-500 mt-1">Browse TESDA diploma offerings. Click any course to open its full Academics page.</p>
     </div>
 
-    <div class="space-y-5 text-slate-700">
-        <div class="p-4 border border-slate-200 rounded-lg">
-            <h2 class="font-semibold text-base md:text-lg text-slate-800">CST (Computer Science Technology)</h2>
-            <p class="mt-1 text-sm">Focuses on software fundamentals, system analysis, and practical coding skills.</p>
-        </div>
-        <div class="p-4 border border-slate-200 rounded-lg">
-            <h2 class="font-semibold text-base md:text-lg text-slate-800">CET (Computer Engineering Technology)</h2>
-            <p class="mt-1 text-sm">Covers hardware servicing, computer architecture, and system integration.</p>
-        </div>
-        <div class="p-4 border border-slate-200 rounded-lg">
-            <h2 class="font-semibold text-base md:text-lg text-slate-800">EET (Electronics Engineering Technology)</h2>
-            <p class="mt-1 text-sm">Builds competencies in electronics, instrumentation, and troubleshooting.</p>
-        </div>
-        <div class="p-4 border border-slate-200 rounded-lg">
-            <h2 class="font-semibold text-base md:text-lg text-slate-800">ICT (Information and Communications Technology)</h2>
-            <p class="mt-1 text-sm">Develops skills in networking, IT support, communications systems, and digital tools.</p>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        @foreach ([
+            ['CST (Computer Science Technology)', 'cst-computer-science-technology'],
+            ['CET (Computer Engineering Technology)', 'cet-computer-engineering-technology'],
+            ['EET (Electronics Engineering Technology)', 'eet-electronics-engineering-technology'],
+            ['ICT (Information and Communications Technology)', 'ict-information-communications-technology'],
+        ] as [$label, $slug])
+            <a href="{{ route('academics.program', $slug) }}" class="block p-4 border border-slate-200 rounded-lg hover:border-[#1D4ED8] hover:shadow-sm transition">
+                <p class="font-semibold text-slate-800">{{ $label }}</p>
+                <p class="text-xs text-slate-500 mt-1">View program details</p>
+            </a>
+        @endforeach
     </div>
 </div>
 @endsection

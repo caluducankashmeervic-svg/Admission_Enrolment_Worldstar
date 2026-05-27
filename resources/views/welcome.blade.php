@@ -15,13 +15,12 @@
                 ['HeroSlide1.jpg', 'Worldstar Faculty'],
                 ['HeroSlide2.jpg', 'Worldstar Sports Fest'],
                 ['Heroslide3.png', 'Worldstar Students'],
-                ['HeroSlide4.jpg', 'Worldstar Campus Event'],
                 ['HeroSlide5.jpg', 'Worldstar Student Gathering'],
                 ['HeroSlide6.jpg', 'Worldstar Student Activities'],
                 ['HeroSlide7.jpg', 'Worldstar School Community'],
             ] as $index => [$image, $alt])
                 <div class="hero-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
-                    <img src="{{ asset('images/' . $image) }}" alt="{{ $alt }}" class="w-full h-full object-cover">
+                    <img src="{{ asset('images/' . $image) }}" alt="{{ $alt }}" class="w-full h-full object-contain object-center">
                 </div>
             @endforeach
 
@@ -49,7 +48,7 @@
 
             {{-- Dot indicators --}}
             <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-                @for ($index = 0; $index < 7; $index++)
+                @for ($index = 0; $index < 6; $index++)
                     <button onclick="heroGoTo({{ $index }})" class="hero-dot w-2.5 h-2.5 rounded-full {{ $index === 0 ? 'bg-white/80' : 'bg-white/30' }} transition-all duration-300"></button>
                 @endfor
             </div>
