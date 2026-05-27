@@ -308,7 +308,7 @@
 
         {{-- White search bar --}}
         <div class="bg-white border-b border-slate-200 shadow-sm">
-            <form action="{{ route('register') }}" method="GET"
+            <form action="{{ route('search') }}" method="GET"
                   class="max-w-7xl mx-auto px-8 flex items-center gap-5 h-[68px]">
                 {{-- Search icon --}}
                 <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

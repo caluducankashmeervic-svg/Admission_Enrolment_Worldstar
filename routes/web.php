@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicsController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Admin\AcademicTermController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuditLogController;
@@ -31,6 +32,9 @@ Route::get('/', function () {
         'courses' => Course::where('is_active', true)->orderBy('code')->get(),
     ]);
 })->name('home');
+
+/* ---------------- Search ----------------------------------- */
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 /* ---------------- About (public info pages) ---------------- */
 Route::prefix('about')->name('about.')->group(function () {
