@@ -17,16 +17,25 @@
         </div>
     @else
         @php
+            // 6 visual steps — 'form_approved' is a pseudo-step (no matching DB status)
             $steps = [
-                'pre_registered'  => ['label' => 'Pre-Registered',  'desc' => 'Form submitted'],
-                'exam_scheduled'  => ['label' => 'Exam Scheduled',  'desc' => 'Assigned to a batch'],
-                'exam_completed'  => ['label' => 'Exam Completed',  'desc' => 'Score recorded'],
-                'verified'        => ['label' => 'Verified',         'desc' => 'Documents cleared'],
-                'enrolled'        => ['label' => 'Enrolled',         'desc' => 'Enrollment finalized'],
+                ['key' => 'pre_registered', 'label' => 'Pre-Registered', 'desc' => 'Form submitted'],
+                ['key' => 'form_approved',  'label' => 'Form Approved',  'desc' => 'Registrar reviewed'],
+                ['key' => 'exam_scheduled', 'label' => 'Exam Scheduled', 'desc' => 'Assigned to a batch'],
+                ['key' => 'exam_completed', 'label' => 'Exam Completed', 'desc' => 'Score recorded'],
+                ['key' => 'verified',       'label' => 'Verified',       'desc' => 'Documents cleared'],
+                ['key' => 'enrolled',       'label' => 'Enrolled',       'desc' => 'Enrollment finalized'],
             ];
-            $order  = array_keys($steps);
-            $current = $applicant->status;
-            $currentIdx = array_search($current, $order);
+            // Map DB status → visual index (form_approved sits between idx 0 and 2)
+            $statusVisualIdx = [
+                'pre_registered' => 0,
+                'exam_scheduled' => 2,
+                'exam_completed' => 3,
+                'verified'       => 4,
+                'enrolled'       => 5,
+            ];
+            $current         = $applicant->status;
+            $currentVisualIdx = $statusVisualIdx[$current] ?? -1;
             $exam = $applicant->latestExamResult;
         @endphp
 
@@ -52,14 +61,13 @@
             {{-- Step tracker --}}
             @if($applicant->status !== 'rejected')
             <div class="mt-6 flex items-center gap-0 overflow-x-auto">
-                @foreach($steps as $key => $step)
+                @foreach($steps as $i => $step)
                     @php
-                        $stepIdx  = array_search($key, $order);
-                        $done     = $stepIdx <= ($currentIdx ?? -1) && $current !== 'rejected';
-                        $isActive = $key === $current;
+                        $done     = $i <= $currentVisualIdx && $current !== 'rejected';
+                        $isActive = $step['key'] === $current;
                     @endphp
                     <div class="flex items-center min-w-0 @if(!$loop->last) flex-1 @endif">
-                        <div class="flex flex-col items-center shrink-0 w-20 text-center">
+                        <div class="flex flex-col items-center shrink-0 w-16 text-center">
                             <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
                                 {{ $done ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-500' }}">
                                 @if($done && !$isActive)
@@ -67,16 +75,16 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                     </svg>
                                 @else
-                                    {{ $stepIdx + 1 }}
+                                    {{ $i + 1 }}
                                 @endif
                             </div>
-                            <p class="text-[10px] mt-1 leading-tight
+                            <p class="text-[9px] mt-1 leading-tight
                                 {{ $isActive ? 'text-blue-700 font-semibold' : ($done ? 'text-slate-700' : 'text-slate-400') }}">
                                 {{ $step['label'] }}
                             </p>
                         </div>
                         @if(!$loop->last)
-                            <div class="flex-1 h-0.5 mb-4 {{ $stepIdx < ($currentIdx ?? -1) ? 'bg-blue-600' : 'bg-slate-200' }}"></div>
+                            <div class="flex-1 h-0.5 mb-4 {{ $i < $currentVisualIdx ? 'bg-blue-600' : 'bg-slate-200' }}"></div>
                         @endif
                     </div>
                 @endforeach
@@ -87,30 +95,6 @@
                 </div>
             @endif
         </div>
-
-        {{-- Step context notice --}}
-        @php
-            $notices = [
-                'pre_registered'  => ['color' => 'amber',   'icon' => '⏳', 'title' => 'Awaiting Registrar Review', 'body' => 'Your pre-registration form has been submitted and is currently being reviewed by the registrar. No action required on your end.'],
-                'exam_scheduled'  => ['color' => 'blue',    'icon' => '✅', 'title' => 'Form Approved — Exam Scheduled', 'body' => 'Your pre-registration form has been approved. Please check your entrance exam batch and schedule below.'],
-                'exam_completed'  => ['color' => 'indigo',  'icon' => '📋', 'title' => 'Exam Completed', 'body' => 'Your entrance exam score has been recorded. The registrar will review your documents next.'],
-                'verified'        => ['color' => 'emerald', 'icon' => '🎉', 'title' => 'Application Verified', 'body' => 'Congratulations! Your documents have been verified. You are cleared for enrollment.'],
-                'enrolled'        => ['color' => 'emerald', 'icon' => '🏫', 'title' => 'Enrollment Complete', 'body' => 'You are officially enrolled. Welcome to Worldstar College of Science and Technology!'],
-                'rejected'        => ['color' => 'rose',    'icon' => '❌', 'title' => 'Application Rejected', 'body' => 'Your application has been rejected. Please visit or contact the registrar\'s office for details.'],
-            ];
-            $notice = $notices[$applicant->status] ?? null;
-        @endphp
-        @if($notice)
-        @php $c = $notice['color']; @endphp
-        <div class="mb-4 flex gap-3 items-start rounded-lg border px-4 py-3 text-sm
-            bg-{{ $c }}-50 border-{{ $c }}-200 text-{{ $c }}-800">
-            <span class="text-base leading-tight shrink-0">{{ $notice['icon'] }}</span>
-            <div>
-                <p class="font-semibold">{{ $notice['title'] }}</p>
-                <p class="mt-0.5 text-{{ $c }}-700">{{ $notice['body'] }}</p>
-            </div>
-        </div>
-        @endif
 
         {{-- Details card --}}
         <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6 space-y-4 text-sm">
