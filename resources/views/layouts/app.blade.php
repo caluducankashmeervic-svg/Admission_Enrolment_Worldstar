@@ -21,20 +21,20 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
     <header id="site-header" class="bg-white border-b border-slate-200 fixed top-0 left-0 right-0 z-40 shadow-md">
-        <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between gap-6 relative">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-6 flex items-center justify-between gap-3 md:gap-6 relative">
             {{-- LEFT: Logo --}}
-            <a href="{{ route('home') }}" class="flex items-center gap-4 shrink-0">
+            <a href="{{ route('home') }}" class="flex items-center gap-2 md:gap-4 shrink-0">
                 <img src="{{ asset('images/image.png') }}" alt="Worldstar Logo"
-                     class="w-16 h-16 object-contain">
+                     class="w-10 h-10 md:w-16 md:h-16 object-contain">
                 <span class="font-semibold text-[#1D4ED8] leading-tight">
-                    <span class="block text-xl">Worldstar College</span>
-                    <span class="block text-[13px] text-slate-500 font-normal">of Science and Technology, Inc.</span>
+                    <span class="block text-sm md:text-xl">Worldstar College</span>
+                    <span class="hidden sm:block text-[13px] text-slate-500 font-normal">of Science and Technology, Inc.</span>
                 </span>
             </a>
 
             @auth
-                {{-- CENTER + RIGHT: Authenticated nav (unchanged behavior) --}}
-                <nav class="flex items-center gap-4 text-sm ml-auto">
+                {{-- Authenticated nav (desktop) --}}
+                <nav class="hidden md:flex items-center gap-4 text-sm ml-auto">
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8]">Dashboard</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
@@ -64,6 +64,17 @@
                         <button class="text-rose-600 hover:underline">Logout</button>
                     </form>
                 </nav>
+                {{-- Mobile hamburger (auth users) --}}
+                <button type="button" id="mobile-menu-btn"
+                        class="md:hidden ml-auto p-2 text-slate-600 hover:text-[#1D4ED8] focus:outline-none"
+                        aria-label="Toggle navigation">
+                    <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             @else
                 {{-- CENTER: Mega-menu navigation --}}
                 @php
@@ -228,11 +239,62 @@
                         </svg>
                     </button>
                     <a href="{{ route('login') }}"
-                       class="text-sm font-semibold bg-[#1D4ED8] text-white px-5 py-2 rounded hover:bg-[#1e40af] transition-colors">
+                       class="text-sm font-semibold bg-[#1D4ED8] text-white px-3 py-1.5 md:px-5 md:py-2 rounded hover:bg-[#1e40af] transition-colors">
                         LOGIN
                     </a>
+                    {{-- Mobile hamburger (public) --}}
+                    <button type="button" id="mobile-menu-btn"
+                            class="md:hidden p-2 text-slate-600 hover:text-[#1D4ED8] focus:outline-none"
+                            aria-label="Toggle navigation">
+                        <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 </div>
             @endauth
+        </div>
+        {{-- ===== MOBILE NAV DRAWER ===== --}}
+        <div id="mobile-nav" class="hidden border-t border-slate-100 bg-white">
+            <nav class="max-w-7xl mx-auto px-4 pb-3 space-y-0.5 text-sm">
+                @auth
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Dashboard</a>
+                        <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollments</a>
+                        <a href="{{ route('admin.courses.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Courses</a>
+                        <a href="{{ route('admin.sections.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Sections</a>
+                        <a href="{{ route('admin.terms.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Terms</a>
+                        <a href="{{ route('exam.schedule.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Exams</a>
+                        <a href="{{ route('admin.users.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Users</a>
+                        <a href="{{ route('admin.audit.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Audit</a>
+                    @elseif(auth()->user()->isRegistrar())
+                        <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollments</a>
+                        <a href="{{ route('exam.schedule.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Exams</a>
+                    @else
+                        <a href="{{ route('applicant.admission.create') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">My Admission</a>
+                        <a href="{{ route('applicant.my-status') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Check Status</a>
+                    @endif
+                    <div class="border-t border-slate-100 mt-2 pt-2 flex items-center justify-between px-1">
+                        <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 px-2 py-2 rounded hover:bg-slate-100">
+                            <img src="{{ auth()->user()->profile_photo_url }}" class="w-7 h-7 rounded-full border border-slate-200" alt="">
+                            <span class="font-medium">{{ auth()->user()->name }}</span>
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="px-3 py-1.5 text-rose-600 hover:bg-rose-50 rounded">Logout</button>
+                        </form>
+                    </div>
+                @else
+                    <a href="{{ route('about.story') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">About WCST</a>
+                    <a href="{{ route('applicant.pre-register.choose') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Apply Now</a>
+                    <a href="{{ route('applicant.code.form') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Reference Code</a>
+                    <a href="/#contact" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Contact Us</a>
+                @endauth
+            </nav>
         </div>
     </header>
 
@@ -243,7 +305,7 @@
          role="dialog" aria-modal="true" aria-label="Site search">
 
         {{-- Spacer matching the sticky header so the bar appears flush below it --}}
-        <div class="h-[104px] shrink-0 bg-white"></div>
+        <div class="h-16 md:h-[104px] shrink-0 bg-white"></div>
 
         {{-- White search bar --}}
         <div class="bg-white border-b border-slate-200 shadow-sm">
@@ -280,7 +342,7 @@
     </div>
     {{-- ===== END SEARCH OVERLAY ===== --}}
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 pt-[128px]">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 pt-16 md:pt-[128px]">
         @if (session('status'))
             <div class="mb-4 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-2 text-sm">
                 {{ session('status') }}
@@ -383,6 +445,22 @@
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeAll(null);
         });
+    })();
+    </script>
+    <script>
+    // Mobile nav toggle
+    (function () {
+        var btn   = document.getElementById('mobile-menu-btn');
+        var nav   = document.getElementById('mobile-nav');
+        var hIcon = document.getElementById('hamburger-icon');
+        var xIcon = document.getElementById('close-icon');
+        if (!btn || !nav) return;
+        var isOpen = false;
+        function openMenu()  { isOpen = true;  nav.classList.remove('hidden'); hIcon && hIcon.classList.add('hidden');    xIcon && xIcon.classList.remove('hidden'); }
+        function closeMenu() { isOpen = false; nav.classList.add('hidden');    hIcon && hIcon.classList.remove('hidden'); xIcon && xIcon.classList.add('hidden'); }
+        btn.addEventListener('click', function (e) { e.stopPropagation(); isOpen ? closeMenu() : openMenu(); });
+        document.addEventListener('click', function (e) { if (isOpen && !nav.contains(e.target)) closeMenu(); });
+        window.addEventListener('resize', function () { if (window.innerWidth >= 768) closeMenu(); });
     })();
     </script>
 </body>

@@ -20,7 +20,7 @@
                    min="0" max="100" step="0.01" required
                    class="mt-1 w-40 border rounded px-3 py-2">
         </label>
-
+        <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead class="text-left text-slate-600">
                 <tr>
@@ -54,6 +54,7 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
 
         @if($results->count())
             <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">

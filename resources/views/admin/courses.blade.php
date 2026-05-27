@@ -7,7 +7,7 @@
 </div>
 
 <div class="grid lg:grid-cols-3 gap-5 mt-5">
-    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm">
+    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm overflow-x-auto">
         <table class="w-full text-sm">
             <thead class="bg-slate-50 text-left text-slate-600">
                 <tr>

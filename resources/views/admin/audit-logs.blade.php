@@ -13,7 +13,7 @@
     <a href="{{ route('admin.audit.index') }}" class="px-3 py-2 text-slate-600 hover:underline">Reset</a>
 </form>
 
-<div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden mt-5">
+<div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-x-auto mt-5">
     <table class="w-full text-sm">
         <thead class="bg-slate-50 text-left text-slate-600">
             <tr>
