@@ -279,11 +279,10 @@
 
             {{-- Circular logo + school name --}}
             <div class="flex flex-col items-center gap-3 mt-4">
-                <div class="relative flex items-center justify-center">
-                    <div class="absolute w-36 h-36 rounded-full bg-white shadow-md"></div>
+                <div class="w-48 h-48 rounded-full bg-white shadow-md flex items-center justify-center">
                     <img src="{{ asset('images/image.png') }}"
                          alt="Worldstar College Logo"
-                         class="relative w-40 h-40 object-contain">
+                         class="w-36 h-36 object-contain">
                 </div>
 
                 <div class="text-center">
@@ -318,13 +317,14 @@
                 Quick Links
             </h3>
             <ul class="space-y-[20px]">
-                @foreach ([
-                    ['About',     '#about'],
-                    ['Academics', '#academics'],
-                    ['Admission', route('register')],
-                ] as [$label, $href])
+@foreach ([
+                    ['About',      0],
+                    ['Admissions', 1],
+                    ['Academics',  2],
+                ] as [$label, $menuIndex])
                     <li>
-                        <a href="{{ $href }}"
+                        <a href="#"
+                           onclick="event.preventDefault(); footerNavTo({{ $menuIndex }})"
                            class="text-[14px] tracking-[0.18em] uppercase text-white/80
                                   hover:text-white hover:tracking-[0.22em]
                                   transition-all duration-200"
@@ -351,10 +351,10 @@
 
                 <div>
                     <p class="text-[13px] uppercase tracking-widest text-white/50 mb-1">
-                        Mobile
+                        Contact
                     </p>
                     <p class="text-[17px] leading-relaxed text-white/85">
-                        0916 908 8531
+                        (078) 642-0421 | 0916 908 8531
                     </p>
                 </div>
 
@@ -395,3 +395,18 @@
 
 </div>{{-- end full-bleed wrapper --}}
 @endsection
+
+@push('scripts')
+<script>
+function footerNavTo(menuIndex) {
+    // Scroll to top first
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Wait for scroll to finish, then click the matching nav mega-menu button
+    var delay = window.scrollY > 300 ? 700 : 150;
+    setTimeout(function () {
+        var btns = document.querySelectorAll('[data-megabtn]');
+        if (btns[menuIndex]) btns[menuIndex].click();
+    }, delay);
+}
+</script>
+@endpush
