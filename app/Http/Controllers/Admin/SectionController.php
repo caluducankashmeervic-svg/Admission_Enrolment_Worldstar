@@ -56,3 +56,4 @@ class SectionController extends Controller
         $section->delete();
         return back()->with('status', "Section {$name} deleted.");
     }
+}

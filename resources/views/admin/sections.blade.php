@@ -29,8 +29,8 @@
                     {{-- Display row --}}
                     <tr class="border-t border-slate-100 hover:bg-slate-50" id="row-{{ $s->id }}">
                         <td class="px-4 py-2 font-mono">{{ $s->name }}</td>
-                        <td class="px-4 py-2">{{ $s->course->code }}</td>
-                        <td class="px-4 py-2">{{ $s->academicTerm->school_year }} {{ $s->academicTerm->semester }}</td>
+                        <td class="px-4 py-2">{{ $s->course?->code ?? 'N/A' }}</td>
+                        <td class="px-4 py-2">{{ $s->academicTerm?->school_year }} {{ $s->academicTerm?->semester }}</td>
                         <td class="px-4 py-2">{{ $s->year_level }}</td>
                         <td class="px-4 py-2">
                             <div class="flex items-center gap-2">

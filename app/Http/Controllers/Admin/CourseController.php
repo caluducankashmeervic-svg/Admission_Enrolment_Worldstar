@@ -44,4 +44,19 @@ class CourseController extends Controller
         AuditLog::record('course.update', $course);
         return back()->with('status', "Course {$course->code} updated.");
     }
+
+    public function destroy(Course $course)
+    {
+        if ($course->sections()->exists() || $course->applicants()->exists() || $course->enrollments()->exists()) {
+            return back()->withErrors([
+                'course_delete' => "Cannot delete {$course->code}. It is already referenced by sections/applicants/enrollments.",
+            ]);
+        }
+
+        $code = $course->code;
+        AuditLog::record('course.delete', $course);
+        $course->delete();
+
+        return back()->with('status', "Course {$code} deleted.");
+    }
 }

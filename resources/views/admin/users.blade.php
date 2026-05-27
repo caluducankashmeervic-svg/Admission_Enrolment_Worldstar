@@ -19,7 +19,7 @@
 
 <div class="grid lg:grid-cols-3 gap-5 mt-5">
     <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="min-w-[1060px] w-full text-sm">
             <thead class="bg-slate-50 text-left text-slate-600">
                 <tr>
                     <th class="px-4 py-2">Photo</th>
@@ -27,7 +27,7 @@
                     <th class="px-4 py-2">Email</th>
                     <th class="px-4 py-2">Role</th>
                     <th class="px-4 py-2">Active</th>
-                    <th class="px-4 py-2">Reset Password</th>
+                    <th class="px-4 py-2">New Password</th>
                     <th class="px-4 py-2"></th>
                     <th class="px-4 py-2"></th>
                 </tr>
@@ -41,7 +41,7 @@
                                 <img src="{{ $u->profile_photo_url }}"
                                      class="w-10 h-10 rounded-full object-cover border border-slate-200" alt="">
                             </td>
-                            <td class="px-4 py-2"><input name="name" value="{{ $u->name }}" class="w-full border rounded px-2 py-1"></td>
+                            <td class="px-4 py-2"><input name="name" value="{{ $u->name }}" class="w-56 border rounded px-2 py-1"></td>
                             <td class="px-4 py-2 text-slate-500">{{ $u->email }}</td>
                             <td class="px-4 py-2">
                                 <select name="role" class="border rounded px-2 py-1">
@@ -51,17 +51,24 @@
                                 </select>
                             </td>
                             <td class="px-4 py-2"><input type="checkbox" name="is_active" value="1" @checked($u->is_active)></td>
-                            <td class="px-4 py-2"><input type="password" name="password" minlength="8" placeholder="leave blank" class="border rounded px-2 py-1 w-36"></td>
+                            <td class="px-4 py-2"></td>
                             <td class="px-4 py-2"><button class="text-blue-600 hover:underline">Save</button></td>
                         </form>
                         <td class="px-4 py-2">
-                            @if($u->id !== auth()->id())
-                                <form method="POST" action="{{ route('admin.users.destroy', $u) }}"
-                                      onsubmit="return confirm('Delete user {{ addslashes($u->email) }}? This cannot be undone.')">
-                                    @csrf @method('DELETE')
-                                    <button class="text-rose-600 hover:underline text-sm">Delete</button>
+                            <div class="flex items-center gap-3">
+                                <form method="POST" action="{{ route('admin.users.password', $u) }}" class="flex items-center gap-2">
+                                    @csrf @method('PUT')
+                                    <input type="password" name="password" minlength="8" required placeholder="min 8 chars" class="border rounded px-2 py-1 w-36">
+                                    <button class="text-amber-700 hover:underline text-sm">Change Password</button>
                                 </form>
-                            @endif
+                                @if($u->id !== auth()->id())
+                                    <form method="POST" action="{{ route('admin.users.destroy', $u) }}"
+                                          onsubmit="return confirm('Delete user {{ addslashes($u->email) }}? This cannot be undone.')">
+                                        @csrf @method('DELETE')
+                                        <button class="text-rose-600 hover:underline text-sm">Delete</button>
+                                    </form>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty

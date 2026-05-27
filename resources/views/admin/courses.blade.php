@@ -6,6 +6,10 @@
     <h1 class="text-2xl font-semibold">Courses</h1>
 </div>
 
+@error('course_delete')
+    <div class="mt-4 rounded bg-rose-50 border border-rose-200 text-rose-800 px-3 py-2 text-sm">{{ $message }}</div>
+@enderror
+
 <div class="grid lg:grid-cols-3 gap-5 mt-5">
     <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm overflow-x-auto">
         <table class="w-full text-sm">
@@ -33,9 +37,16 @@
                             <td class="px-4 py-2"><input type="checkbox" name="is_active" value="1" @checked($c->is_active)></td>
                             <td class="px-4 py-2"><button class="text-blue-600 hover:underline">Save</button></td>
                         </form>
+                        <td class="px-4 py-2">
+                            <form method="POST" action="{{ route('admin.courses.destroy', $c) }}"
+                                  onsubmit="return confirm('Delete course {{ addslashes($c->code) }}?')">
+                                @csrf @method('DELETE')
+                                <button class="text-rose-600 hover:underline">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
-                    <tr><td colspan="7" class="px-4 py-8 text-center text-slate-500">No courses yet.</td></tr>
+                    <tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">No courses yet.</td></tr>
                 @endforelse
             </tbody>
         </table>

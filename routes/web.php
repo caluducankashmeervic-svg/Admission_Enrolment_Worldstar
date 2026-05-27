@@ -121,6 +121,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/courses',            [CourseController::class, 'index'])->name('courses.index');
     Route::post('/courses',           [CourseController::class, 'store'])->name('courses.store');
     Route::put('/courses/{course}',   [CourseController::class, 'update'])->name('courses.update');
+    Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
 
     Route::get('/sections',              [SectionController::class, 'index'])->name('sections.index');
     Route::post('/sections',             [SectionController::class, 'store'])->name('sections.store');
@@ -130,12 +131,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/terms',             [AcademicTermController::class, 'index'])->name('terms.index');
     Route::post('/terms',            [AcademicTermController::class, 'store'])->name('terms.store');
     Route::put('/terms/{term}',      [AcademicTermController::class, 'update'])->name('terms.update');
+    Route::delete('/terms/{term}',   [AcademicTermController::class, 'destroy'])->name('terms.destroy');
     Route::post('/terms/{term}/activate',
         [AcademicTermController::class, 'activate'])->name('terms.activate');
 
     Route::get('/users',           [UserController::class, 'index'])->name('users.index');
     Route::post('/users',          [UserController::class, 'store'])->name('users.store');
     Route::put('/users/{user}',    [UserController::class, 'update'])->name('users.update');
+    Route::put('/users/{user}/password', [UserController::class, 'updatePassword'])->name('users.password');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::get('/trash',                [TrashController::class, 'index'])->name('trash.index');

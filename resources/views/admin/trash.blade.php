@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Rejected Applicants — Trash')
+@section('title', 'Rejected Applicants')
 
 @section('content')
 <div class="flex items-start justify-between flex-wrap gap-3">
     <div>
-        <h1 class="text-2xl font-semibold">Trash — Rejected Applicants</h1>
+        <h1 class="text-2xl font-semibold">Rejected Applicants</h1>
         <p class="text-sm text-slate-500 mt-1">These applicants have been rejected. You can permanently delete their data here.</p>
     </div>
 </div>
@@ -50,7 +50,7 @@
             @empty
                 <tr>
                     <td colspan="7" class="px-3 py-10 text-center text-slate-500">
-                        <p class="text-lg font-semibold">Trash is empty</p>
+                        <p class="text-lg font-semibold">No rejected applicants</p>
                         <p class="text-sm mt-1">No rejected applicants found.</p>
                     </td>
                 </tr>

@@ -52,7 +52,6 @@ class UserController extends Controller
             'name'      => ['required', 'string', 'max:100'],
             'role'      => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_REGISTRAR, User::ROLE_APPLICANT])],
             'is_active' => ['sometimes', 'boolean'],
-            'password'  => ['nullable', 'string', 'min:8'],
         ]);
 
         $payload = [
@@ -60,12 +59,23 @@ class UserController extends Controller
             'role'      => $data['role'],
             'is_active' => (bool) ($data['is_active'] ?? false),
         ];
-        if (! empty($data['password'])) {
-            $payload['password'] = Hash::make($data['password']);
-        }
         $user->update($payload);
         AuditLog::record('user.update', $user);
         return back()->with('status', "User {$user->email} updated.");
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+
+        $user->update([
+            'password' => Hash::make($data['password']),
+        ]);
+
+        AuditLog::record('user.password.update', $user);
+        return back()->with('status', "Password updated for {$user->email}.");
     }
 
     public function destroy(User $user)

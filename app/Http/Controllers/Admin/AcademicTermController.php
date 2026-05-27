@@ -51,4 +51,19 @@ class AcademicTermController extends Controller
         AuditLog::record('term.activate', $term);
         return back()->with('status', "Activated {$term->school_year} {$term->semester}.");
     }
+
+    public function destroy(AcademicTerm $term)
+    {
+        if ($term->sections()->exists() || $term->examSchedules()->exists() || $term->enrollments()->exists() || $term->applicants()->exists()) {
+            return back()->withErrors([
+                'term_delete' => "Cannot delete {$term->school_year} {$term->semester}. It is already in use.",
+            ]);
+        }
+
+        $label = $term->school_year . ' ' . $term->semester;
+        AuditLog::record('term.delete', $term);
+        $term->delete();
+
+        return back()->with('status', "Term {$label} deleted.");
+    }
 }

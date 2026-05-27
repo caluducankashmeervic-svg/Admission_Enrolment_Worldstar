@@ -4,6 +4,10 @@
 @section('content')
 <h1 class="text-2xl font-semibold">Academic Terms</h1>
 
+@error('term_delete')
+    <div class="mt-4 rounded bg-rose-50 border border-rose-200 text-rose-800 px-3 py-2 text-sm">{{ $message }}</div>
+@enderror
+
 <div class="grid lg:grid-cols-3 gap-5 mt-5">
     <div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg shadow-sm overflow-x-auto">
         <table class="w-full text-sm">
@@ -27,15 +31,22 @@
                             <td class="px-4 py-2"><input type="date" name="start_date" value="{{ $t->start_date->format('Y-m-d') }}" class="border rounded px-2 py-1"></td>
                             <td class="px-4 py-2"><input type="date" name="end_date" value="{{ $t->end_date->format('Y-m-d') }}" class="border rounded px-2 py-1"></td>
                             <td class="px-4 py-2"><input type="checkbox" name="is_active" value="1" @checked($t->is_active)></td>
-                            <td class="px-4 py-2 flex gap-2">
-                                <button class="text-blue-600 hover:underline">Save</button>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center gap-3">
+                                    <button class="text-blue-600 hover:underline">Save</button>
                         </form>
-                                @if(! $t->is_active)
-                                    <form method="POST" action="{{ route('admin.terms.activate', $t) }}">
-                                        @csrf
-                                        <button class="text-emerald-600 hover:underline">Activate</button>
+                                    @if(! $t->is_active)
+                                        <form method="POST" action="{{ route('admin.terms.activate', $t) }}">
+                                            @csrf
+                                            <button class="text-emerald-600 hover:underline">Activate</button>
+                                        </form>
+                                    @endif
+                                    <form method="POST" action="{{ route('admin.terms.destroy', $t) }}"
+                                          onsubmit="return confirm('Delete term {{ $t->school_year }} {{ $t->semester }}?')">
+                                        @csrf @method('DELETE')
+                                        <button class="text-rose-600 hover:underline">Delete</button>
                                     </form>
-                                @endif
+                                </div>
                             </td>
                     </tr>
                 @empty
