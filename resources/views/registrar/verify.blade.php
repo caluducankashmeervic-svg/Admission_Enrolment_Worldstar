@@ -113,6 +113,12 @@
                     ✏ Edit Applicant
                 </a>
 
+                <a href="{{ route('registrar.applicants.pre-reg-pdf', $applicant) }}"
+                   target="_blank"
+                   class="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-300 text-emerald-700 text-sm px-4 py-2 rounded hover:bg-emerald-100">
+                    ⬇ Export Pre-Reg PDF
+                </a>
+
                 @if($applicant->status === 'pre_registered')
                     <form method="POST" action="{{ route('registrar.approve', $applicant) }}">
                         @csrf
