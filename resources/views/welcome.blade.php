@@ -109,7 +109,7 @@
 @endpush
 
 {{-- ============== INTRO ============== --}}
-<section class="bg-white">
+<section id="about" class="bg-white">
     <div class="max-w-3xl mx-auto px-6 py-10 text-center md:text-left">
         <h2 class="text-blue-700 text-xl font-bold">For a better tomorrow</h2>
         <p class="mt-3 text-slate-700 text-sm leading-relaxed">
@@ -146,7 +146,7 @@
 </section>
 
 {{-- ============== THREE IMAGE CARDS ============== --}}
-<section class="bg-white">
+<section id="academics" class="bg-white">
     <div class="max-w-3xl mx-auto px-6 pb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ([
             ['STUDY',    'from-blue-200 to-blue-400',    '#courses'],
@@ -165,21 +165,7 @@
     </div>
 </section>
 
-{{-- ============== BLUE BUTTON ROW ============== --}}
-<section class="bg-slate-100 py-4">
-    <div class="max-w-3xl mx-auto px-6 flex flex-wrap gap-3 justify-center md:justify-start">
-        @foreach ([
-            ['Locations',     '#mission'],
-            ['How to apply',  route('register')],
-            ['News',          '#news'],
-        ] as [$label, $href])
-            <a href="{{ $href }}"
-               class="border-2 border-blue-700 text-blue-700 font-semibold text-sm px-5 py-2 bg-white hover:bg-blue-50">
-                {{ $label }}
-            </a>
-        @endforeach
-    </div>
-</section>
+
 
 {{-- ============== THREE INFO CARDS (light blue bg) ============== --}}
 <section class="bg-slate-100 py-6">
@@ -301,7 +287,7 @@
                 </div>
 
                 <div class="text-center">
-                    <p class="text-white font-extrabold text-[13px] leading-snug">
+                    <p class="text-white font-extrabold text-base leading-snug">
                         Worldstar College of Science and Technology, Inc.
                     </p>
                 </div>
@@ -323,26 +309,24 @@
         </div>
 
         {{-- ── COLUMN 2: Quick Links ── --}}
-        <div>
+        <div class="md:pl-10">
             <h3 class="text-white mb-7"
                 style="font-family: Georgia, 'Times New Roman', serif;
-                       font-size: 1.5rem;
+                       font-size: 1.6rem;
                        font-weight: 400;
                        letter-spacing: 0.01em;">
                 Quick Links
             </h3>
-            <ul class="space-y-[18px]">
+            <ul class="space-y-[20px]">
                 @foreach ([
-                    ['About',        '#about'],
-                    ['Academics',    '#academics'],
-                    ['Admission',    route('register')],
-                    ['Student Life', '#student-life'],
-                    ['Contact',      '#contact'],
+                    ['About',     '#about'],
+                    ['Academics', '#academics'],
+                    ['Admission', route('register')],
                 ] as [$label, $href])
                     <li>
                         <a href="{{ $href }}"
-                           class="text-[11px] tracking-[0.22em] uppercase text-white/80
-                                  hover:text-white hover:tracking-[0.28em]
+                           class="text-[14px] tracking-[0.18em] uppercase text-white/80
+                                  hover:text-white hover:tracking-[0.22em]
                                   transition-all duration-200"
                            style="font-family: 'Helvetica Neue', Arial, sans-serif;
                                   font-weight: 300;">
@@ -354,10 +338,10 @@
         </div>
 
         {{-- ── COLUMN 3: Contact Details ── --}}
-        <div>
+        <div class="md:pl-10">
             <h3 class="text-white mb-7"
                 style="font-family: Georgia, 'Times New Roman', serif;
-                       font-size: 1.5rem;
+                       font-size: 1.6rem;
                        font-weight: 400;
                        letter-spacing: 0.01em;">
                 Contact Details
@@ -366,28 +350,28 @@
                  style="font-family: 'Helvetica Neue', Arial, sans-serif;">
 
                 <div>
-                    <p class="text-[10px] uppercase tracking-widest text-white/50 mb-1">
+                    <p class="text-[13px] uppercase tracking-widest text-white/50 mb-1">
                         Mobile
                     </p>
-                    <p class="text-[14px] leading-relaxed text-white/85">
+                    <p class="text-[17px] leading-relaxed text-white/85">
                         0916 908 8531
                     </p>
                 </div>
 
                 <div>
-                    <p class="text-[10px] uppercase tracking-widest text-white/50 mb-1">
+                    <p class="text-[13px] uppercase tracking-widest text-white/50 mb-1">
                         Email Address
                     </p>
-                    <p class="text-[14px] leading-relaxed text-white/85">
+                    <p class="text-[17px] leading-relaxed text-white/85">
                         wcst.2016@gmail.com
                     </p>
                 </div>
 
                 <div>
-                    <p class="text-[10px] uppercase tracking-widest text-white/50 mb-1">
+                    <p class="text-[13px] uppercase tracking-widest text-white/50 mb-1">
                         Address
                     </p>
-                    <p class="text-[14px] leading-relaxed text-white/85">
+                    <p class="text-[17px] leading-relaxed text-white/85">
                         Alliance Bldg., National Highway,<br>
                         Bantug, Roxas, Philippines, 3320
                     </p>
@@ -399,7 +383,7 @@
     {{-- ── Sub-footer ── --}}
     <div class="relative max-w-7xl mx-auto px-8 md:px-12">
         <hr class="border-white/20">
-        <p class="py-6 text-center text-xs text-white/60"
+        <p class="py-6 text-center text-sm text-white/60"
            style="font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 300;">
             &copy; Copyright 2025 &ndash; 2026 &nbsp;|&nbsp; Privacy Notice
         </p>
