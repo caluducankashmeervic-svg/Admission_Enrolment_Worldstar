@@ -37,6 +37,7 @@
                 <nav class="hidden md:flex items-center gap-4 text-sm ml-auto">
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8]">Dashboard</a>
+                        <a href="{{ route('admin.accreditations.index') }}" class="hover:text-[#1D4ED8]">Accreditations</a>
                         <a href="{{ route('admin.announcements.index') }}" class="hover:text-[#1D4ED8]">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollees</a>
@@ -121,7 +122,7 @@
                                     <ul class="space-y-3">
                                         @foreach ([
                                             ['Vision and Mission', route('about.vision-mission')],
-                                            ['Accreditations and Recognition', '#accreditation'],
+                                            ['Accreditations and Recognition', route('about.accreditation')],
                                         ] as [$label, $href])
                                             <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
@@ -286,6 +287,7 @@
                 @auth
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Dashboard</a>
+                        <a href="{{ route('admin.accreditations.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Accreditations</a>
                         <a href="{{ route('admin.announcements.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Announcements</a>
                         <a href="{{ route('registrar.applicants.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="block px-3 py-2.5 rounded hover:bg-slate-100 font-medium">Enrollees</a>

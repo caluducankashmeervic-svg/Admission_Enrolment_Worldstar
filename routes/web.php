@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AccreditationController;
 use App\Http\Controllers\AcademicsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Admin\AcademicTermController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
+use App\Http\Controllers\Admin\AccreditationController as AdminAccreditationController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\CourseController;
@@ -41,6 +43,7 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 /* ---------------- About (public info pages) ---------------- */
 Route::prefix('about')->name('about.')->group(function () {
     Route::view('/story',          'about.story')->name('story');
+    Route::get('/accreditation-recognition', [AccreditationController::class, 'index'])->name('accreditation');
     Route::get('/announcements',   [AnnouncementController::class, 'index'])->name('announcements');
     Route::view('/philosophy',     'about.philosophy')->name('philosophy');
     Route::view('/vision-mission', 'about.vision-mission')->name('vision-mission');
@@ -108,6 +111,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/announcements', [AdminAnnouncementController::class, 'index'])->name('announcements.index');
     Route::post('/announcements', [AdminAnnouncementController::class, 'store'])->name('announcements.store');
     Route::put('/announcements/{announcement}', [AdminAnnouncementController::class, 'update'])->name('announcements.update');
+
+    Route::get('/accreditations', [AdminAccreditationController::class, 'index'])->name('accreditations.index');
+    Route::post('/accreditations', [AdminAccreditationController::class, 'store'])->name('accreditations.store');
+    Route::delete('/accreditations/{accreditation}', [AdminAccreditationController::class, 'destroy'])->name('accreditations.destroy');
 
     Route::get('/courses',            [CourseController::class, 'index'])->name('courses.index');
     Route::post('/courses',           [CourseController::class, 'store'])->name('courses.store');
