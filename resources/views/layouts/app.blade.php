@@ -36,17 +36,18 @@
                 {{-- Authenticated nav (desktop) --}}
                 <nav class="hidden md:flex items-center gap-4 text-sm ml-auto">
                     @if(auth()->user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8]">Dashboard</a>
-                        <a href="{{ route('admin.accreditations.index') }}" class="hover:text-[#1D4ED8]">Accreditations</a>
-                        <a href="{{ route('admin.announcements.index') }}" class="hover:text-[#1D4ED8]">Announcements</a>
-                        <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
-                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollees</a>
-                        <a href="{{ route('admin.courses.index') }}" class="hover:text-[#1D4ED8]">Courses</a>
-                        <a href="{{ route('admin.sections.index') }}" class="hover:text-[#1D4ED8]">Sections</a>
-                        <a href="{{ route('admin.terms.index') }}" class="hover:text-[#1D4ED8]">Terms</a>
-                        <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8]">Exams</a>
-                        <a href="{{ route('admin.users.index') }}" class="hover:text-[#1D4ED8]">Users</a>
-                        <a href="{{ route('admin.audit.index') }}" class="hover:text-[#1D4ED8]">Audit</a>
+                        <a href="{{ route('admin.dashboard') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.dashboard*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Dashboard</a>
+                        <a href="{{ route('admin.accreditations.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.accreditations.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Accreditations</a>
+                        <a href="{{ route('admin.announcements.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.announcements.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Announcements</a>
+                        <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.applicants.*') || request()->routeIs('registrar.verify.*') || request()->routeIs('registrar.approve') || request()->routeIs('registrar.reject') ? 'text-[#1D4ED8] font-semibold' : '' }}">Applicants</a>
+                        <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.enrollment*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Enrollees</a>
+                        <a href="{{ route('admin.courses.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.courses.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Courses</a>
+                        <a href="{{ route('admin.sections.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.sections.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Sections</a>
+                        <a href="{{ route('admin.terms.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.terms.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Terms</a>
+                        <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('exam.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Exams</a>
+                        <a href="{{ route('admin.users.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.users.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Users</a>
+                        <a href="{{ route('admin.audit.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.audit.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Audit</a>
+                        <a href="{{ route('admin.trash.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.trash.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Trash</a>
                     @elseif(auth()->user()->isRegistrar())
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8]">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8]">Enrollees</a>

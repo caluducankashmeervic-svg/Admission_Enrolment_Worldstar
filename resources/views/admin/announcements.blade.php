@@ -21,9 +21,18 @@
                         <label class="inline-flex items-center text-sm">
                             <input type="checkbox" name="is_active" value="1" @checked($announcement->is_active) class="mr-2"> Active
                         </label>
-                        <button class="text-blue-600 hover:underline">Save</button>
+                        <div class="flex items-center gap-3">
+                            <button class="text-blue-600 hover:underline text-sm">Save</button>
+                        </div>
                     </div>
                 </form>
+                <div class="px-5 pb-4 flex justify-end">
+                    <form method="POST" action="{{ route('admin.announcements.destroy', $announcement) }}"
+                          onsubmit="return confirm('Delete this announcement permanently?')">
+                        @csrf @method('DELETE')
+                        <button class="text-rose-600 hover:underline text-sm">Delete</button>
+                    </form>
+                </div>
             @empty
                 <div class="px-4 py-8 text-center text-slate-500">No announcements yet.</div>
             @endforelse

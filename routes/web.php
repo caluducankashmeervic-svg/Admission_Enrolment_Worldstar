@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ManageEnrolleesController;
 use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\TrashController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Applicant\AdmissionController;
 use App\Http\Controllers\Applicant\PreRegistrationController;
@@ -111,6 +112,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/announcements', [AdminAnnouncementController::class, 'index'])->name('announcements.index');
     Route::post('/announcements', [AdminAnnouncementController::class, 'store'])->name('announcements.store');
     Route::put('/announcements/{announcement}', [AdminAnnouncementController::class, 'update'])->name('announcements.update');
+    Route::delete('/announcements/{announcement}', [AdminAnnouncementController::class, 'destroy'])->name('announcements.destroy');
 
     Route::get('/accreditations', [AdminAccreditationController::class, 'index'])->name('accreditations.index');
     Route::post('/accreditations', [AdminAccreditationController::class, 'store'])->name('accreditations.store');
@@ -120,8 +122,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/courses',           [CourseController::class, 'store'])->name('courses.store');
     Route::put('/courses/{course}',   [CourseController::class, 'update'])->name('courses.update');
 
-    Route::get('/sections',  [SectionController::class, 'index'])->name('sections.index');
-    Route::post('/sections', [SectionController::class, 'store'])->name('sections.store');
+    Route::get('/sections',              [SectionController::class, 'index'])->name('sections.index');
+    Route::post('/sections',             [SectionController::class, 'store'])->name('sections.store');
+    Route::put('/sections/{section}',    [SectionController::class, 'update'])->name('sections.update');
+    Route::delete('/sections/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
 
     Route::get('/terms',             [AcademicTermController::class, 'index'])->name('terms.index');
     Route::post('/terms',            [AcademicTermController::class, 'store'])->name('terms.store');
@@ -132,6 +136,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/users',           [UserController::class, 'index'])->name('users.index');
     Route::post('/users',          [UserController::class, 'store'])->name('users.store');
     Route::put('/users/{user}',    [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/trash',                [TrashController::class, 'index'])->name('trash.index');
+    Route::delete('/trash/{applicant}', [TrashController::class, 'destroy'])->name('trash.destroy');
 
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit.index');
 

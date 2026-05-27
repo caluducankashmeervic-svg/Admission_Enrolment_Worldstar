@@ -40,6 +40,14 @@ class AnnouncementController extends Controller
         return back()->with('status', 'Announcement updated.');
     }
 
+    public function destroy(Announcement $announcement)
+    {
+        AuditLog::record('announcement.delete', $announcement);
+        $announcement->delete();
+
+        return back()->with('status', 'Announcement deleted.');
+    }
+
     protected function validated(Request $request): array
     {
         $data = $request->validate([

@@ -34,4 +34,25 @@ class SectionController extends Controller
         AuditLog::record('section.create', $section);
         return back()->with('status', "Section {$section->name} created.");
     }
-}
+
+    public function update(Request $request, Section $section)
+    {
+        $data = $request->validate([
+            'name'       => ['required', 'string', 'max:50'],
+            'year_level' => ['required', 'integer', 'min:1', 'max:8'],
+            'capacity'   => ['required', 'integer', 'min:1', 'max:200'],
+            'is_open'    => ['sometimes', 'boolean'],
+        ]);
+        $data['is_open'] = $request->boolean('is_open');
+        $section->update($data);
+        AuditLog::record('section.update', $section);
+        return back()->with('status', "Section {$section->name} updated.");
+    }
+
+    public function destroy(Section $section)
+    {
+        AuditLog::record('section.delete', $section);
+        $name = $section->name;
+        $section->delete();
+        return back()->with('status', "Section {$name} deleted.");
+    }

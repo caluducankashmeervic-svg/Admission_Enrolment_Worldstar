@@ -29,6 +29,7 @@
                     <th class="px-4 py-2">Active</th>
                     <th class="px-4 py-2">Reset Password</th>
                     <th class="px-4 py-2"></th>
+                    <th class="px-4 py-2"></th>
                 </tr>
             </thead>
             <tbody>
@@ -53,9 +54,18 @@
                             <td class="px-4 py-2"><input type="password" name="password" minlength="8" placeholder="leave blank" class="border rounded px-2 py-1 w-36"></td>
                             <td class="px-4 py-2"><button class="text-blue-600 hover:underline">Save</button></td>
                         </form>
+                        <td class="px-4 py-2">
+                            @if($u->id !== auth()->id())
+                                <form method="POST" action="{{ route('admin.users.destroy', $u) }}"
+                                      onsubmit="return confirm('Delete user {{ addslashes($u->email) }}? This cannot be undone.')">
+                                    @csrf @method('DELETE')
+                                    <button class="text-rose-600 hover:underline text-sm">Delete</button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="px-4 py-8 text-center text-slate-500">No users.</td></tr>
+                    <tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">No users.</td></tr>
                 @endforelse
             </tbody>
         </table>

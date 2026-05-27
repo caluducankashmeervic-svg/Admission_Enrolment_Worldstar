@@ -67,4 +67,15 @@ class UserController extends Controller
         AuditLog::record('user.update', $user);
         return back()->with('status', "User {$user->email} updated.");
     }
+
+    public function destroy(User $user)
+    {
+        abort_if($user->id === auth()->id(), 403, 'You cannot delete your own account.');
+
+        AuditLog::record('user.delete', $user);
+        $email = $user->email;
+        $user->delete();
+
+        return back()->with('status', "User {$email} deleted.");
+    }
 }

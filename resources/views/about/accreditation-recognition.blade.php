@@ -17,9 +17,12 @@
             @foreach($items as $item)
                 <article class="border border-slate-200 rounded-lg overflow-hidden bg-white">
                     <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->title ?: 'Accreditation photo' }}" class="w-full h-52 object-cover">
-                    @if($item->title)
-                        <div class="px-4 py-3 text-sm font-medium text-slate-700">{{ $item->title }}</div>
-                    @endif
+                    <div class="px-4 py-3 space-y-0.5">
+                        @if($item->title)
+                            <p class="text-sm font-medium text-slate-700">{{ $item->title }}</p>
+                        @endif
+                        <p class="text-xs text-slate-400">{{ $item->created_at->format('M d, Y h:i A') }}</p>
+                    </div>
                 </article>
             @endforeach
         </div>
