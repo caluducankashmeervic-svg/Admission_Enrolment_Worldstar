@@ -256,7 +256,7 @@
 
             {{-- Circular logo + school name --}}
             <div class="flex flex-col items-center gap-3 self-start">
-                <img src="{{ asset('images/logo.png') }}"
+                <img src="{{ asset('images/image.png') }}"
                      alt="Worldstar College Logo"
                      class="w-28 h-28 object-contain">
 
@@ -274,7 +274,7 @@
 
             {{-- Social icons row — Facebook only --}}
             <div class="flex items-center gap-3">
-                <a href="#" title="Facebook"
+                <a href="https://www.facebook.com/WCST2016" title="Facebook" target="_blank" rel="noopener noreferrer"
                    class="w-10 h-10 rounded-full border border-white
                           flex items-center justify-center text-white
                           hover:bg-white hover:text-blue-900
@@ -332,10 +332,10 @@
 
                 <div>
                     <p class="text-[10px] uppercase tracking-widest text-white/50 mb-1">
-                        Trunkline
+                        Mobile
                     </p>
                     <p class="text-[14px] leading-relaxed text-white/85">
-                        (02) 8245-4201 &nbsp;|&nbsp; (02) 8245-4202
+                        0916 908 8531
                     </p>
                 </div>
 
@@ -344,7 +344,7 @@
                         Email Address
                     </p>
                     <p class="text-[14px] leading-relaxed text-white/85">
-                        info@worldstar.edu.ph
+                        wcst.2016@gmail.com
                     </p>
                 </div>
 
@@ -353,8 +353,8 @@
                         Address
                     </p>
                     <p class="text-[14px] leading-relaxed text-white/85">
-                        P. Paredes St., Sampaloc,<br>
-                        Manila, Philippines 1008
+                        Alliance Bldg., National Highway,<br>
+                        Bantug, Roxas, Philippines, 3320
                     </p>
                 </div>
             </div>

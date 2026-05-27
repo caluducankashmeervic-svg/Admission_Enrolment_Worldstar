@@ -12,7 +12,14 @@ class RoleMiddleware
     {
         $user = $request->user();
         if (! $user || ! $user->is_active || ! in_array($user->role, $roles, true)) {
-            abort(403, 'Forbidden.');
+            if (! $user) {
+                return redirect()->route('login');
+            }
+            return match ($user->role) {
+                'admin'     => redirect()->route('admin.dashboard'),
+                'registrar' => redirect()->route('registrar.applicants.index'),
+                default     => redirect()->route('applicant.admission.create'),
+            };
         }
         return $next($request);
     }
