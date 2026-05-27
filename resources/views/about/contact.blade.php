@@ -53,9 +53,8 @@
             <div>
                 <p class="font-semibold text-slate-800 text-[15px]">Address</p>
                 <p class="text-slate-600 mt-1 text-[15px] leading-relaxed">
-                    Worldstar College of Science and Technology, Inc.<br>
-                    Ilagan City, Isabela, Region II<br>
-                    Philippines
+                    Alliance Bldg., National Highway, Bantug,<br>
+                    Roxas, Philippines, 3320
                 </p>
             </div>
         </div>
@@ -71,7 +70,7 @@
             <div>
                 <p class="font-semibold text-slate-800 text-[15px]">Office Hours</p>
                 <p class="text-slate-600 mt-1 text-[15px]">Monday – Friday: 8:00 AM – 5:00 PM</p>
-                <p class="text-slate-600 text-[15px]">Saturday: 8:00 AM – 12:00 PM</p>
+                <p class="text-slate-600 text-[15px]">Saturday: 8:00 AM – 4:00 PM</p>
             </div>
         </div>
 

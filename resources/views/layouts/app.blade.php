@@ -135,9 +135,8 @@
                                         @foreach ([
                                             ['Reference Code Apply', route('applicant.code.form')],
                                             ['Applicant Portal', route('login')],
-                                            ['Application Forms', route('applicant.pre-register.choose')],
+                                            ['Pre-registration Form', route('applicant.pre-register.choose')],
                                             ['Enrollment FAQs', '/#questions'],
-                                            ['Contact Admission', '#contact'],
                                         ] as [$label, $href])
                                             <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
@@ -147,8 +146,8 @@
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Programs</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
-                                            ['Senior High School', '#shs'],
-                                            ['TESDA Diploma Courses', '#tesda'],
+                                            ['Senior High School', route('admissions.senior-high-school')],
+                                            ['TESDA Diploma Courses', route('admissions.tesda-diploma-courses')],
                                         ] as [$label, $href])
                                             <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach
@@ -158,9 +157,9 @@
                                     <h3 class="text-[#1D4ED8] font-bold uppercase text-[13px] tracking-widest mb-6">Student Support</h3>
                                     <ul class="space-y-3">
                                         @foreach ([
-                                            ['Scholarship', '#scholarship'],
+                                            ['Scholarship', route('admissions.scholarship')],
                                             ['Safe Space', '#safespace'],
-                                            ['Apply as Working Student', '#working'],
+                                            ['Apply as Working Student', route('admissions.working-student')],
                                         ] as [$label, $href])
                                             <li><a href="{{ $href }}" class="block text-[15px] font-medium text-slate-700 hover:text-[#1D4ED8] transition">{{ $label }}</a></li>
                                         @endforeach

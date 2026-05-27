@@ -7,7 +7,7 @@
 
 {{-- ============== HERO (cinematic dark banner) ============== --}}
 <section class="relative bg-black text-white overflow-hidden">
-    <div class="relative h-[360px] md:h-[500px] flex">
+    <div class="relative h-[430px] md:h-[620px] flex">
 
         {{-- ── Slider: full-bleed background ── --}}
         <div id="hero-slider" class="absolute inset-0 overflow-hidden">

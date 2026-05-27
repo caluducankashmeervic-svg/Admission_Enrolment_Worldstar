@@ -45,6 +45,14 @@ Route::prefix('about')->name('about.')->group(function () {
     Route::view('/contact',        'about.contact')->name('contact');
 });
 
+/* ---------------- Admissions (public info pages) ----------- */
+Route::prefix('admissions')->name('admissions.')->group(function () {
+    Route::view('/senior-high-school', 'admissions.senior-high-school')->name('senior-high-school');
+    Route::view('/tesda-diploma-courses', 'admissions.tesda-diploma-courses')->name('tesda-diploma-courses');
+    Route::view('/scholarship', 'admissions.scholarship')->name('scholarship');
+    Route::view('/working-student', 'admissions.working-student')->name('working-student');
+});
+
 /* ---------------- Academics (program detail pages) --------- */
 Route::get('/academics/{slug}', [AcademicsController::class, 'show'])->name('academics.program');
 
