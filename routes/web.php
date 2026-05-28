@@ -157,6 +157,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::get('/trends',           [AnalyticsController::class, 'trends'])->name('trends');
         Route::get('/course-capacities',[AnalyticsController::class, 'courseCapacities'])->name('capacities');
         Route::get('/demographics',     [AnalyticsController::class, 'demographics'])->name('demographics');
+        Route::get('/top-courses',      [AnalyticsController::class, 'topCourses'])->name('top-courses');
+        Route::get('/funnel',           [AnalyticsController::class, 'funnel'])->name('funnel');
     });
 });
 

@@ -3,18 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <style>
-    @page { margin: 1.25in; }
+    @page { margin: 0.6in 0.65in 0.7in 0.65in; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Arial, sans-serif; font-size: 10pt; color: #1e293b; line-height: 1.5; }
 
-    /* ── Page header ── */
-    .header { display: flex; align-items: center; border-bottom: 2.5px solid #1d4ed8; padding-bottom: 12px; margin-bottom: 18px; }
-    .header img { width: 58px; height: 58px; object-fit: contain; margin-right: 14px; }
-    .header-text { flex: 1; }
+    /* ── Page header (table-based for DomPDF reliability) ── */
+    .header { width: 100%; border-bottom: 2.5px solid #1d4ed8; padding-bottom: 10px; margin-bottom: 16px; }
+    .header td { vertical-align: middle; }
+    .header td.logo { width: 70px; }
+    .header td.logo img { width: 58px; height: 58px; object-fit: contain; }
+    .header td.right { text-align: right; width: 200px; }
     .school-name { font-size: 13pt; font-weight: bold; color: #1d4ed8; }
     .school-sub  { font-size: 8.5pt; color: #475569; margin-top: 1px; }
-    .doc-title   { text-align: right; font-size: 11pt; font-weight: bold; color: #1e293b; }
-    .doc-ref     { text-align: right; font-size: 8.5pt; color: #64748b; margin-top: 2px; }
+    .doc-title   { font-size: 11pt; font-weight: bold; color: #1e293b; }
+    .doc-ref     { font-size: 8.5pt; color: #64748b; margin-top: 2px; }
 
     /* ── Sections ── */
     .section { margin-bottom: 18px; }
@@ -75,19 +77,21 @@
 @endphp
 
 {{-- ── Page header ── --}}
-<div class="header">
-    <img src="{{ public_path('images/image.png') }}" alt="WCST">
-    <div class="header-text">
-        <div class="school-name">Worldstar College of Science and Technology</div>
-        <div class="school-sub">Alliance Bldg., National Highway, Bantug, Roxas, Philippines 3320</div>
-        <div class="school-sub">wcst.2016@gmail.com &nbsp;|&nbsp; 0916 908 8531</div>
-    </div>
-    <div>
-        <div class="doc-title">Pre-Registration Form</div>
-        <div class="doc-ref">Ref: {{ $applicant->reference_code }}</div>
-        <div class="doc-ref">Date: {{ now()->format('F d, Y') }}</div>
-    </div>
-</div>
+<table class="header">
+    <tr>
+        <td class="logo"><img src="{{ public_path('images/image.png') }}" alt="WCST"></td>
+        <td>
+            <div class="school-name">Worldstar College of Science and Technology</div>
+            <div class="school-sub">Alliance Bldg., National Highway, Bantug, Roxas, Philippines 3320</div>
+            <div class="school-sub">wcst.2016@gmail.com &nbsp;|&nbsp; 0916 908 8531</div>
+        </td>
+        <td class="right">
+            <div class="doc-title">Pre-Registration Form</div>
+            <div class="doc-ref">Ref: {{ $applicant->reference_code }}</div>
+            <div class="doc-ref">Date: {{ now()->format('F d, Y') }}</div>
+        </td>
+    </tr>
+</table>
 
 {{-- ── Application Info ── --}}
 <div class="section">

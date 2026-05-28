@@ -30,13 +30,64 @@ class AnalyticsController extends Controller
 
     public function summary(?int $termId = null): array
     {
+        $base = fn () => Applicant::when($termId, fn ($q) => $q->where('academic_term_id', $termId));
+
+        $sectionsTotal = Section::when($termId, fn ($q) => $q->where('academic_term_id', $termId))->count();
+        $sectionsFull = Section::when($termId, fn ($q) => $q->where('academic_term_id', $termId))
+            ->whereColumn('enrolled_count', '>=', 'capacity')->count();
+
         return [
-            'total_applicants' => Applicant::when($termId, fn ($q) => $q->where('academic_term_id', $termId))->count(),
-            'total_enrolled'   => Enrollment::when($termId, fn ($q) => $q->where('academic_term_id', $termId))
-                                    ->where('status', 'finalized')->count(),
-            'total_courses'    => Course::where('is_active', true)->count(),
-            'total_sections'   => Section::when($termId, fn ($q) => $q->where('academic_term_id', $termId))->count(),
+            'total_applicants'   => $base()->count(),
+            'total_enrolled'     => Enrollment::when($termId, fn ($q) => $q->where('academic_term_id', $termId))
+                                        ->where('status', 'finalized')->count(),
+            'total_courses'      => Course::where('is_active', true)->count(),
+            'total_sections'     => $sectionsTotal,
+            'pending_pre_reg'    => $base()->where('status', Applicant::STATUS_PRE_REGISTERED)->count(),
+            'exam_scheduled'     => $base()->where('status', Applicant::STATUS_EXAM_SCHEDULED)->count(),
+            'exam_completed'     => $base()->where('status', Applicant::STATUS_EXAM_COMPLETED)->count(),
+            'verified'           => $base()->where('status', Applicant::STATUS_VERIFIED)->count(),
+            'rejected'           => $base()->where('status', Applicant::STATUS_REJECTED)->count(),
+            'sections_full'      => $sectionsFull,
+            'new_today'          => $base()->whereDate('created_at', today())->count(),
+            'new_this_week'      => $base()->where('created_at', '>=', now()->subDays(7))->count(),
         ];
+    }
+
+    public function topCourses(Request $request): JsonResponse
+    {
+        [$termId] = $this->resolveTermFilter($request);
+
+        $rows = Course::where('is_active', true)
+            ->withCount(['applicants as applicant_count' => function ($q) use ($termId) {
+                if ($termId) {
+                    $q->where('academic_term_id', $termId);
+                }
+            }])
+            ->orderByDesc('applicant_count')
+            ->take(5)
+            ->get();
+
+        return response()->json([
+            'labels' => $rows->pluck('code'),
+            'data'   => $rows->pluck('applicant_count'),
+        ]);
+    }
+
+    public function funnel(Request $request): JsonResponse
+    {
+        [$termId] = $this->resolveTermFilter($request);
+        $base = fn () => Applicant::when($termId, fn ($q) => $q->where('academic_term_id', $termId));
+
+        return response()->json([
+            'labels' => ['Pre-Registered', 'Exam Scheduled', 'Exam Completed', 'Verified', 'Enrolled'],
+            'data'   => [
+                $base()->where('status', Applicant::STATUS_PRE_REGISTERED)->count(),
+                $base()->where('status', Applicant::STATUS_EXAM_SCHEDULED)->count(),
+                $base()->where('status', Applicant::STATUS_EXAM_COMPLETED)->count(),
+                $base()->where('status', Applicant::STATUS_VERIFIED)->count(),
+                $base()->where('status', Applicant::STATUS_ENROLLED)->count(),
+            ],
+        ]);
     }
 
     public function trends(Request $request): JsonResponse

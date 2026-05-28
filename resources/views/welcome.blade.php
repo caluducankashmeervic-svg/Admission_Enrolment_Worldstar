@@ -111,20 +111,41 @@
 </script>
 @endpush
 
-{{-- ============== FEATURED BANNER (Explore campuses) ============== --}}
+{{-- ============== WHY CHOOSE WORLDSTAR (replaces generic "Explore campuses" banner) ============== --}}
+@php
+    $stats = [
+        ['10+',  'Years Building Worldstar Lions'],
+        ['15+',  'SHS & TESDA Programs Offered'],
+        ['100%', 'TESDA-Accredited Diploma Tracks'],
+        ['1:1',  'Faith, Care & Mentorship Support'],
+    ];
+@endphp
 <section class="bg-white pt-10">
-    <div class="max-w-3xl mx-auto px-6 pb-8">
-        <div class="relative h-56 md:h-64 rounded-sm overflow-hidden bg-gradient-to-r from-slate-700 via-slate-500 to-slate-400 shadow">
-            <div class="absolute inset-0 bg-black/30"></div>
-            <div class="relative h-full flex items-center px-8">
+    <div class="max-w-5xl mx-auto px-6 pb-8">
+        <div class="rounded-md overflow-hidden bg-gradient-to-r from-[#0b1c96] via-[#1d4ed8] to-emerald-600 shadow-lg">
+            <div class="px-8 py-8 md:py-10 grid md:grid-cols-[1.1fr_1fr] gap-6 items-center">
                 <div>
-                    <p class="text-white font-extrabold uppercase tracking-wide leading-tight text-lg md:text-2xl">
-                        Explore our<br>award-winning<br>campuses and<br>state-of-the-art<br>facilities
+                    <p class="text-amber-300 font-semibold uppercase tracking-widest text-xs">Why Choose Worldstar</p>
+                    <h3 class="text-white font-extrabold leading-tight text-2xl md:text-3xl mt-2">
+                        A faith-driven, industry-ready college<br class="hidden md:block">
+                        right here in Roxas, Capiz.
+                    </h3>
+                    <p class="text-white/85 text-sm mt-3 max-w-md">
+                        TESDA-accredited programs, dedicated faculty, and a Safe Space community
+                        that supports every learner — academically, emotionally, and spiritually.
                     </p>
-                    <a href="#courses"
-                       class="inline-block mt-4 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm px-4 py-2 rounded">
-                        BOOK A GUIDED TOUR
+                    <a href="{{ route('applicant.pre-register.choose') }}"
+                       class="inline-block mt-5 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm px-5 py-2.5 rounded">
+                        START YOUR APPLICATION
                     </a>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    @foreach($stats as [$value, $label])
+                        <div class="bg-white/10 backdrop-blur rounded-lg px-4 py-4 border border-white/20">
+                            <p class="text-amber-300 font-extrabold text-2xl md:text-3xl leading-none">{{ $value }}</p>
+                            <p class="text-white/90 text-xs mt-1 leading-snug">{{ $label }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

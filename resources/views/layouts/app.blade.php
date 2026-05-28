@@ -47,7 +47,6 @@
                         <a href="{{ route('exam.schedule.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('exam.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Exams</a>
                         <a href="{{ route('admin.users.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.users.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Users</a>
                         <a href="{{ route('admin.audit.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.audit.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Audit</a>
-                        <a href="{{ route('admin.trash.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('admin.trash.*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Rejected</a>
                     @elseif(auth()->user()->isRegistrar())
                         <a href="{{ route('registrar.applicants.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.applicants.*') || request()->routeIs('registrar.verify.*') || request()->routeIs('registrar.approve') || request()->routeIs('registrar.reject') ? 'text-[#1D4ED8] font-semibold' : '' }}">Applicants</a>
                         <a href="{{ route('registrar.enrollments.index') }}" class="hover:text-[#1D4ED8] {{ request()->routeIs('registrar.enrollment*') ? 'text-[#1D4ED8] font-semibold' : '' }}">Enrollees</a>
@@ -57,14 +56,15 @@
                         <a href="{{ route('applicant.my-status') }}" class="hover:text-[#1D4ED8]">Check Status</a>
                     @endif
                     <a href="{{ route('profile.edit') }}"
-                       class="ml-3 pl-3 border-l border-slate-200 flex items-center gap-2 text-slate-500 hover:text-[#1D4ED8]">
+                       class="ml-6 pl-5 border-l border-slate-200 flex items-center gap-2 text-slate-500 hover:text-[#1D4ED8]">
                         <img src="{{ auth()->user()->profile_photo_url }}"
+                             onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?: 'U') }}&background=0D8ABC&color=fff&size=128'"
                              class="w-7 h-7 rounded-full object-cover border border-slate-200" alt="">
                         <span class="max-w-[170px] leading-tight whitespace-normal break-words">{{ auth()->user()->name }}</span>
                     </a>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" class="ml-6">
                         @csrf
-                        <button class="ml-3 text-rose-600 hover:underline">Logout</button>
+                        <button class="text-rose-600 hover:underline">Logout</button>
                     </form>
                 </nav>
                 {{-- Mobile hamburger (auth users) --}}

@@ -14,7 +14,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach($items as $item)
                     <article class="border border-slate-200 rounded-lg overflow-hidden">
-                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->title ?: 'Accreditation photo' }}" class="w-full h-44 object-cover">
+                        <img src="{{ asset('storage/' . $item->image_path) }}"
+                             onerror="this.onerror=null;this.src='{{ asset('images/image.png') }}';this.classList.add('object-contain','bg-slate-50','p-4');"
+                             alt="{{ $item->title ?: 'Accreditation photo' }}" class="w-full h-44 object-cover">
                         <div class="p-3 flex items-center justify-between gap-3">
                             <p class="text-sm text-slate-700 truncate">{{ $item->title ?: 'Untitled photo' }}</p>
                             <form method="POST" action="{{ route('admin.accreditations.destroy', $item) }}" onsubmit="return confirm('Delete this photo?');">

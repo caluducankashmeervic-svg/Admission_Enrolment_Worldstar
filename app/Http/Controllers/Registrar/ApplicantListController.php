@@ -59,28 +59,49 @@ class ApplicantListController extends Controller
         $filename = 'applicants-' . now()->format('Ymd-His') . '.csv';
 
         $out = fopen('php://temp', 'w+');
+        // UTF-8 BOM so Excel reads accents correctly.
         fwrite($out, "\xEF\xBB\xBF");
 
+        // Force Excel to treat numeric-only strings (mobile, ref) as text so
+        // they don't get scientific-notation formatted (e.g. 9.68E+09).
+        $asText = fn ($v) => ($v === null || $v === '') ? '' : "\u{200B}" . $v;
+
         fputcsv($out, [
-            'Reference', 'Last Name', 'First Name', 'Middle Name',
-            'Gender', 'Birth Date', 'Mobile', 'Email',
-            'Course', 'Term', 'Status',
-            'Latest Exam Score', 'Latest Exam Result', 'Registered At',
+            'Reference', 'Last Name', 'First Name', 'Middle Name', 'Suffix',
+            'Gender', 'Birth Date', 'Age', 'Nationality', 'Religion', 'Civil Status',
+            'Mobile', 'Email',
+            'Address', 'City', 'Province',
+            'Applicant Type', 'Course Code', 'Course Name', 'Strand/Track',
+            'Term', 'Status',
+            'Latest Exam Score', 'Latest Exam Result',
+            'Registered At',
         ]);
 
-        $this->baseQuery($request)->orderBy('id')->chunk(500, function ($rows) use ($out) {
+        $this->baseQuery($request)->orderBy('id')->chunk(500, function ($rows) use ($out, $asText) {
             foreach ($rows as $a) {
                 fputcsv($out, [
                     $a->reference_code,
-                    $a->last_name, $a->first_name, $a->middle_name,
-                    $a->gender, optional($a->birth_date)->format('Y-m-d'),
-                    $a->mobile, $a->email,
+                    $a->last_name, $a->first_name, $a->middle_name, $a->suffix,
+                    $a->gender,
+                    optional($a->birth_date)->format('M d, Y'),
+                    $a->birth_date ? $a->birth_date->age : '',
+                    $a->nationality,
+                    $a->religion,
+                    $a->civil_status,
+                    $asText($a->mobile),
+                    $a->email,
+                    $a->address_line,
+                    $a->city,
+                    $a->province,
+                    $a->applicant_type,
                     $a->preferredCourse?->code,
+                    $a->preferredCourse?->name,
+                    $a->strand_track,
                     trim(($a->academicTerm?->school_year ?? '') . ' ' . ($a->academicTerm?->semester ?? '')),
-                    $a->status,
+                    str_replace('_', ' ', (string) $a->status),
                     $a->latestExamResult?->score,
                     $a->latestExamResult?->result,
-                    $a->created_at?->format('Y-m-d H:i'),
+                    optional($a->created_at)->format('M d, Y h:i A'),
                 ]);
             }
         });
