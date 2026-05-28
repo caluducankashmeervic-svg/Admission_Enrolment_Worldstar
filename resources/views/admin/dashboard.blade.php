@@ -95,6 +95,44 @@
     @endforeach
 </section>
 
+@php
+    $enrollmentRate = $summary['total_applicants'] > 0
+        ? round($summary['total_enrolled'] / $summary['total_applicants'] * 100, 1)
+        : 0;
+@endphp
+<section class="grid sm:grid-cols-3 gap-3 mt-3">
+    <div class="bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <div>
+            <p class="text-[11px] uppercase tracking-wider text-slate-500">Enrollment Rate</p>
+            <p class="text-xl font-bold text-indigo-600">{{ $enrollmentRate }}%</p>
+            <p class="text-[10px] text-slate-400">{{ $summary['total_enrolled'] }} of {{ $summary['total_applicants'] }} applicants</p>
+        </div>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+        </div>
+        <div>
+            <p class="text-[11px] uppercase tracking-wider text-slate-500">Active Announcements</p>
+            <p class="text-xl font-bold text-amber-600">{{ $announcementCount }}</p>
+            <a href="{{ route('admin.announcements.index') }}" class="text-[10px] text-blue-500 hover:underline">Manage →</a>
+        </div>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+            <p class="text-[11px] uppercase tracking-wider text-slate-500">Data As Of</p>
+            <p class="text-sm font-semibold text-slate-700">{{ now()->format('M d, Y') }}</p>
+            <p class="text-[10px] text-slate-400">{{ now()->format('g:i A') }}</p>
+        </div>
+    </div>
+</section>
+
 <section class="grid md:grid-cols-2 gap-3 mt-3">
     <div class="bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm flex items-center justify-between">
         <div>
@@ -142,9 +180,116 @@
     </div>
 </section>
 
+<section class="grid lg:grid-cols-2 gap-5 mt-5">
+    {{-- Upcoming Exams --}}
+    <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="font-semibold text-slate-800">Upcoming Exams</h2>
+            <a href="{{ route('exam.schedule.index') }}" class="text-xs text-blue-600 hover:underline">View all →</a>
+        </div>
+        @if($upcomingExams->isEmpty())
+            <div class="py-6 text-center text-slate-400">
+                <svg class="w-8 h-8 mx-auto mb-2 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <p class="text-sm">No upcoming exams scheduled.</p>
+            </div>
+        @else
+            <div class="space-y-2">
+                @foreach($upcomingExams as $exam)
+                    <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
+                        <div class="shrink-0 text-center w-10">
+                            <p class="text-[10px] font-black text-blue-600 uppercase">{{ $exam->exam_datetime->format('M') }}</p>
+                            <p class="text-xl font-black text-slate-800 leading-none">{{ $exam->exam_datetime->format('d') }}</p>
+                        </div>
+                        <div class="flex-1 min-w-0 border-l border-slate-200 pl-3">
+                            <p class="text-sm font-semibold text-slate-800 truncate">{{ $exam->batch_code }}</p>
+                            <p class="text-xs text-slate-500">{{ $exam->exam_datetime->format('g:i A') }} · {{ $exam->venue }}</p>
+                        </div>
+                        <div class="shrink-0 text-right">
+                            <p class="text-xs font-bold {{ $exam->assigned_count >= $exam->capacity ? 'text-rose-500' : 'text-emerald-600' }}">
+                                {{ $exam->assigned_count }}/{{ $exam->capacity }}
+                            </p>
+                            <p class="text-[10px] text-slate-400">slots</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
+
+    {{-- Recent Applications --}}
+    <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="font-semibold text-slate-800">Recent Applications</h2>
+            <a href="{{ route('registrar.applicants.index') }}" class="text-xs text-blue-600 hover:underline">View all →</a>
+        </div>
+        @if($recentActivity->isEmpty())
+            <div class="py-6 text-center text-slate-400">
+                <svg class="w-8 h-8 mx-auto mb-2 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <p class="text-sm">No applications yet.</p>
+            </div>
+        @else
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs">
+                    <thead>
+                        <tr class="text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-100">
+                            <th class="pb-2 text-left font-semibold">Applicant</th>
+                            <th class="pb-2 text-left font-semibold">Course</th>
+                            <th class="pb-2 text-left font-semibold">Status</th>
+                            <th class="pb-2 text-right font-semibold">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                        @foreach($recentActivity as $app)
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="py-2 font-medium text-slate-800">{{ $app->first_name }} {{ $app->last_name }}</td>
+                                <td class="py-2 text-slate-500">{{ $app->preferredCourse?->code ?? '—' }}</td>
+                                <td class="py-2">
+                                    @php
+                                        $sc = match($app->status) {
+                                            'enrolled'       => 'bg-emerald-100 text-emerald-700',
+                                            'verified'       => 'bg-indigo-100 text-indigo-700',
+                                            'exam_completed' => 'bg-blue-100 text-blue-700',
+                                            'exam_scheduled' => 'bg-sky-100 text-sky-700',
+                                            'rejected'       => 'bg-rose-100 text-rose-700',
+                                            default          => 'bg-amber-100 text-amber-700',
+                                        };
+                                    @endphp
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold {{ $sc }}">
+                                        {{ ucwords(str_replace('_', ' ', $app->status)) }}
+                                    </span>
+                                </td>
+                                <td class="py-2 text-slate-500 text-right">{{ $app->created_at->format('M d') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </div>
+</section>
+
 @push('scripts')
 <script>
 async function j(url){ const r = await fetch(url); return r.json(); }
+
+Chart.register({
+    id: 'noDataText',
+    afterDraw(chart) {
+        const total = chart.data.datasets.reduce(
+            (s, ds) => s + ds.data.reduce((a, v) => a + (Number(v) || 0), 0), 0
+        );
+        if (total === 0) {
+            const { ctx, width, height } = chart;
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.font = '600 13px system-ui, sans-serif';
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('No data for this term', width / 2, height / 2);
+            ctx.restore();
+        }
+    }
+});
 
 const params = new URLSearchParams(window.location.search);
 const termParam = params.get('term') || 'active';

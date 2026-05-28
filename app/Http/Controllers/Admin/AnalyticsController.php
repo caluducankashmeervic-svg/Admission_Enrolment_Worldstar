@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcademicTerm;
+use App\Models\Announcement;
 use App\Models\Applicant;
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Models\ExamSchedule;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +27,15 @@ class AnalyticsController extends Controller
             'terms'             => AcademicTerm::orderByDesc('school_year')->orderBy('semester')->get(),
             'selectedTermId'    => $selectedTermId,
             'selectedTermLabel' => $selectedTermLabel,
+            'announcementCount' => Announcement::where('is_active', true)->count(),
+            'upcomingExams'     => ExamSchedule::where('exam_datetime', '>=', now())
+                                        ->orderBy('exam_datetime')
+                                        ->take(4)
+                                        ->get(['id', 'batch_code', 'exam_datetime', 'venue', 'assigned_count', 'capacity']),
+            'recentActivity'    => Applicant::with('preferredCourse:id,code')
+                                        ->latest()
+                                        ->take(6)
+                                        ->get(['id', 'first_name', 'last_name', 'status', 'created_at', 'preferred_course_id']),
         ]);
     }
 
