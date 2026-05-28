@@ -15,11 +15,11 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach($items as $item)
-                <a href="{{ asset('storage/' . $item->image_path) }}" target="_blank" rel="noopener"
+                <a href="/storage/{{ $item->image_path }}" target="_blank" rel="noopener"
                    class="group block relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-xl transition-shadow duration-300">
                     <div class="aspect-[4/3] overflow-hidden bg-slate-50">
-                        <img src="{{ asset('storage/' . $item->image_path) }}"
-                             onerror="this.onerror=null;this.src='{{ asset('images/image.png') }}';this.classList.add('object-contain','p-6');"
+                        <img src="/storage/{{ $item->image_path }}"
+                             onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100 text-slate-400 text-xs\'>No image</div>';"
                              alt="{{ $item->title ?: 'Accreditation photo' }}"
                              class="w-full h-full object-cover transform transition-transform duration-500 ease-out group-hover:scale-110">
                     </div>

@@ -14,11 +14,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach($items as $item)
                     <article class="border border-slate-200 rounded-lg overflow-hidden">
-                        <a href="{{ asset('storage/' . $item->image_path) }}" target="_blank" rel="noopener"
+                        <a href="/storage/{{ $item->image_path }}" target="_blank" rel="noopener"
                            class="group block relative overflow-hidden bg-slate-50">
                             <div class="aspect-[4/3] overflow-hidden">
-                                <img src="{{ asset('storage/' . $item->image_path) }}"
-                                     onerror="this.onerror=null;this.src='{{ asset('images/image.png') }}';this.classList.add('object-contain','bg-slate-50','p-6');"
+                                <img src="/storage/{{ $item->image_path }}"
+                                     onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100 text-slate-400 text-xs\'>No image</div>';"
                                      alt="{{ $item->title ?: 'Accreditation photo' }}"
                                      class="w-full h-full object-cover transform transition-transform duration-500 ease-out group-hover:scale-110">
                             </div>

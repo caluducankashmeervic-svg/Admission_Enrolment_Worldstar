@@ -2,23 +2,47 @@
 @section('title', 'Admin Dashboard')
 
 @section('content')
-<section class="bg-gradient-to-r from-blue-700 via-blue-600 to-emerald-600 text-white rounded-xl shadow-lg p-6 flex items-center gap-5">
-    <div class="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center p-2 shrink-0">
-        <img src="{{ asset('images/image.png') }}" alt="Worldstar Logo" class="w-full h-full object-contain">
-    </div>
-    <div class="flex-1">
-        <p class="uppercase tracking-widest text-amber-300 text-[11px] font-semibold">Administrator Dashboard</p>
-        <h1 class="text-2xl md:text-3xl font-extrabold leading-tight">
-            Worldstar College of Science and Technology, Inc.
-        </h1>
-        @if($term)
-            <p class="text-sm text-white/85 mt-1">
-                Active term: <strong>{{ $term->school_year }} — {{ $term->semester }} Sem</strong>
-            </p>
-        @endif
-        <p class="text-sm text-white/85 mt-1">
-            Viewing: <strong>{{ $selectedTermLabel }}</strong>
-        </p>
+<section class="relative overflow-hidden rounded-xl shadow-lg text-white">
+    <div class="absolute inset-0" style="background: linear-gradient(135deg, #0b1c96 0%, #1a38d6 45%, #0d7364 100%);"></div>
+    <div class="absolute inset-0 opacity-[0.07]" style="background-image: repeating-linear-gradient(45deg, #fff 0px, #fff 1px, transparent 1px, transparent 24px);"></div>
+    <div class="absolute -top-16 -right-16 w-72 h-72 rounded-full blur-3xl" style="background: rgba(52,211,153,0.20);"></div>
+    <div class="absolute -bottom-16 -left-8 w-56 h-56 rounded-full blur-3xl" style="background: rgba(99,102,241,0.20);"></div>
+    <div class="relative flex items-center gap-5 p-6">
+        <div class="w-20 h-20 rounded-full bg-white shadow-xl flex items-center justify-center p-2 shrink-0 ring-4 ring-white/20">
+            <img src="{{ asset('images/image.png') }}" alt="Worldstar Logo" class="w-full h-full object-contain">
+        </div>
+        <div class="flex-1 min-w-0">
+            <p class="uppercase tracking-[0.3em] text-amber-300 text-[10px] font-bold">Administrator Dashboard</p>
+            <h1 class="text-xl md:text-3xl font-extrabold leading-tight mt-0.5">
+                Worldstar College of Science and Technology, Inc.
+            </h1>
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-1 mt-2 text-xs text-white/80">
+                @if($term)
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Active: <strong class="text-white ml-1">{{ $term->school_year }} — {{ $term->semester }} Sem</strong>
+                    </span>
+                @endif
+                <span class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
+                    Viewing: <strong class="text-amber-300 ml-1">{{ $selectedTermLabel }}</strong>
+                </span>
+            </div>
+        </div>
+        <div class="hidden lg:flex divide-x divide-white/20 shrink-0">
+            <div class="text-center px-5">
+                <p class="text-3xl font-black text-amber-300 leading-none">{{ number_format($summary['total_applicants']) }}</p>
+                <p class="text-[10px] uppercase tracking-widest text-white/60 mt-1">Applicants</p>
+            </div>
+            <div class="text-center px-5">
+                <p class="text-3xl font-black text-emerald-300 leading-none">{{ number_format($summary['total_enrolled']) }}</p>
+                <p class="text-[10px] uppercase tracking-widest text-white/60 mt-1">Enrolled</p>
+            </div>
+            <div class="text-center px-5">
+                <p class="text-3xl font-black text-white leading-none">{{ number_format($summary['total_courses']) }}</p>
+                <p class="text-[10px] uppercase tracking-widest text-white/60 mt-1">Courses</p>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -58,7 +82,7 @@
 <section class="grid md:grid-cols-3 lg:grid-cols-6 gap-3 mt-4">
     @foreach ([
         ['Pending Pre-Reg', $summary['pending_pre_reg'], 'bg-amber-50 text-amber-700 border-amber-200', route('registrar.applicants.index', ['status' => 'pre_registered'])],
-        ['Exam Scheduled',  $summary['exam_scheduled'],  'bg-sky-50 text-sky-700 border-sky-200',       route('registrar.applicants.index', ['status' => 'exam_scheduled'])],
+        ['Exam Scheduled',  $summary['exam_scheduled'],  'bg-sky-50 text-sky-700 border-sky-200',       route('exam.schedule.index')],
         ['Exam Completed',  $summary['exam_completed'],  'bg-blue-50 text-blue-700 border-blue-200',    route('registrar.applicants.index', ['status' => 'exam_completed'])],
         ['Verified',        $summary['verified'],        'bg-indigo-50 text-indigo-700 border-indigo-200', route('registrar.applicants.index', ['status' => 'verified'])],
         ['Rejected',        $summary['rejected'],        'bg-rose-50 text-rose-700 border-rose-200',    route('admin.trash.index')],

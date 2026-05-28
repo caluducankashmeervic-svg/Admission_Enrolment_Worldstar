@@ -113,7 +113,7 @@
 
 
 {{-- ============== 29 YEARS STRONG — themed banner ============== --}}
-<section class="bg-white pt-2">
+<section class="bg-white pt-10">
     <div class="max-w-5xl mx-auto px-6 pb-6">
         <div class="relative overflow-hidden rounded-2xl shadow-2xl
                     bg-[radial-gradient(circle_at_top_left,#1e40af_0%,#1d4ed8_35%,#0b1c96_70%,#0a1660_100%)]
@@ -142,21 +142,21 @@
 </section>
 
 {{-- ============== THREE GOV'T ACCREDITING AGENCY CARDS ============== --}}
-<section id="accreditation" class="bg-white">
+<section id="accreditation" class="bg-white pt-6">
     <div class="max-w-3xl mx-auto px-6 pb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ([
             ['DepEd', 'deped.svg', '#courses', 'from-blue-50 to-blue-100'],
             ['TESDA', 'tesda.svg', '#mission', 'from-slate-50 to-slate-100'],
             ['LTO',   'lto.svg',   '#values',  'from-amber-50 to-rose-100'],
         ] as [$label, $logo, $href, $grad])
-            <a href="{{ $href }}" class="block border-2 border-blue-700 group">
-                <div class="relative aspect-[4/3] bg-gradient-to-br {{ $grad }} overflow-hidden flex items-center justify-center p-6">
+            <a href="{{ $href }}" class="block rounded-lg overflow-hidden border-2 border-blue-700 group">
+                <div class="relative aspect-square bg-gradient-to-br {{ $grad }} overflow-hidden flex items-center justify-center p-8">
                     <img src="{{ asset('images/' . $logo) }}"
                          onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('span'),{className:'text-blue-700 font-extrabold text-3xl tracking-wider',textContent:'{{ $label }}'}));"
                          alt="{{ $label }} logo"
-                         class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110">
+                         class="max-h-[80%] max-w-[80%] object-contain transition-transform duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition"></div>
-                    <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white">
+                    <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white text-center">
                         <span class="text-blue-700 font-bold text-sm tracking-wider">{{ $label }}</span>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
 
 
 {{-- ============== FAQ (kept for /#questions anchor) ============== --}}
-<section id="questions" class="bg-white pb-6">
+<section id="questions" class="bg-white py-8">
     <div class="max-w-4xl mx-auto px-6">
         <h3 class="font-bold text-slate-900 text-lg mb-4">Frequently Asked Questions</h3>
         <div class="space-y-3 text-sm text-slate-700 text-justify">
