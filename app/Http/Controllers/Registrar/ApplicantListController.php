@@ -7,6 +7,8 @@ use App\Models\AcademicTerm;
 use App\Models\Applicant;
 use App\Models\AuditLog;
 use App\Models\Course;
+use App\Models\ExamResult;
+use App\Models\ExamSchedule;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -120,6 +122,18 @@ class ApplicantListController extends Controller
     {
         if ($applicant->status === Applicant::STATUS_ENROLLED) {
             return back()->withErrors(['delete' => 'Enrolled students cannot be deleted from this page.']);
+        }
+
+        // Decrement exam batch counter before the cascade-delete removes the exam_result row
+        if ($applicant->status === Applicant::STATUS_EXAM_SCHEDULED) {
+            $scheduleId = ExamResult::where('applicant_id', $applicant->id)
+                ->where('result', ExamResult::RESULT_PENDING)
+                ->value('exam_schedule_id');
+            if ($scheduleId) {
+                ExamSchedule::where('id', $scheduleId)
+                    ->where('assigned_count', '>', 0)
+                    ->decrement('assigned_count');
+            }
         }
 
         AuditLog::record('registrar.applicant.delete', $applicant, [

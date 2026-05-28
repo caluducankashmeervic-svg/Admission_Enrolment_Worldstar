@@ -51,12 +51,14 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'name'      => ['required', 'string', 'max:100'],
+            'email'     => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
             'role'      => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_REGISTRAR, User::ROLE_APPLICANT])],
             'is_active' => ['sometimes', 'boolean'],
         ]);
 
         $payload = [
             'name'      => $data['name'],
+            'email'     => $data['email'],
             'role'      => $data['role'],
             'is_active' => (bool) ($data['is_active'] ?? false),
         ];

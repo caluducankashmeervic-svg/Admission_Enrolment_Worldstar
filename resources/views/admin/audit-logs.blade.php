@@ -7,8 +7,14 @@
 <form method="GET" class="mt-4 flex flex-wrap gap-2">
     <input name="action" value="{{ $filter['action'] }}" placeholder="Filter by action (e.g. enrollment.finalize)"
            class="border rounded px-3 py-2 w-80">
-    <input name="user_id" value="{{ $filter['user_id'] }}" placeholder="User ID" type="number"
-           class="border rounded px-3 py-2 w-28">
+    <select name="user_id" class="border rounded px-3 py-2 w-48">
+        <option value="">All users</option>
+        @foreach($users as $u)
+            <option value="{{ $u->id }}" {{ (string)$filter['user_id'] === (string)$u->id ? 'selected' : '' }}>
+                {{ $u->name }}
+            </option>
+        @endforeach
+    </select>
     <button class="bg-slate-700 text-white px-4 py-2 rounded">Filter</button>
     <a href="{{ route('admin.audit.index') }}" class="px-3 py-2 text-slate-600 hover:underline">Reset</a>
 </form>

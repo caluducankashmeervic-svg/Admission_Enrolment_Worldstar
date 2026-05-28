@@ -49,7 +49,7 @@
                                      class="w-10 h-10 rounded-full object-cover border border-slate-200" alt="">
                             </td>
                             <td class="px-4 py-2"><input name="name" value="{{ $u->name }}" class="w-full border rounded px-2 py-1"></td>
-                            <td class="px-4 py-2 text-slate-500 truncate" title="{{ $u->email }}">{{ $u->email }}</td>
+                            <td class="px-4 py-2"><input type="email" name="email" value="{{ $u->email }}" class="w-full border rounded px-2 py-1"></td>
                             <td class="px-4 py-2">
                                 <select name="role" class="border rounded px-2 py-1 w-full">
                                     @foreach(['admin','registrar','applicant'] as $r)

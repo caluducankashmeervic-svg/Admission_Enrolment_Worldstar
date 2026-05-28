@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuditLogController extends Controller
@@ -22,6 +23,7 @@ class AuditLogController extends Controller
         return view('admin.audit-logs', [
             'logs'   => $q->paginate(30)->withQueryString(),
             'filter' => ['action' => $action, 'user_id' => $userId],
+            'users'  => User::orderBy('name')->get(['id', 'name']),
         ]);
     }
 }
