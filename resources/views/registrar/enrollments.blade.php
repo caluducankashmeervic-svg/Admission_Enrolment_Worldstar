@@ -59,7 +59,15 @@
                     <td class="px-3 py-2 text-xs">{{ optional($e->enrolled_at)->format('M d, Y H:i') }}</td>
                     <td class="px-3 py-2 text-xs">{{ $e->processor?->name }}</td>
                     <td class="px-3 py-2">
-                        <span class="text-xs text-slate-400">—</span>
+                        <form method="POST"
+                              action="{{ route('registrar.enrollments.destroy', $e) }}"
+                              onsubmit="return confirm('Drop enrollment {{ $e->enrollment_no }}? The student status will be reset to Verified.')">
+                            @csrf @method('DELETE')
+                            <button type="submit"
+                                    class="text-xs text-rose-600 hover:text-rose-800 hover:underline font-medium">
+                                Drop
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @empty

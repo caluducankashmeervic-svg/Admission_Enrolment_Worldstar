@@ -8,6 +8,7 @@ use App\Models\Applicant;
 use App\Models\AuditLog;
 use App\Models\Enrollment;
 use App\Models\Verification;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
 class EnrollmentController extends Controller
@@ -42,6 +43,11 @@ class EnrollmentController extends Controller
 
                 if ($applicant->status === Applicant::STATUS_ENROLLED) {
                     throw new \RuntimeException('Applicant is already enrolled.');
+                }
+
+                // Guard against orphaned enrollment records
+                if ($applicant->enrollment()->exists()) {
+                    throw new \RuntimeException('An enrollment record already exists for this applicant.');
                 }
                 if ($applicant->status === Applicant::STATUS_REJECTED) {
                     throw new \RuntimeException('Rejected applicants cannot be enrolled.');
@@ -83,10 +89,29 @@ class EnrollmentController extends Controller
             ->with('status', "Enrollment finalized. {$enrollment->enrollment_no}");
     }
 
-    protected function nextEnrollmentNo(?int $termId): string
+    protected function nextEnrollmentNo(?int $termId = null): string
     {
-        $year  = date('Y');
-        $count = Enrollment::where('academic_term_id', $termId)->count() + 1;
-        return sprintf('ENR-%s-%06d', $year, $count);
+        $year = date('Y');
+        // Use the global max for this year to avoid duplicates across terms
+        $last = Enrollment::where('enrollment_no', 'like', "ENR-{$year}-%")
+            ->max('enrollment_no');
+        $next = $last ? ((int) substr($last, -6)) + 1 : 1;
+        return sprintf('ENR-%s-%06d', $year, $next);
+    }
+
+    public function destroy(Enrollment $enrollment): RedirectResponse
+    {
+        DB::transaction(function () use ($enrollment) {
+            // Reset applicant status so they can be re-processed if needed
+            $enrollment->applicant()->update(['status' => Applicant::STATUS_VERIFIED]);
+
+            AuditLog::record('enrollment.drop', $enrollment, [
+                'enrollment_no' => $enrollment->enrollment_no,
+            ]);
+
+            $enrollment->delete();
+        });
+
+        return back()->with('status', "Enrollment {$enrollment->enrollment_no} dropped. Student status reset to Verified.");
     }
 }

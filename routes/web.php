@@ -196,8 +196,9 @@ Route::middleware(['auth', 'role:registrar,admin'])->prefix('registrar')->name('
     Route::put('/applicants/{applicant}',       [ApplicantEditController::class, 'update'])->name('applicants.update');
     Route::get('/applicants/{applicant}/pre-reg-pdf', [PreRegistrationPdfController::class, 'download'])->name('applicants.pre-reg-pdf');
 
-    Route::get('/enrollments',        [EnrollmentListController::class, 'index'])->name('enrollments.index');
-    Route::get('/enrollments/export', [EnrollmentListController::class, 'export'])->name('enrollments.export');
+    Route::get('/enrollments',               [EnrollmentListController::class, 'index'])->name('enrollments.index');
+    Route::get('/enrollments/export',        [EnrollmentListController::class, 'export'])->name('enrollments.export');
+    Route::delete('/enrollments/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
 });
 
 /* ---------------- Documents ---------------- */

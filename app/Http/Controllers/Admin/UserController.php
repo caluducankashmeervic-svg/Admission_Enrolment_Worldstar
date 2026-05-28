@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
+use App\Models\Enrollment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -81,6 +82,9 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         abort_if($user->id === auth()->id(), 403, 'You cannot delete your own account.');
+
+        // Nullify processed_by FK on enrollments (no cascade defined on that column)
+        Enrollment::where('processed_by', $user->id)->update(['processed_by' => null]);
 
         AuditLog::record('user.delete', $user);
         $email = $user->email;
