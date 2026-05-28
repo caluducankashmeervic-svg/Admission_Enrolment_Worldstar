@@ -12,6 +12,7 @@
         {{-- Profile Photo --}}
         <div class="flex items-center gap-5">
             <img id="photo-preview" src="{{ $user->profile_photo_url }}"
+                 onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=0D8ABC&color=fff&size=128'"
                  class="w-24 h-24 rounded-full object-cover border-2 border-slate-200 shadow-sm" alt="Profile photo">
             <div>
                 <label class="block text-sm font-medium text-slate-700">Profile Photo</label>

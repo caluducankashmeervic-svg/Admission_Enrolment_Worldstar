@@ -111,46 +111,6 @@
 </script>
 @endpush
 
-{{-- ============== WHY CHOOSE WORLDSTAR (replaces generic "Explore campuses" banner) ============== --}}
-@php
-    $stats = [
-        ['10+',  'Years Building Worldstar Lions'],
-        ['15+',  'SHS & TESDA Programs Offered'],
-        ['100%', 'TESDA-Accredited Diploma Tracks'],
-        ['1:1',  'Faith, Care & Mentorship Support'],
-    ];
-@endphp
-<section class="bg-white pt-10">
-    <div class="max-w-5xl mx-auto px-6 pb-8">
-        <div class="rounded-md overflow-hidden bg-gradient-to-r from-[#0b1c96] via-[#1d4ed8] to-emerald-600 shadow-lg">
-            <div class="px-8 py-8 md:py-10 grid md:grid-cols-[1.1fr_1fr] gap-6 items-center">
-                <div>
-                    <p class="text-amber-300 font-semibold uppercase tracking-widest text-xs">Why Choose Worldstar</p>
-                    <h3 class="text-white font-extrabold leading-tight text-2xl md:text-3xl mt-2">
-                        A faith-driven, industry-ready college<br class="hidden md:block">
-                        right here in Roxas, Capiz.
-                    </h3>
-                    <p class="text-white/85 text-sm mt-3 max-w-md">
-                        TESDA-accredited programs, dedicated faculty, and a Safe Space community
-                        that supports every learner — academically, emotionally, and spiritually.
-                    </p>
-                    <a href="{{ route('applicant.pre-register.choose') }}"
-                       class="inline-block mt-5 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm px-5 py-2.5 rounded">
-                        START YOUR APPLICATION
-                    </a>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    @foreach($stats as [$value, $label])
-                        <div class="bg-white/10 backdrop-blur rounded-lg px-4 py-4 border border-white/20">
-                            <p class="text-amber-300 font-extrabold text-2xl md:text-3xl leading-none">{{ $value }}</p>
-                            <p class="text-white/90 text-xs mt-1 leading-snug">{{ $label }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 {{-- ============== 29 YEARS STRONG — themed banner ============== --}}
 <section class="bg-white pt-2">
@@ -185,9 +145,9 @@
 <section id="accreditation" class="bg-white">
     <div class="max-w-3xl mx-auto px-6 pb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ([
-            ['DepEd', 'deped.png', '#courses', 'from-blue-50 to-blue-100'],
-            ['TESDA', 'tesda.png', '#mission', 'from-slate-50 to-slate-100'],
-            ['LTO',   'lto.png',   '#values',  'from-amber-50 to-rose-100'],
+            ['DepEd', 'deped.svg', '#courses', 'from-blue-50 to-blue-100'],
+            ['TESDA', 'tesda.svg', '#mission', 'from-slate-50 to-slate-100'],
+            ['LTO',   'lto.svg',   '#values',  'from-amber-50 to-rose-100'],
         ] as [$label, $logo, $href, $grad])
             <a href="{{ $href }}" class="block border-2 border-blue-700 group">
                 <div class="relative aspect-[4/3] bg-gradient-to-br {{ $grad }} overflow-hidden flex items-center justify-center p-6">
@@ -197,7 +157,7 @@
                          class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition"></div>
                     <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white">
-                        <span class="text-blue-700 font-bold text-sm tracking-wider">{{ $label }} ›</span>
+                        <span class="text-blue-700 font-bold text-sm tracking-wider">{{ $label }}</span>
                     </div>
                 </div>
             </a>

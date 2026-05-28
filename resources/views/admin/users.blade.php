@@ -45,6 +45,7 @@
                             @csrf @method('PUT')
                             <td class="px-4 py-2">
                                 <img src="{{ $u->profile_photo_url }}"
+                                     onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ urlencode($u->name) }}&background=0D8ABC&color=fff&size=128'"
                                      class="w-10 h-10 rounded-full object-cover border border-slate-200" alt="">
                             </td>
                             <td class="px-4 py-2"><input name="name" value="{{ $u->name }}" class="w-full border rounded px-2 py-1"></td>

@@ -31,14 +31,19 @@ class User extends Authenticatable
     {
         if ($this->profile_photo_path) {
             $diskName = config('filesystems.profile_disk', 'public');
-            // For the public disk, render via asset() so the URL uses the
-            // current request host (works regardless of APP_URL mismatch).
             if ($diskName === 'public') {
-                return asset('storage/' . ltrim($this->profile_photo_path, '/'));
+                // Use root-relative URL so it works regardless of APP_URL / port.
+                // Only return the storage path when the file actually exists.
+                if (Storage::disk('public')->exists($this->profile_photo_path)) {
+                    return '/storage/' . ltrim($this->profile_photo_path, '/');
+                }
+            } else {
+                /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+                $disk = Storage::disk($diskName);
+                if ($disk->exists($this->profile_photo_path)) {
+                    return $disk->url($this->profile_photo_path);
+                }
             }
-            /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
-            $disk = Storage::disk($diskName);
-            return $disk->url($this->profile_photo_path);
         }
         $seed = urlencode($this->name ?: $this->email ?: 'user');
         return "https://ui-avatars.com/api/?name={$seed}&background=0D8ABC&color=fff&size=128";
