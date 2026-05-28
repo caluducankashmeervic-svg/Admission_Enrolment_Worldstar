@@ -113,6 +113,7 @@ class PreRegistrationController extends Controller
 
             $a = Applicant::create([
                 'reference_code'        => $this->codes->generate('SHS'),
+                'academic_term_id'      => AcademicTerm::where('is_active', true)->value('id'),
                 'applicant_type'        => Applicant::TYPE_SHS,
                 'user_id'               => optional($request->user())->id,
                 'first_name'            => $v['first_name'],
@@ -192,6 +193,7 @@ class PreRegistrationController extends Controller
 
             $a = Applicant::create([
                 'reference_code'        => $this->codes->generate('TES'),
+                'academic_term_id'      => AcademicTerm::where('is_active', true)->value('id'),
                 'applicant_type'        => Applicant::TYPE_TESDA,
                 'user_id'               => optional($request->user())->id,
                 'first_name'            => $v['first_name'],
