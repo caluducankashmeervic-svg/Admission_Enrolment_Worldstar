@@ -30,8 +30,14 @@ class User extends Authenticatable
     public function getProfilePhotoUrlAttribute(): string
     {
         if ($this->profile_photo_path) {
+            $diskName = config('filesystems.profile_disk', 'public');
+            // For the public disk, render via asset() so the URL uses the
+            // current request host (works regardless of APP_URL mismatch).
+            if ($diskName === 'public') {
+                return asset('storage/' . ltrim($this->profile_photo_path, '/'));
+            }
             /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
-            $disk = Storage::disk(config('filesystems.profile_disk'));
+            $disk = Storage::disk($diskName);
             return $disk->url($this->profile_photo_path);
         }
         $seed = urlencode($this->name ?: $this->email ?: 'user');

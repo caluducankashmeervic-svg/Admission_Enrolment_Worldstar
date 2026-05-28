@@ -13,19 +13,24 @@
             <p class="text-lg font-semibold text-slate-700">No content</p>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach($items as $item)
-                <article class="border border-slate-200 rounded-lg overflow-hidden bg-white">
-                    <img src="{{ asset('storage/' . $item->image_path) }}"
-                         onerror="this.onerror=null;this.src='{{ asset('images/image.png') }}';this.classList.add('object-contain','bg-slate-50','p-4');"
-                         alt="{{ $item->title ?: 'Accreditation photo' }}" class="w-full h-52 object-cover">
-                    <div class="px-4 py-3 space-y-0.5">
-                        @if($item->title)
-                            <p class="text-sm font-medium text-slate-700">{{ $item->title }}</p>
-                        @endif
-                        <p class="text-xs text-slate-400">{{ $item->created_at->format('M d, Y h:i A') }}</p>
+                <a href="{{ asset('storage/' . $item->image_path) }}" target="_blank" rel="noopener"
+                   class="group block relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-xl transition-shadow duration-300">
+                    <div class="aspect-[4/3] overflow-hidden bg-slate-50">
+                        <img src="{{ asset('storage/' . $item->image_path) }}"
+                             onerror="this.onerror=null;this.src='{{ asset('images/image.png') }}';this.classList.add('object-contain','p-6');"
+                             alt="{{ $item->title ?: 'Accreditation photo' }}"
+                             class="w-full h-full object-cover transform transition-transform duration-500 ease-out group-hover:scale-110">
                     </div>
-                </article>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 right-0 px-4 py-3 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition duration-300">
+                        @if($item->title)
+                            <p class="text-sm font-semibold leading-tight">{{ $item->title }}</p>
+                        @endif
+                        <p class="text-[11px] uppercase tracking-wider opacity-90">{{ $item->created_at->format('M d, Y') }}</p>
+                    </div>
+                </a>
             @endforeach
         </div>
     @endif

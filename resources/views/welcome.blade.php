@@ -152,17 +152,50 @@
     </div>
 </section>
 
-{{-- ============== THREE IMAGE CARDS ============== --}}
-<section id="academics" class="bg-white">
+{{-- ============== 29 YEARS STRONG — themed banner ============== --}}
+<section class="bg-white pt-2">
+    <div class="max-w-5xl mx-auto px-6 pb-6">
+        <div class="relative overflow-hidden rounded-2xl shadow-2xl
+                    bg-[radial-gradient(circle_at_top_left,#1e40af_0%,#1d4ed8_35%,#0b1c96_70%,#0a1660_100%)]
+                    border border-blue-900/30">
+            {{-- decorative shapes --}}
+            <div class="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-amber-300/20 blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-10 w-72 h-72 rounded-full bg-emerald-400/20 blur-3xl"></div>
+            <div class="absolute top-6 left-6 w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                <img src="{{ asset('images/image.png') }}" alt="" class="w-10 h-10 object-contain">
+            </div>
+            <div class="relative text-center px-6 py-12 md:py-16">
+                <p class="uppercase tracking-[0.4em] text-amber-300 text-[11px] md:text-xs font-semibold">Worldstar College of Science and Technology</p>
+                <h2 class="mt-3 text-white font-black leading-none text-5xl md:text-7xl tracking-tight drop-shadow">
+                    29 YEARS STRONG!
+                </h2>
+                <p class="mt-4 text-amber-300 font-extrabold text-2xl md:text-4xl tracking-wide">
+                    #TatakWorldstar
+                </p>
+                <div class="mt-5 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Producing Worldstar Lions since 1996
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- ============== THREE GOV'T ACCREDITING AGENCY CARDS ============== --}}
+<section id="accreditation" class="bg-white">
     <div class="max-w-3xl mx-auto px-6 pb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ([
-            ['STUDY',    'from-blue-200 to-blue-400',    '#courses'],
-            ['RESEARCH', 'from-slate-300 to-slate-500',  '#mission'],
-            ['INDUSTRY', 'from-amber-200 to-rose-300',   '#values'],
-        ] as [$label, $grad, $href])
+            ['DepEd', 'deped.png', '#courses', 'from-blue-50 to-blue-100'],
+            ['TESDA', 'tesda.png', '#mission', 'from-slate-50 to-slate-100'],
+            ['LTO',   'lto.png',   '#values',  'from-amber-50 to-rose-100'],
+        ] as [$label, $logo, $href, $grad])
             <a href="{{ $href }}" class="block border-2 border-blue-700 group">
-                <div class="relative aspect-[4/3] bg-gradient-to-br {{ $grad }} overflow-hidden">
-                    <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition"></div>
+                <div class="relative aspect-[4/3] bg-gradient-to-br {{ $grad }} overflow-hidden flex items-center justify-center p-6">
+                    <img src="{{ asset('images/' . $logo) }}"
+                         onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('span'),{className:'text-blue-700 font-extrabold text-3xl tracking-wider',textContent:'{{ $label }}'}));"
+                         alt="{{ $label }} logo"
+                         class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition"></div>
                     <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white">
                         <span class="text-blue-700 font-bold text-sm tracking-wider">{{ $label }} ›</span>
                     </div>

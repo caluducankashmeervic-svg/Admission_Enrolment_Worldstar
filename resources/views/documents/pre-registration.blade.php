@@ -3,9 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <style>
-    @page { margin: 0.6in 0.65in 0.7in 0.65in; }
+    @page { margin: 0; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; font-size: 10pt; color: #1e293b; line-height: 1.5; }
+    html, body { margin: 0; padding: 0; }
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 10pt;
+        color: #1e293b;
+        line-height: 1.5;
+        padding: 0.6in 0.7in 0.75in 0.75in;
+    }
 
     /* ── Page header (table-based for DomPDF reliability) ── */
     .header { width: 100%; border-bottom: 2.5px solid #1d4ed8; padding-bottom: 10px; margin-bottom: 16px; }
