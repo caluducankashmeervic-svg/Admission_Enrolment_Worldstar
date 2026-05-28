@@ -134,7 +134,7 @@
                 </p>
                 <div class="mt-5 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs uppercase tracking-widest">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Producing Worldstar Lions since 1996
+                    Producing Worldstar Lions since 1997
                 </div>
             </div>
         </div>
